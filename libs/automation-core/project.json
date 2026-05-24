@@ -1,0 +1,27 @@
+{
+  "name": "automation-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/automation-core/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/automation-core",
+        "tsConfig": "libs/automation-core/tsconfig.json",
+        "packageJson": "libs/automation-core/package.json",
+        "main": "libs/automation-core/src/index.ts",
+        "assets": ["libs/automation-core/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/automation-core"],
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

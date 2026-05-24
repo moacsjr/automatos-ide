@@ -1,0 +1,8 @@
+{
+  "name": "pluggable-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/pluggable-core/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": []
+}

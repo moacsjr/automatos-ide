@@ -1,0 +1,8 @@
+{
+  "name": "pluggable-react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/pluggable-react/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": []
+}
