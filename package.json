@@ -5,7 +5,8 @@
   "scripts": {
     "build": "npx nx run-many -t build --projects=api-gateway,rpa-worker,web-platform",
     "test": "npx nx run-many -t test",
-    "lint": "npx nx run-many -t lint"
+    "lint": "npx nx run-many -t lint",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@nx/js": "20.0.0",
@@ -18,6 +19,8 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^17.0.5",
     "nx": "20.0.0",
     "prettier": "^3.3.0",
     "typescript": "^5.6.0",
@@ -25,12 +28,12 @@
     "vitest": "^2.1.0"
   },
   "dependencies": {
-    "@pluggable-js/core": "file:./libs/pluggable-core",
-    "@pluggable-js/react": "file:./libs/pluggable-react",
     "@aws-sdk/client-dynamodb": "^3.700.0",
-    "@aws-sdk/lib-dynamodb": "^3.700.0",
     "@aws-sdk/client-s3": "^3.700.0",
     "@aws-sdk/client-sqs": "^3.700.0",
+    "@aws-sdk/lib-dynamodb": "^3.700.0",
+    "@pluggable-js/core": "file:./libs/pluggable-core",
+    "@pluggable-js/react": "file:./libs/pluggable-react",
     "playwright": "^1.49.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -38,5 +41,8 @@
   "workspaces": [
     "apps/*",
     "libs/*"
-  ]
+  ],
+  "lint-staged": {
+    "*.{js,ts,tsx,json,md}": "prettier --write --ignore-unknown"
+  }
 }
