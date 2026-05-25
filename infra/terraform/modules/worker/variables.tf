@@ -2,8 +2,9 @@ variable "environment" {
   type = string
 }
 
-variable "docker_image_uri" {
-  type = string
+variable "ecr_repository_uri" {
+  description = "Base ECR URI (image tag is added at runtime)"
+  type        = string
 }
 
 variable "job_queue_url" {

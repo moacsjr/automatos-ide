@@ -27,6 +27,7 @@ libs/pluggable-react     → Stub for @pluggable-js/react (UI component host)
 ### DSL & Interpreter
 
 `libs/automation-core` contains:
+
 - `domain/types.ts` — `AutomationStep`, `WorkflowJob`, `ExecutionContext` types
 - `interpreter/safe-runner.ts` — `SafeAutomationInterpreter` resolves `{{variable.key}}` templates from context, supports conditional branching, prevents RCE
 - `executors/workflow-executor.ts` — launches headless Chromium, runs a full workflow, closes browser
@@ -38,6 +39,7 @@ The web app uses `@pluggable-js/react`'s `ActiveWorkspaceView` to dynamically re
 ### API Gateway
 
 Lambda handler (`apps/api-gateway/src/index.ts`) exposes:
+
 - `POST /workflows` — persists workflow to DynamoDB, enqueues job to SQS
 - `GET /workflows/:id` — reads workflow status from DynamoDB
 
@@ -61,7 +63,44 @@ npx vitest run libs/automation-core
 npx nx run-many -t build --projects=api-gateway,rpa-worker,web-platform
 ```
 
+## Infrastructure (Terraform)
+
+`infra/terraform/` manages all AWS resources and auto-creates GitHub secrets on `terraform apply`.
+
+**Resources created:**
+
+- ECR repository `rpa-worker` (with lifecycle policy, scan on push)
+- SQS queue + DLQ for workflow jobs
+- DynamoDB table for workflow state
+- API Gateway v2 (REST) + Lambda
+- ECS Fargate cluster + service + auto-scaling
+- GitHub OIDC provider + IAM role (no static AWS credentials needed)
+- GitHub repository secrets: `AWS_ROLE_ARN`, `AWS_REGION`, `ECR_REPOSITORY`
+
+**Providers required:**
+
+- `AWS_*` env vars from AWS CLI or OIDC (for AWS resources)
+- `GITHUB_TOKEN` env var (for GitHub secrets)
+
+**First-time setup:**
+
+```bash
+# 1. Bootstrap remote state (S3 + DynamoDB for Terraform state)
+AWS_REGION=us-east-1 bash infra/terraform/scripts/bootstrap-backend.sh
+# 2. Uncomment the backend "s3" block in infra/terraform/variables.tf
+
+# 3. Login to AWS
+aws sso login
+
+# 4. Apply (creates all AWS resources + GitHub secrets)
+cd infra/terraform
+terraform init
+export GITHUB_TOKEN=ghp_xxxx  # personal access token with repo scope
+terraform apply -var-file=environments/staging/terraform.tfvars
+```
+
 ## Notes
 
 - The `@pluggable-js/*` packages are local stubs. When the real `@pluggable-js` npm packages are published, update `package.json` to point to the npm versions and remove the `libs/pluggable-*` directories.
 - Environment variables: `WORKFLOW_TABLE` (DynamoDB), `JOB_QUEUE_URL` (SQS) for api-gateway; `JOB_QUEUE_URL` for rpa-worker.
+- GitHub OIDC replaces static AWS credentials — the deploy workflow assumes `AWS_ROLE_ARN` via `sts:AssumeRoleWithWebIdentity`.

@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "worker" {
   container_definitions = jsonencode([
     {
       name  = "rpa-worker"
-      image = var.docker_image_uri
+      image = "${var.ecr_repository_uri}:latest"
       environment = [
         { name = "NODE_ENV",      value = "production" },
         { name = "JOB_QUEUE_URL", value = var.job_queue_url },

@@ -10,8 +10,13 @@ variable "environment" {
   default     = "staging"
 }
 
-variable "docker_image_uri" {
-  description = "ECR URI for the rpa-worker Docker image"
+variable "github_owner" {
+  description = "GitHub username or org"
+  type        = string
+}
+
+variable "github_repo" {
+  description = "GitHub repository name"
   type        = string
 }
 

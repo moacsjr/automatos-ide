@@ -1,3 +1,85 @@
+terraform {
+  required_version = ">= 1.6"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
+  }
+
+  # Uncomment after running bootstrap-backend.sh:
+  # backend "s3" {
+  #   bucket         = "rpa-terraform-state-xxxxx"
+  #   key            = "prod/terraform.tfstate"
+  #   region         = "us-east-1"
+  #   encrypt        = true
+  #   dynamodb_table = "terraform-locks"
+  # }
+}
+
+provider "aws" {
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      Project     = "cognitive-rpa"
+      ManagedBy   = "terraform"
+      Environment = var.environment
+    }
+  }
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+  region     = data.aws_region.current.name
+}
+
+# ============================================================
+# ECR — Docker image registry for rpa-worker
+# ============================================================
+
+resource "aws_ecr_repository" "rpa_worker" {
+  name                 = "rpa-worker"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+}
+
+resource "aws_ecr_lifecycle_policy" "rpa_worker" {
+  repository = aws_ecr_repository.rpa_worker.name
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Keep last 10 images, expire older"
+        selection = {
+          tagStatus   = "any"
+          countType   = "imageCountMoreThan"
+          countNumber = 10
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
+  })
+}
+
 # ============================================================
 # SQS — Job queue (API Gateway enqueues, RPA Worker consumes)
 # ============================================================
@@ -6,7 +88,6 @@ resource "aws_sqs_queue" "workflow_queue" {
   name                       = "${var.environment}-rpa-workflow-queue"
   visibility_timeout_seconds = 300
   message_retention_seconds  = 345600 # 4 days
-  delay_seconds              = 0
 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.workflow_queue_dlq.arn
@@ -36,19 +117,151 @@ resource "aws_dynamodb_table" "workflows" {
   point_in_time_recovery {
     enabled = true
   }
-
-  ttl {
-    attribute_name = "expiresAt"
-    enabled        = false
-  }
-
-  tags = {
-    Name = "${var.environment}-rpa-workflows"
-  }
 }
 
 # ============================================================
-# IAM — Shared role for Lambda + Worker (SQS + DynamoDB access)
+# GitHub OIDC — Trust relationship for GitHub Actions
+# ============================================================
+
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+
+  client_id_list = ["sts.amazonaws.com"]
+
+  thumbprint_list = [
+    "6938fd4d9ebab03ace7620e26c1b5457b960b442"
+  ]
+}
+
+# ============================================================
+# IAM — Role for GitHub Actions (assume via OIDC)
+# ============================================================
+
+resource "aws_iam_role" "github_actions_role" {
+  name = "${var.environment}-github-actions-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.github.arn
+        }
+        Action = "sts:AssumeRoleWithWebIdentity"
+        Condition = {
+          StringLike = {
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_owner}/${var.github_repo}:*"
+          }
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "github_actions_policy" {
+  name = "${var.environment}-github-actions-policy"
+  role = aws_iam_role.github_actions_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:InitiateLayerUpload",
+          "ecr:UploadLayerPart",
+          "ecr:CompleteLayerUpload",
+          "ecr:PutImage"
+        ]
+        Resource = aws_ecr_repository.rpa_worker.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes"
+        ]
+        Resource = [
+          aws_sqs_queue.workflow_queue.arn,
+          aws_sqs_queue.workflow_queue_dlq.arn
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:Query",
+          "dynamodb:Scan"
+        ]
+        Resource = aws_dynamodb_table.workflows.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "lambda:CreateFunction",
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:GetFunction",
+          "lambda:InvokeFunction",
+          "lambda:AddPermission",
+          "lambda:RemovePermission",
+          "lambda:PublishVersion"
+        ]
+        Resource = "arn:aws:lambda:${local.region}:${local.account_id}:function:${var.environment}-rpa-*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "apigateway:*"
+        ]
+        Resource = "arn:aws:apigateway:${local.region}::/*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecs:RunTask",
+          "ecs:UpdateService",
+          "ecs:DescribeServices",
+          "ecs:DescribeClusters",
+          "ecs:DescribeTaskDefinition",
+          "ecs:RegisterTaskDefinition"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "iam:PassRole"
+        ]
+        Resource = aws_iam_role.rpa_execution_role.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
+
+# ============================================================
+# IAM — Execution role for Lambda + Fargate (runtime)
 # ============================================================
 
 resource "aws_iam_role" "rpa_execution_role" {
@@ -135,9 +348,48 @@ module "worker" {
   source = "./modules/worker"
 
   environment        = var.environment
-  docker_image_uri   = var.docker_image_uri
+  ecr_repository_uri = aws_ecr_repository.rpa_worker.repository_url
   job_queue_url      = aws_sqs_queue.workflow_queue.url
   execution_role_arn = aws_iam_role.rpa_execution_role.arn
   vpc_id             = var.vpc_id
   subnet_ids         = var.subnet_ids
+}
+
+# ============================================================
+# GitHub Secrets — created automatically on terraform apply
+# ============================================================
+
+provider "github" {
+  owner = var.github_owner
+  # Token via GITHUB_TOKEN env var
+}
+
+resource "github_repository_environment" "staging" {
+  repository  = var.github_repo
+  environment = "staging"
+}
+
+resource "github_actions_secret" "aws_role_arn" {
+  repository      = var.github_repo
+  secret_name     = "AWS_ROLE_ARN"
+  plaintext_value = aws_iam_role.github_actions_role.arn
+}
+
+resource "github_actions_secret" "aws_region" {
+  repository      = var.github_repo
+  secret_name     = "AWS_REGION"
+  plaintext_value = var.aws_region
+}
+
+resource "github_actions_secret" "ecr_repository" {
+  repository      = var.github_repo
+  secret_name     = "ECR_REPOSITORY"
+  plaintext_value = aws_ecr_repository.rpa_worker.name
+}
+
+resource "github_actions_environment_secret" "aws_role_arn_env" {
+  repository      = var.github_repo
+  environment     = github_repository_environment.staging.environment
+  secret_name     = "AWS_ROLE_ARN"
+  plaintext_value = aws_iam_role.github_actions_role.arn
 }
