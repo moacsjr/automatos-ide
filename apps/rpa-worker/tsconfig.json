@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/apps/rpa-worker",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "baseUrl": "../../"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

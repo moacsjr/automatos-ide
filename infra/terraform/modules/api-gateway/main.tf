@@ -47,11 +47,11 @@ resource "aws_security_group" "lambda_sg" {
   }
 }
 
-# API Gateway — REST API
+# API Gateway — HTTP API
 
 resource "aws_apigatewayv2_api" "api" {
   name          = "${var.environment}-rpa-api"
-  protocol_type = "REST"
+  protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_integration" "lambda" {

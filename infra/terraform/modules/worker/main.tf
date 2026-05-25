@@ -1,5 +1,18 @@
 # ECS Cluster + Fargate Task for RPA Worker
 
+data "aws_vpc" "default" {
+  count = length(var.subnet_ids) > 0 ? 0 : 1
+  default = true
+}
+
+data "aws_subnets" "default" {
+  count = length(var.subnet_ids) > 0 ? 0 : 1
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default[0].id]
+  }
+}
+
 resource "aws_ecs_cluster" "worker" {
   name = "${var.environment}-rpa-worker-cluster"
 
@@ -55,7 +68,7 @@ resource "aws_ecs_service" "worker" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = var.subnet_ids
+    subnets         = length(var.subnet_ids) > 0 ? var.subnet_ids : data.aws_subnets.default[0].ids
     assign_public_ip = true
   }
 }

@@ -12,14 +12,13 @@ terraform {
     }
   }
 
-  # Uncomment after running bootstrap-backend.sh:
-  # backend "s3" {
-  #   bucket         = "rpa-terraform-state-xxxxx"
-  #   key            = "prod/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   encrypt        = true
-  #   dynamodb_table = "terraform-locks"
-  # }
+  backend "s3" {
+    bucket         = "rpa-terraform-state-3778"
+    key            = "prod/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+  }
 }
 
 provider "aws" {

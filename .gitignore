@@ -4,3 +4,7 @@ dist/
 .env.*
 *.tsbuildinfo
 coverage/
+.terraform/
+.nx/cache/
+.nx/workspace-data/
+**/*.zip
