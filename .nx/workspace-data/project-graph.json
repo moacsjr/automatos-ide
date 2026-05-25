@@ -1,0 +1,206 @@
+{
+  "nodes": {
+    "automation-core": {
+      "name": "automation-core",
+      "type": "lib",
+      "data": {
+        "root": "libs/automation-core",
+        "name": "automation-core",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/automation-core/src",
+        "projectType": "library",
+        "tags": [],
+        "targets": {
+          "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/libs/automation-core",
+              "tsConfig": "libs/automation-core/tsconfig.json",
+              "packageJson": "libs/automation-core/package.json",
+              "main": "libs/automation-core/src/index.ts",
+              "assets": ["libs/automation-core/*.md"]
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"],
+            "cache": true
+          },
+          "test": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/automation-core"],
+            "options": {
+              "passWithNoTests": true
+            },
+            "configurations": {},
+            "parallelism": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/vitest.workspace.ts"
+            ],
+            "cache": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "pluggable-react": {
+      "name": "pluggable-react",
+      "type": "lib",
+      "data": {
+        "root": "libs/pluggable-react",
+        "name": "pluggable-react",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/pluggable-react/src",
+        "projectType": "library",
+        "tags": [],
+        "targets": {},
+        "implicitDependencies": []
+      }
+    },
+    "pluggable-core": {
+      "name": "pluggable-core",
+      "type": "lib",
+      "data": {
+        "root": "libs/pluggable-core",
+        "name": "pluggable-core",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/pluggable-core/src",
+        "projectType": "library",
+        "tags": [],
+        "targets": {},
+        "implicitDependencies": []
+      }
+    },
+    "web-platform": {
+      "name": "web-platform",
+      "type": "app",
+      "data": {
+        "root": "apps/web-platform",
+        "name": "web-platform",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/web-platform/src",
+        "projectType": "application",
+        "tags": [],
+        "targets": {
+          "build": {
+            "executor": "@nx/vite:build",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/apps/web-platform",
+              "configFile": "apps/web-platform/vite.config.ts"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"],
+            "cache": true
+          },
+          "serve": {
+            "executor": "@nx/vite:dev-server",
+            "options": {
+              "buildTarget": "web-platform:build",
+              "port": 3000
+            },
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "api-gateway": {
+      "name": "api-gateway",
+      "type": "app",
+      "data": {
+        "root": "apps/api-gateway",
+        "name": "api-gateway",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/api-gateway/src",
+        "projectType": "application",
+        "tags": [],
+        "targets": {
+          "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/apps/api-gateway",
+              "tsConfig": "apps/api-gateway/tsconfig.json",
+              "main": "apps/api-gateway/src/index.ts"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"],
+            "cache": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
+    "rpa-worker": {
+      "name": "rpa-worker",
+      "type": "app",
+      "data": {
+        "root": "apps/rpa-worker",
+        "name": "rpa-worker",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/rpa-worker/src",
+        "projectType": "application",
+        "tags": [],
+        "targets": {
+          "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/apps/rpa-worker",
+              "tsConfig": "apps/rpa-worker/tsconfig.json",
+              "main": "apps/rpa-worker/src/index.ts"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"],
+            "cache": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    }
+  },
+  "externalNodes": {},
+  "dependencies": {
+    "automation-core": [],
+    "pluggable-react": [
+      {
+        "source": "pluggable-react",
+        "target": "pluggable-core",
+        "type": "static"
+      }
+    ],
+    "pluggable-core": [],
+    "web-platform": [
+      {
+        "source": "web-platform",
+        "target": "pluggable-react",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "pluggable-core",
+        "type": "static"
+      }
+    ],
+    "api-gateway": [],
+    "rpa-worker": [
+      {
+        "source": "rpa-worker",
+        "target": "automation-core",
+        "type": "static"
+      }
+    ]
+  },
+  "version": "6.0"
+}

@@ -1,0 +1,11 @@
+[NX Daemon Server] - 2026-05-24T22:27:05.891Z - Started listening on: /tmp/9050f583a9b67dd2bb85/d.sock
+[NX Daemon Server] - 2026-05-24T22:27:05.893Z - [WATCHER]: Subscribed to changes within: /home/moacir/dev/automatos-ide (native)
+[NX Daemon Server] - 2026-05-24T22:27:05.901Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-24T22:27:05.902Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-24T22:27:05.904Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-24T22:27:05.905Z - [REQUEST]: Responding to the client. Shutdown initiated
+[NX Daemon Server] - 2026-05-24T22:27:05.906Z - Done responding to the client Shutdown initiated
+[NX Daemon Server] - 2026-05-24T22:27:05.906Z - Handled FORCE_SHUTDOWN. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-24T22:27:05.906Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-24T22:27:05.907Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (sources)
+[NX Daemon Server] - 2026-05-24T22:27:05.907Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (outputs)
