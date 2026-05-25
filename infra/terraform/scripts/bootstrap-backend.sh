@@ -27,10 +27,7 @@ aws s3api put-bucket-versioning \
 
 aws s3api put-public-access-block \
   --bucket "$BUCKET" \
-  --block-public-acls true \
-  --ignore-public-acls true \
-  --block-public-policy true \
-  --restrict-public-buckets true \
+  --public-access-block-configuration '{"BlockPublicAcls":true,"IgnorePublicAcls":true,"BlockPublicPolicy":true,"RestrictPublicBuckets":true}' \
   2>&1
 
 echo "Creating DynamoDB table: $TABLE"
