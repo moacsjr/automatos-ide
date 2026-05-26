@@ -1,7 +1,10 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { ActiveWorkspaceView } from '@pluggable-js/react';
-import './plugins/rpa-cockpit';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { ExtensionPoint } from "@pluggable-js/react";
+import { pluginRegistry } from "@pluggable-js/core";
+import "./plugins/rpa-cockpit";
+
+pluginRegistry.init();
 
 function App() {
   return (
@@ -12,13 +15,13 @@ function App() {
         </h1>
       </header>
       <main className="max-w-4xl mx-auto">
-        <ActiveWorkspaceView
-          role="rpa-workspace-view"
-          passProps={{ websocketUrl: 'wss://api.rpa-saas.com/stream' }}
+        <ExtensionPoint
+          id="rpa-workspace-view"
+          passProps={{ websocketUrl: "wss://api.rpa-saas.com/stream" }}
         />
       </main>
     </div>
   );
 }
 
-createRoot(document.getElementById('root')!).render(<App />);
+createRoot(document.getElementById("root")!).render(<App />);

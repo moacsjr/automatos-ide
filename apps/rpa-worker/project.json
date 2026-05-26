@@ -10,7 +10,8 @@
       "options": {
         "outputPath": "dist/apps/rpa-worker",
         "tsConfig": "apps/rpa-worker/tsconfig.json",
-        "main": "apps/rpa-worker/src/index.ts"
+        "main": "apps/rpa-worker/src/index.ts",
+        "rootDir": "."
       }
     }
   },

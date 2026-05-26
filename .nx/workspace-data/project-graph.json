@@ -57,34 +57,6 @@
         "implicitDependencies": []
       }
     },
-    "pluggable-react": {
-      "name": "pluggable-react",
-      "type": "lib",
-      "data": {
-        "root": "libs/pluggable-react",
-        "name": "pluggable-react",
-        "$schema": "../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "libs/pluggable-react/src",
-        "projectType": "library",
-        "tags": [],
-        "targets": {},
-        "implicitDependencies": []
-      }
-    },
-    "pluggable-core": {
-      "name": "pluggable-core",
-      "type": "lib",
-      "data": {
-        "root": "libs/pluggable-core",
-        "name": "pluggable-core",
-        "$schema": "../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "libs/pluggable-core/src",
-        "projectType": "library",
-        "tags": [],
-        "targets": {},
-        "implicitDependencies": []
-      }
-    },
     "web-platform": {
       "name": "web-platform",
       "type": "app",
@@ -184,7 +156,8 @@
             "options": {
               "outputPath": "dist/apps/rpa-worker",
               "tsConfig": "apps/rpa-worker/tsconfig.json",
-              "main": "apps/rpa-worker/src/index.ts"
+              "main": "apps/rpa-worker/src/index.ts",
+              "rootDir": "."
             },
             "configurations": {},
             "parallelism": true,
@@ -2424,6 +2397,24 @@
         "version": "5.0.1",
         "packageName": "@phenomnomnominal/tsquery",
         "hash": "sha512-3nVv+e2FQwsW8Aw6qTU6f+1rfcJ3hrcnvH/mu9i8YhxO+9sqbOfpL8m6PbET5+xKOlz/VSbp0RoYWYCtIsnmuA=="
+      }
+    },
+    "npm:@pluggable-js/core": {
+      "type": "npm",
+      "name": "npm:@pluggable-js/core",
+      "data": {
+        "version": "0.0.1",
+        "packageName": "@pluggable-js/core",
+        "hash": "sha512-PkG7gtql3wDCbWLDhqgfTZfuokeBQBCohD3D3XqojCCBDiZVg2hR55C7IDM1am+X+trIxT50tBAFmw91qIEGKg=="
+      }
+    },
+    "npm:@pluggable-js/react": {
+      "type": "npm",
+      "name": "npm:@pluggable-js/react",
+      "data": {
+        "version": "0.0.1",
+        "packageName": "@pluggable-js/react",
+        "hash": "sha512-7kOW3WI0PcbK+gCw+vnSkB6q0pURjM3TpX3nE7ttGUnOx+FIr2i4mCp3r+tn/YYs3271NsEGBcskLkZhEhcNOw=="
       }
     },
     "npm:@rolldown/pluginutils": {
@@ -7831,23 +7822,25 @@
         "type": "static"
       }
     ],
-    "pluggable-react": [
-      {
-        "source": "pluggable-react",
-        "target": "pluggable-core",
-        "type": "static"
-      }
-    ],
-    "pluggable-core": [],
     "web-platform": [
       {
         "source": "web-platform",
-        "target": "pluggable-react",
+        "target": "npm:react",
         "type": "static"
       },
       {
         "source": "web-platform",
-        "target": "pluggable-core",
+        "target": "npm:react-dom",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:@pluggable-js/react",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:@pluggable-js/core",
         "type": "static"
       },
       {
@@ -7879,6 +7872,11 @@
       }
     ],
     "rpa-worker": [
+      {
+        "source": "rpa-worker",
+        "target": "npm:@aws-sdk/client-sqs",
+        "type": "static"
+      },
       {
         "source": "rpa-worker",
         "target": "automation-core",
@@ -12241,6 +12239,18 @@
       {
         "source": "npm:@phenomnomnominal/tsquery",
         "target": "npm:esquery",
+        "type": "static"
+      }
+    ],
+    "npm:@pluggable-js/react": [
+      {
+        "source": "npm:@pluggable-js/react",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "npm:@pluggable-js/react",
+        "target": "npm:@pluggable-js/core",
         "type": "static"
       }
     ],

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { pluginRegistry } from '@pluggable-js/core';
-import { uiRegistry } from '@pluggable-js/react';
+import React, { useState, useEffect } from "react";
+import { pluginRegistry } from "@pluggable-js/core";
 
 export function RpaCockpitComponent({
   passProps,
@@ -11,11 +10,11 @@ export function RpaCockpitComponent({
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const ws = new WebSocket(passProps?.websocketUrl ?? 'ws://localhost:8080');
+    const ws = new WebSocket(passProps?.websocketUrl ?? "ws://localhost:8080");
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.type === 'LOG') setLogs((prev) => [...prev, data.message]);
-      if (data.type === 'PROGRESS') setProgress(data.percentage);
+      if (data.type === "LOG") setLogs((prev) => [...prev, data.message]);
+      if (data.type === "PROGRESS") setProgress(data.percentage);
     };
     return () => ws.close();
   }, [passProps]);
@@ -23,7 +22,9 @@ export function RpaCockpitComponent({
   return (
     <div className="p-6 bg-slate-900 text-slate-100 rounded-xl border border-slate-800 shadow-2xl">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold tracking-wide">RPA Cockpit - Monitor de Execucao</h3>
+        <h3 className="text-lg font-semibold tracking-wide">
+          RPA Cockpit - Monitor de Execucao
+        </h3>
         <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/20">
           Active Task
         </span>
@@ -45,12 +46,12 @@ export function RpaCockpitComponent({
   );
 }
 
-uiRegistry.registerComponent('rpa-workspace-view', RpaCockpitComponent);
-
 pluginRegistry.register({
-  id: 'rpa-execution-plugin',
-  name: 'Pluggable Engine Execution Monitor',
-  version: '1.0.0',
-  type: 'feature',
-  role: 'rpa-workspace-view',
+  id: "rpa-execution-plugin",
+  name: "Pluggable Engine Execution Monitor",
+  version: "1.0.0",
+  type: "feature",
+  contributions: {
+    "rpa-workspace-view": [RpaCockpitComponent],
+  },
 });

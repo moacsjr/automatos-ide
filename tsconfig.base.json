@@ -5,9 +5,7 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
-      "@rpa/automation-core": ["libs/automation-core/src/index.ts"],
-      "@pluggable-js/core": ["libs/pluggable-core/src/index.ts"],
-      "@pluggable-js/react": ["libs/pluggable-react/src/index.tsx"]
+      "@rpa/automation-core": ["libs/automation-core/src/index.ts"]
     },
     "strict": true,
     "esModuleInterop": true,
