@@ -9,3 +9,1499 @@
 [NX Daemon Server] - 2026-05-24T22:27:05.906Z - Closed a connection. Number of open connections: 0
 [NX Daemon Server] - 2026-05-24T22:27:05.907Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (sources)
 [NX Daemon Server] - 2026-05-24T22:27:05.907Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (outputs)
+[NX Daemon Server] - 2026-05-25T00:30:46.017Z - Started listening on: /tmp/9050f583a9b67dd2bb85/d.sock
+[NX Daemon Server] - 2026-05-25T00:30:46.019Z - [WATCHER]: Subscribed to changes within: /home/moacir/dev/automatos-ide (native)
+[NX Daemon Server] - 2026-05-25T00:30:46.022Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:30:46.025Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-25T00:30:46.053Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:30:46.053Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-25T00:30:46.054Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:30:46.056Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:30:46.285Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T00:30:46.285Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T00:30:46.285Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T00:30:46.294Z - Time taken for 'loadNxPlugins' 227.38961000000003ms
+[NX Daemon Server] - 2026-05-25T00:30:46.295Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T00:30:46.303Z - [WATCHER]: package-lock.json was modified
+[NX Daemon Server] - 2026-05-25T00:30:46.331Z - Time taken for 'build-project-configs' 23.81624599999998ms
+[NX Daemon Server] - 2026-05-25T00:30:46.404Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T00:30:46.405Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T00:30:46.405Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T00:30:46.407Z - Time taken for 'hash changed files from watcher' 0.062026999999943655ms
+[NX Daemon Server] - 2026-05-25T00:30:46.634Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T00:30:46.635Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.636Z - Time taken for 'total for creating and serializing project graph' 578.895045ms
+[NX Daemon Server] - 2026-05-25T00:30:46.642Z - Time taken for 'build-project-configs' 234.26289000000008ms
+[NX Daemon Server] - 2026-05-25T00:30:46.643Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.643Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 579. Response time: 8.
+[NX Daemon Server] - 2026-05-25T00:30:46.649Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T00:30:46.649Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T00:30:46.649Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T00:30:46.659Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T00:30:46.659Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T00:30:46.659Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T00:30:46.659Z - Time taken for 'total execution time for createProjectGraph()' 14.60405400000002ms
+[NX Daemon Server] - 2026-05-25T00:30:46.738Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T00:30:46.738Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:30:46.738Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.739Z - Time taken for 'total for creating and serializing project graph' 0.20192999999994754ms
+[NX Daemon Server] - 2026-05-25T00:30:46.739Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:30:46.739Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.739Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T00:30:46.743Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:30:46.743Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.744Z - Time taken for 'total for creating and serializing project graph' 0.27577900000005684ms
+[NX Daemon Server] - 2026-05-25T00:30:46.744Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:30:46.744Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T00:30:46.747Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T00:31:04.806Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T00:33:19.710Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T00:33:19.711Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:19.711Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:19.712Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T00:33:19.712Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T00:33:19.712Z - Time taken for 'changed-projects' 0.11661900000763126ms
+[NX Daemon Server] - 2026-05-25T00:33:19.812Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T00:33:19.812Z - [REQUEST]: infra/terraform/scripts/bootstrap-backend.sh
+[NX Daemon Server] - 2026-05-25T00:33:19.812Z - [REQUEST]: infra/terraform/scripts/bootstrap-backend.sh.tmp.2331729.f5e7773b3519
+[NX Daemon Server] - 2026-05-25T00:33:19.815Z - Time taken for 'hash changed files from watcher' 0.1555590000061784ms
+[NX Daemon Server] - 2026-05-25T00:33:19.827Z - Time taken for 'build-project-configs' 12.411473999993177ms
+[NX Daemon Server] - 2026-05-25T00:33:19.852Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T00:33:19.852Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T00:33:19.852Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T00:33:19.853Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:19.853Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:19.853Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T00:33:19.853Z - Time taken for 'total execution time for createProjectGraph()' 20.739440000004834ms
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T00:33:27.693Z - Time taken for 'changed-projects' 0.07104700000490993ms
+[NX Daemon Server] - 2026-05-25T00:33:27.793Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T00:33:27.794Z - [REQUEST]: infra/terraform/scripts/bootstrap-backend.sh
+[NX Daemon Server] - 2026-05-25T00:33:27.794Z - [REQUEST]: infra/terraform/scripts/bootstrap-backend.sh.tmp.2331729.cb9818183b24
+[NX Daemon Server] - 2026-05-25T00:33:27.799Z - Time taken for 'hash changed files from watcher' 0.20807899997453205ms
+[NX Daemon Server] - 2026-05-25T00:33:27.817Z - Time taken for 'build-project-configs' 16.808851000008872ms
+[NX Daemon Server] - 2026-05-25T00:33:27.852Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T00:33:27.853Z - Time taken for 'total execution time for createProjectGraph()' 26.515855000005104ms
+[NX Daemon Server] - 2026-05-25T00:33:38.868Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T00:33:38.870Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:33:38.871Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:33:38.874Z - Time taken for 'total for creating and serializing project graph' 1.079954999993788ms
+[NX Daemon Server] - 2026-05-25T00:33:38.875Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T00:33:38.876Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:33:38.876Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 5.
+[NX Daemon Server] - 2026-05-25T00:33:38.890Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T00:33:38.890Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T00:33:38.890Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T00:33:39.127Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:33:39.129Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T00:33:39.130Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:33:39.130Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:33:39.131Z - Time taken for 'total for creating and serializing project graph' 0.3681959999958053ms
+[NX Daemon Server] - 2026-05-25T00:33:39.131Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T00:33:39.131Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:33:39.131Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T00:33:39.136Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T00:33:39.136Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T00:33:39.137Z - Time taken for 'total for creating and serializing project graph' 0.46292600000742823ms
+[NX Daemon Server] - 2026-05-25T00:33:39.138Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T00:33:39.138Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T00:33:39.142Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T03:33:39.194Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T06:33:39.278Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T09:33:39.379Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T12:33:39.479Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T15:33:39.571Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T18:23:28.761Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:23:28.763Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:28.763Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:28.763Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:28.763Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:28.764Z - Time taken for 'changed-projects' 0.2662869989871979ms
+[NX Daemon Server] - 2026-05-25T18:23:28.863Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:28.863Z - [REQUEST]: infra/terraform/main.tf
+[NX Daemon Server] - 2026-05-25T18:23:28.863Z - [REQUEST]: infra/terraform/main.tf.tmp.2331729.c5d370f2218a
+[NX Daemon Server] - 2026-05-25T18:23:28.869Z - Time taken for 'hash changed files from watcher' 0.16937000304460526ms
+[NX Daemon Server] - 2026-05-25T18:23:28.896Z - Time taken for 'build-project-configs' 25.18087900429964ms
+[NX Daemon Server] - 2026-05-25T18:23:28.922Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:28.922Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:28.922Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:28.923Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:28.923Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:28.923Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:28.923Z - Time taken for 'total execution time for createProjectGraph()' 24.893639996647835ms
+[NX Daemon Server] - 2026-05-25T18:23:39.943Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:23:39.944Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:23:39.947Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:23:39.948Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:23:39.950Z - Time taken for 'total for creating and serializing project graph' 0.8579300045967102ms
+[NX Daemon Server] - 2026-05-25T18:23:39.951Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:23:39.951Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 3.
+[NX Daemon Server] - 2026-05-25T18:23:39.963Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:23:39.963Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:23:39.963Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:40.148Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:23:40.149Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:23:40.150Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:23:40.150Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:23:40.151Z - Time taken for 'total for creating and serializing project graph' 0.2000039964914322ms
+[NX Daemon Server] - 2026-05-25T18:23:40.151Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:23:40.151Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:23:40.151Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:40.155Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:23:40.155Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:23:40.156Z - Time taken for 'total for creating and serializing project graph' 0.2656099945306778ms
+[NX Daemon Server] - 2026-05-25T18:23:40.156Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:23:40.156Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:40.159Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:23:44.583Z - [WATCHER]: infra/terraform/.terraform/modules/modules.json was created or restored
+[NX Daemon Server] - 2026-05-25T18:23:44.583Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:44.684Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:44.684Z - [REQUEST]: infra/terraform/.terraform/modules/modules.json
+[NX Daemon Server] - 2026-05-25T18:23:44.685Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:44.693Z - Time taken for 'hash changed files from watcher' 0.2981320023536682ms
+[NX Daemon Server] - 2026-05-25T18:23:44.727Z - Time taken for 'build-project-configs' 33.96040299534798ms
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:44.747Z - Time taken for 'total execution time for createProjectGraph()' 20.936934001743793ms
+[NX Daemon Server] - 2026-05-25T18:23:45.976Z - [WATCHER]: 2 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:23:45.976Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:46.028Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/archive/2.8.0/linux_amd64/terraform-provider-archive_v2.8.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:46.028Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.028Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.028Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:46.028Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:46.029Z - Time taken for 'changed-projects' 0.1098800003528595ms
+[NX Daemon Server] - 2026-05-25T18:23:46.088Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:46.088Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/archive/2.8.0/linux_amd64/LICENSE.txt,infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/archive/2.8.0/linux_amd64/terraform-provider-archive_v2.8.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:46.088Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/archive/2.8.0/linux_amd64/terraform-provider-archive_v2.8.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:46.091Z - Time taken for 'hash changed files from watcher' 12.37848699837923ms
+[NX Daemon Server] - 2026-05-25T18:23:46.103Z - Time taken for 'build-project-configs' 11.606596998870373ms
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:46.127Z - Time taken for 'total execution time for createProjectGraph()' 17.768452003598213ms
+[NX Daemon Server] - 2026-05-25T18:23:46.292Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:46.293Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:46.293Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:46.300Z - Time taken for 'hash changed files from watcher' 0.27900199592113495ms
+[NX Daemon Server] - 2026-05-25T18:23:46.324Z - Time taken for 'build-project-configs' 25.699772998690605ms
+[NX Daemon Server] - 2026-05-25T18:23:46.344Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.344Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.344Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:46.344Z - Time taken for 'total execution time for createProjectGraph()' 16.838952995836735ms
+[NX Daemon Server] - 2026-05-25T18:23:50.702Z - [WATCHER]: 2 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:23:50.702Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.754Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:50.755Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.755Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.755Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:50.755Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.755Z - Time taken for 'changed-projects' 0.03491700440645218ms
+[NX Daemon Server] - 2026-05-25T18:23:50.818Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:50.818Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/LICENSE.txt,infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:50.818Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:50.821Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:50.821Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.821Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.821Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:50.821Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.822Z - Time taken for 'hash changed files from watcher' 15.9876060038805ms
+[NX Daemon Server] - 2026-05-25T18:23:50.835Z - Time taken for 'build-project-configs' 13.768307998776436ms
+[NX Daemon Server] - 2026-05-25T18:23:50.856Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:50.857Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:50.857Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:50.858Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.858Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.858Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:50.859Z - Time taken for 'total execution time for createProjectGraph()' 16.83567900210619ms
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.863Z - Time taken for 'changed-projects' 0.03543899953365326ms
+[NX Daemon Server] - 2026-05-25T18:23:50.917Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:50.917Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.917Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.917Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:50.918Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.919Z - Time taken for 'changed-projects' 0.03825199604034424ms
+[NX Daemon Server] - 2026-05-25T18:23:50.970Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:50.970Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.970Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:50.971Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:50.971Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:50.971Z - Time taken for 'changed-projects' 0.04237399995326996ms
+[NX Daemon Server] - 2026-05-25T18:23:51.124Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:51.124Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:51.124Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:51.127Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.128Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.128Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.128Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.129Z - Time taken for 'hash changed files from watcher' 102.30562700331211ms
+[NX Daemon Server] - 2026-05-25T18:23:51.132Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.133Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.133Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.133Z - Handled FILE-WATCH-CHANGED. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.133Z - Time taken for 'changed-projects' 0.04370500147342682ms
+[NX Daemon Server] - 2026-05-25T18:23:51.135Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.144Z - Time taken for 'build-project-configs' 15.795733004808426ms
+[NX Daemon Server] - 2026-05-25T18:23:51.159Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.159Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.159Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.160Z - Time taken for 'total execution time for createProjectGraph()' 13.461428001523018ms
+[NX Daemon Server] - 2026-05-25T18:23:51.184Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.184Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.184Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.184Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.184Z - Time taken for 'changed-projects' 0.03617499768733978ms
+[NX Daemon Server] - 2026-05-25T18:23:51.187Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.236Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.237Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.237Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.237Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.237Z - Time taken for 'changed-projects' 0.025199003517627716ms
+[NX Daemon Server] - 2026-05-25T18:23:51.240Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.289Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.289Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.289Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.289Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.289Z - Time taken for 'changed-projects' 0.03578200191259384ms
+[NX Daemon Server] - 2026-05-25T18:23:51.293Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.342Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.342Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.342Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.342Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.342Z - Time taken for 'changed-projects' 0.04086099565029144ms
+[NX Daemon Server] - 2026-05-25T18:23:51.345Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.394Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.394Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.394Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.394Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.395Z - Time taken for 'changed-projects' 0.03529699891805649ms
+[NX Daemon Server] - 2026-05-25T18:23:51.397Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.447Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.447Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.447Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.447Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.447Z - Time taken for 'changed-projects' 0.03133499622344971ms
+[NX Daemon Server] - 2026-05-25T18:23:51.451Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.500Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.500Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.500Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.500Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.500Z - Time taken for 'changed-projects' 0.03432099521160126ms
+[NX Daemon Server] - 2026-05-25T18:23:51.507Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.727Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:51.728Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:51.728Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:51.734Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.735Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.735Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.735Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.736Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.736Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.737Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.737Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:51.737Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.737Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.738Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.738Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:51.741Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - Handled FILE-WATCH-CHANGED. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.742Z - Time taken for 'hash changed files from watcher' 199.4744869992137ms
+[NX Daemon Server] - 2026-05-25T18:23:51.756Z - Time taken for 'build-project-configs' 18.0645309984684ms
+[NX Daemon Server] - 2026-05-25T18:23:51.757Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.767Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.767Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.767Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.767Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.768Z - Time taken for 'changed-projects' 0.04035700112581253ms
+[NX Daemon Server] - 2026-05-25T18:23:51.778Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.779Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.779Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:51.779Z - Time taken for 'total execution time for createProjectGraph()' 25.469154998660088ms
+[NX Daemon Server] - 2026-05-25T18:23:51.796Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.820Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.821Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.821Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.821Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.821Z - Time taken for 'changed-projects' 0.049612000584602356ms
+[NX Daemon Server] - 2026-05-25T18:23:51.849Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.874Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.874Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.874Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.874Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.874Z - Time taken for 'changed-projects' 0.030027002096176147ms
+[NX Daemon Server] - 2026-05-25T18:23:51.912Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.927Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.927Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.927Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.927Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.927Z - Time taken for 'changed-projects' 0.031568996608257294ms
+[NX Daemon Server] - 2026-05-25T18:23:51.963Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:51.981Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:51.981Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.981Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:51.981Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:51.981Z - Time taken for 'changed-projects' 0.02855200320482254ms
+[NX Daemon Server] - 2026-05-25T18:23:52.015Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.032Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.032Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.032Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.032Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.032Z - Time taken for 'changed-projects' 0.04337500035762787ms
+[NX Daemon Server] - 2026-05-25T18:23:52.067Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.083Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.084Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.084Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.084Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.084Z - Time taken for 'changed-projects' 0.029725998640060425ms
+[NX Daemon Server] - 2026-05-25T18:23:52.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.135Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.136Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.136Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.136Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:52.136Z - Time taken for 'changed-projects' 0.03181799501180649ms
+[NX Daemon Server] - 2026-05-25T18:23:52.171Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.187Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.188Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.188Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.188Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.188Z - Time taken for 'changed-projects' 0.0449569970369339ms
+[NX Daemon Server] - 2026-05-25T18:23:52.223Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.239Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.239Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.239Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.240Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:52.240Z - Time taken for 'changed-projects' 0.0400020033121109ms
+[NX Daemon Server] - 2026-05-25T18:23:52.275Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.292Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.292Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.292Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.292Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.292Z - Time taken for 'changed-projects' 0.04220700263977051ms
+[NX Daemon Server] - 2026-05-25T18:23:52.327Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.344Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.344Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.344Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.345Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:52.345Z - Time taken for 'changed-projects' 0.043407998979091644ms
+[NX Daemon Server] - 2026-05-25T18:23:52.379Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.396Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.396Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.396Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.396Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.397Z - Time taken for 'changed-projects' 0.03410699963569641ms
+[NX Daemon Server] - 2026-05-25T18:23:52.430Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.448Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.448Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.449Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.449Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:52.449Z - Time taken for 'changed-projects' 0.049943000078201294ms
+[NX Daemon Server] - 2026-05-25T18:23:52.484Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.501Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.501Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.501Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.502Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:52.502Z - Time taken for 'changed-projects' 0.04179900139570236ms
+[NX Daemon Server] - 2026-05-25T18:23:52.818Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:52.818Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:52.818Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:52.822Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.822Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.822Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.822Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.823Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.823Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.823Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.823Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.824Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.824Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.824Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.824Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.824Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.825Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.826Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.827Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.827Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.828Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.828Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.828Z - Time taken for 'hash changed files from watcher' 282.1960010007024ms
+[NX Daemon Server] - 2026-05-25T18:23:52.833Z - Time taken for 'build-project-configs' 11.345183998346329ms
+[NX Daemon Server] - 2026-05-25T18:23:52.855Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:52.855Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:52.855Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:52.855Z - Time taken for 'total execution time for createProjectGraph()' 17.429127998650074ms
+[NX Daemon Server] - 2026-05-25T18:23:52.855Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.870Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.871Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.871Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.871Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.871Z - Time taken for 'changed-projects' 0.030757002532482147ms
+[NX Daemon Server] - 2026-05-25T18:23:52.906Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.922Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.922Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.922Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.922Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.922Z - Time taken for 'changed-projects' 0.033239997923374176ms
+[NX Daemon Server] - 2026-05-25T18:23:52.958Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:52.975Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:52.975Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.975Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:52.975Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:52.975Z - Time taken for 'changed-projects' 0.04791799932718277ms
+[NX Daemon Server] - 2026-05-25T18:23:53.010Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.026Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.027Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.027Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.027Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.027Z - Time taken for 'changed-projects' 0.02585599571466446ms
+[NX Daemon Server] - 2026-05-25T18:23:53.062Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.078Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.078Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.078Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.078Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.078Z - Time taken for 'changed-projects' 0.028675004839897156ms
+[NX Daemon Server] - 2026-05-25T18:23:53.114Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.131Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.131Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.131Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.131Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.131Z - Time taken for 'changed-projects' 0.02980700135231018ms
+[NX Daemon Server] - 2026-05-25T18:23:53.166Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.183Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.183Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.183Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.183Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.185Z - Time taken for 'changed-projects' 0.03508400171995163ms
+[NX Daemon Server] - 2026-05-25T18:23:53.218Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.234Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.234Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.235Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.235Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:53.235Z - Time taken for 'changed-projects' 0.061834998428821564ms
+[NX Daemon Server] - 2026-05-25T18:23:53.269Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.286Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.286Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.286Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.286Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.286Z - Time taken for 'changed-projects' 0.03463199734687805ms
+[NX Daemon Server] - 2026-05-25T18:23:53.321Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.339Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.339Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.339Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.339Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.340Z - Time taken for 'changed-projects' 0.044877998530864716ms
+[NX Daemon Server] - 2026-05-25T18:23:53.373Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.391Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.391Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.391Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.391Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.391Z - Time taken for 'changed-projects' 0.040275998413562775ms
+[NX Daemon Server] - 2026-05-25T18:23:53.426Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.449Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.449Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.449Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.450Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:53.450Z - Time taken for 'changed-projects' 0.05392199754714966ms
+[NX Daemon Server] - 2026-05-25T18:23:53.478Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.501Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.501Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.501Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.501Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.501Z - Time taken for 'changed-projects' 0.024719998240470886ms
+[NX Daemon Server] - 2026-05-25T18:23:53.530Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.552Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.552Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.552Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.552Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.552Z - Time taken for 'changed-projects' 0.03014100342988968ms
+[NX Daemon Server] - 2026-05-25T18:23:53.581Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.604Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.604Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.604Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.604Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.604Z - Time taken for 'changed-projects' 0.02257099747657776ms
+[NX Daemon Server] - 2026-05-25T18:23:53.633Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.656Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.656Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.656Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.656Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.656Z - Time taken for 'changed-projects' 0.03164299577474594ms
+[NX Daemon Server] - 2026-05-25T18:23:53.685Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.708Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.708Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.708Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.708Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.708Z - Time taken for 'changed-projects' 0.036555998027324677ms
+[NX Daemon Server] - 2026-05-25T18:23:53.737Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.760Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.761Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.761Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.761Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.761Z - Time taken for 'changed-projects' 0.04791700094938278ms
+[NX Daemon Server] - 2026-05-25T18:23:53.789Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.812Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.813Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.813Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.813Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.813Z - Time taken for 'changed-projects' 0.026990003883838654ms
+[NX Daemon Server] - 2026-05-25T18:23:53.842Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.865Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.865Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.865Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.865Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.865Z - Time taken for 'changed-projects' 0.02672000229358673ms
+[NX Daemon Server] - 2026-05-25T18:23:53.893Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.916Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.916Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.916Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.916Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.916Z - Time taken for 'changed-projects' 0.025191999971866608ms
+[NX Daemon Server] - 2026-05-25T18:23:53.945Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:53.968Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:53.968Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.968Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:53.968Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:53.968Z - Time taken for 'changed-projects' 0.02802000194787979ms
+[NX Daemon Server] - 2026-05-25T18:23:53.998Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.021Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.022Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.022Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.022Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.022Z - Time taken for 'changed-projects' 0.03510099649429321ms
+[NX Daemon Server] - 2026-05-25T18:23:54.052Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.075Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.075Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.075Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.075Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.075Z - Time taken for 'changed-projects' 0.038860999047756195ms
+[NX Daemon Server] - 2026-05-25T18:23:54.104Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.127Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.127Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.127Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.127Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.127Z - Time taken for 'changed-projects' 0.031080998480319977ms
+[NX Daemon Server] - 2026-05-25T18:23:54.159Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.180Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.181Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.181Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.181Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.181Z - Time taken for 'changed-projects' 0.03654500097036362ms
+[NX Daemon Server] - 2026-05-25T18:23:54.213Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.235Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.235Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.235Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.235Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.235Z - Time taken for 'changed-projects' 0.041742004454135895ms
+[NX Daemon Server] - 2026-05-25T18:23:54.268Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.291Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.291Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.291Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.291Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.291Z - Time taken for 'changed-projects' 0.03907400369644165ms
+[NX Daemon Server] - 2026-05-25T18:23:54.322Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.345Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.345Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.345Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.345Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.345Z - Time taken for 'changed-projects' 0.03560300171375275ms
+[NX Daemon Server] - 2026-05-25T18:23:54.373Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:54.396Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:54.396Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.396Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:54.396Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:54.396Z - Time taken for 'changed-projects' 0.024603992700576782ms
+[NX Daemon Server] - 2026-05-25T18:23:55.109Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:55.109Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:55.109Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:55.113Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.113Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.113Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.113Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.113Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.114Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.115Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.116Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.117Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.118Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.120Z - Time taken for 'hash changed files from watcher' 687.1289439946413ms
+[NX Daemon Server] - 2026-05-25T18:23:55.126Z - Time taken for 'build-project-configs' 13.361790999770164ms
+[NX Daemon Server] - 2026-05-25T18:23:55.126Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.126Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.126Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.126Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.127Z - Time taken for 'changed-projects' 0.025609001517295837ms
+[NX Daemon Server] - 2026-05-25T18:23:55.147Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:55.148Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:55.148Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:55.148Z - Time taken for 'total execution time for createProjectGraph()' 15.280244000256062ms
+[NX Daemon Server] - 2026-05-25T18:23:55.150Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.171Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.172Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.172Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.172Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.172Z - Time taken for 'changed-projects' 0.023518994450569153ms
+[NX Daemon Server] - 2026-05-25T18:23:55.202Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.223Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.223Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.223Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.223Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.223Z - Time taken for 'changed-projects' 0.022357001900672913ms
+[NX Daemon Server] - 2026-05-25T18:23:55.253Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.274Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.274Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.274Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.274Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.274Z - Time taken for 'changed-projects' 0.023158006370067596ms
+[NX Daemon Server] - 2026-05-25T18:23:55.304Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.325Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.325Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.325Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.325Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.325Z - Time taken for 'changed-projects' 0.03315899521112442ms
+[NX Daemon Server] - 2026-05-25T18:23:55.357Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.376Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.376Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.376Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.376Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.377Z - Time taken for 'changed-projects' 0.02315499633550644ms
+[NX Daemon Server] - 2026-05-25T18:23:55.409Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.428Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.429Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.429Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.429Z - Handled FILE-WATCH-CHANGED. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.429Z - Time taken for 'changed-projects' 0.02497299760580063ms
+[NX Daemon Server] - 2026-05-25T18:23:55.461Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.480Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.480Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.480Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.480Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.480Z - Time taken for 'changed-projects' 0.03456800431013107ms
+[NX Daemon Server] - 2026-05-25T18:23:55.513Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.533Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.533Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.533Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.533Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.533Z - Time taken for 'changed-projects' 0.05947300046682358ms
+[NX Daemon Server] - 2026-05-25T18:23:55.565Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.585Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.585Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.585Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.585Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.585Z - Time taken for 'changed-projects' 0.04543599486351013ms
+[NX Daemon Server] - 2026-05-25T18:23:55.617Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.637Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.637Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.637Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.637Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.637Z - Time taken for 'changed-projects' 0.04092499613761902ms
+[NX Daemon Server] - 2026-05-25T18:23:55.672Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:55.693Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5 was modified
+[NX Daemon Server] - 2026-05-25T18:23:55.693Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.693Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:55.693Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:55.693Z - Time taken for 'changed-projects' 0.04566299915313721ms
+[NX Daemon Server] - 2026-05-25T18:23:59.106Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:59.106Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/linux_amd64/terraform-provider-aws_v5.100.0_x5
+[NX Daemon Server] - 2026-05-25T18:23:59.106Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:59.108Z - Time taken for 'hash changed files from watcher' 790.3027560040355ms
+[NX Daemon Server] - 2026-05-25T18:23:59.128Z - Time taken for 'build-project-configs' 18.15829099714756ms
+[NX Daemon Server] - 2026-05-25T18:23:59.148Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.148Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.148Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.148Z - Time taken for 'total execution time for createProjectGraph()' 17.214439004659653ms
+[NX Daemon Server] - 2026-05-25T18:23:59.832Z - [WATCHER]: 4 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:23:59.833Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:59.886Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1 was modified
+[NX Daemon Server] - 2026-05-25T18:23:59.886Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.887Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.887Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:23:59.887Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:59.887Z - Time taken for 'changed-projects' 0.09716799855232239ms
+[NX Daemon Server] - 2026-05-25T18:23:59.958Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:23:59.958Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/LICENSE,infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/README.md,infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/CHANGELOG.md,infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1
+[NX Daemon Server] - 2026-05-25T18:23:59.958Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:23:59.960Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1 was modified
+[NX Daemon Server] - 2026-05-25T18:23:59.961Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.961Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.961Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:59.961Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:23:59.961Z - Time taken for 'hash changed files from watcher' 24.27794399857521ms
+[NX Daemon Server] - 2026-05-25T18:23:59.971Z - Time taken for 'build-project-configs' 9.84876000136137ms
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:59.990Z - Time taken for 'total execution time for createProjectGraph()' 14.376295000314713ms
+[NX Daemon Server] - 2026-05-25T18:23:59.991Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1 was modified
+[NX Daemon Server] - 2026-05-25T18:23:59.991Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.991Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:23:59.991Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:23:59.992Z - Time taken for 'changed-projects' 0.02076999843120575ms
+[NX Daemon Server] - 2026-05-25T18:23:59.992Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - [WATCHER]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1 was modified
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:24:00.043Z - Time taken for 'changed-projects' 0.035033002495765686ms
+[NX Daemon Server] - 2026-05-25T18:24:00.187Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:24:00.187Z - [REQUEST]: infra/terraform/.terraform/providers/registry.terraform.io/integrations/github/6.12.1/linux_amd64/terraform-provider-github_v6.12.1
+[NX Daemon Server] - 2026-05-25T18:24:00.187Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:24:00.191Z - Time taken for 'hash changed files from watcher' 26.175040997564793ms
+[NX Daemon Server] - 2026-05-25T18:24:00.200Z - Time taken for 'build-project-configs' 10.227862998843193ms
+[NX Daemon Server] - 2026-05-25T18:24:00.219Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:24:00.219Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:24:00.219Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:24:00.220Z - Time taken for 'total execution time for createProjectGraph()' 15.385334998369217ms
+[NX Daemon Server] - 2026-05-25T18:24:01.167Z - [WATCHER]: 2 file(s) created or restored, 0 file(s) modified, 0 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:24:01.167Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:24:01.269Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:24:01.269Z - [REQUEST]: infra/terraform/.terraform/.terraform.tfstate.lock.info,infra/terraform/.terraform/terraform.tfstate
+[NX Daemon Server] - 2026-05-25T18:24:01.269Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:24:01.275Z - Time taken for 'hash changed files from watcher' 0.7406519949436188ms
+[NX Daemon Server] - 2026-05-25T18:24:01.290Z - Time taken for 'build-project-configs' 16.405121006071568ms
+[NX Daemon Server] - 2026-05-25T18:24:01.312Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:24:01.313Z - Time taken for 'total execution time for createProjectGraph()' 17.24601500481367ms
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - [WATCHER]: 0 file(s) created or restored, 1 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:24:01.874Z - Time taken for 'changed-projects' 0.043831996619701385ms
+[NX Daemon Server] - 2026-05-25T18:24:02.074Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:24:02.074Z - [REQUEST]: infra/terraform/.terraform/terraform.tfstate
+[NX Daemon Server] - 2026-05-25T18:24:02.074Z - [REQUEST]: infra/terraform/.terraform/.terraform.tfstate.lock.info
+[NX Daemon Server] - 2026-05-25T18:24:02.077Z - Time taken for 'hash changed files from watcher' 0.133713997900486ms
+[NX Daemon Server] - 2026-05-25T18:24:02.092Z - Time taken for 'build-project-configs' 14.124641999602318ms
+[NX Daemon Server] - 2026-05-25T18:24:02.109Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:24:02.110Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:24:02.110Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:24:02.110Z - Time taken for 'total execution time for createProjectGraph()' 13.877957001328468ms
+[NX Daemon Server] - 2026-05-25T18:24:03.001Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:24:03.002Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:24:03.002Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:03.003Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:03.003Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:24:03.003Z - Time taken for 'changed-projects' 0.22150500118732452ms
+[NX Daemon Server] - 2026-05-25T18:24:03.103Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:24:03.103Z - [REQUEST]: infra/terraform/.terraform.lock.hcl
+[NX Daemon Server] - 2026-05-25T18:24:03.103Z - [REQUEST]: infra/terraform/.terraform.lock.hcl1556934608
+[NX Daemon Server] - 2026-05-25T18:24:03.105Z - Time taken for 'hash changed files from watcher' 0.24264099448919296ms
+[NX Daemon Server] - 2026-05-25T18:24:03.120Z - Time taken for 'build-project-configs' 10.400185994803905ms
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:24:03.145Z - Time taken for 'total execution time for createProjectGraph()' 24.23718199878931ms
+[NX Daemon Server] - 2026-05-25T18:24:14.157Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:24:14.158Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:24:14.158Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.160Z - Time taken for 'total for creating and serializing project graph' 0.4446389973163605ms
+[NX Daemon Server] - 2026-05-25T18:24:14.160Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:24:14.161Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.161Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 3.
+[NX Daemon Server] - 2026-05-25T18:24:14.172Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:24:14.173Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:24:14.173Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:24:14.797Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:24:14.798Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:24:14.798Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:24:14.799Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.799Z - Time taken for 'total for creating and serializing project graph' 0.1640539988875389ms
+[NX Daemon Server] - 2026-05-25T18:24:14.799Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:24:14.799Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.799Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:24:14.802Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:24:14.802Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.803Z - Time taken for 'total for creating and serializing project graph' 0.16311799734830856ms
+[NX Daemon Server] - 2026-05-25T18:24:14.803Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:24:14.803Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:24:14.806Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:25:02.868Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:25:02.868Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:25:02.868Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:25:02.868Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:25:02.868Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:25:02.869Z - Time taken for 'changed-projects' 0.030970998108386993ms
+[NX Daemon Server] - 2026-05-25T18:25:02.969Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:25:02.969Z - [REQUEST]: infra/terraform/modules/api-gateway/main.tf
+[NX Daemon Server] - 2026-05-25T18:25:02.969Z - [REQUEST]: infra/terraform/modules/api-gateway/main.tf.tmp.2331729.52689c459707
+[NX Daemon Server] - 2026-05-25T18:25:02.972Z - Time taken for 'hash changed files from watcher' 0.16897999495267868ms
+[NX Daemon Server] - 2026-05-25T18:25:02.991Z - Time taken for 'build-project-configs' 17.22995500266552ms
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:25:03.010Z - Time taken for 'total execution time for createProjectGraph()' 16.951628997921944ms
+[NX Daemon Server] - 2026-05-25T18:25:14.016Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:25:14.017Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:25:14.017Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.018Z - Time taken for 'total for creating and serializing project graph' 0.1622369959950447ms
+[NX Daemon Server] - 2026-05-25T18:25:14.018Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:25:14.018Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.019Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T18:25:14.023Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:25:14.023Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:25:14.023Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:25:14.103Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:25:14.104Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:25:14.105Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:25:14.105Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.105Z - Time taken for 'total for creating and serializing project graph' 0.16288600116968155ms
+[NX Daemon Server] - 2026-05-25T18:25:14.105Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:25:14.105Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.106Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:25:14.108Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:25:14.109Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.110Z - Time taken for 'total for creating and serializing project graph' 0.2248379960656166ms
+[NX Daemon Server] - 2026-05-25T18:25:14.110Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:25:14.110Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:25:14.113Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:27.380Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:27:27.382Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:27.383Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:27:27.384Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:27.384Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:27.385Z - Time taken for 'total for creating and serializing project graph' 0.13259399682283401ms
+[NX Daemon Server] - 2026-05-25T18:27:27.386Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:27.386Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T18:27:27.452Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:27:27.452Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:27:27.452Z - Handled HASH_TASKS. Handling time: 15. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:27.994Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:27:27.994Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:27:27.994Z - Handled RECORD_OUTPUTS_HASH. Handling time: 4. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:28.004Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:28.011Z - [WATCHER]: tmp/apps/api-gateway/build/tsconfig.generated.json was deleted
+[NX Daemon Server] - 2026-05-25T18:27:28.011Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:28.011Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:28.011Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:28.011Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:27:28.012Z - Time taken for 'changed-projects' 0.05098799616098404ms
+[NX Daemon Server] - 2026-05-25T18:27:28.112Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:27:28.112Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:27:28.112Z - [REQUEST]: tmp/apps/api-gateway/build/tsconfig.generated.json
+[NX Daemon Server] - 2026-05-25T18:27:28.114Z - Time taken for 'hash changed files from watcher' 0.12667100131511688ms
+[NX Daemon Server] - 2026-05-25T18:27:28.133Z - Time taken for 'build-project-configs' 16.84807399660349ms
+[NX Daemon Server] - 2026-05-25T18:27:28.154Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:27:28.154Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:27:28.154Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:27:28.154Z - Time taken for 'total execution time for createProjectGraph()' 18.041167996823788ms
+[NX Daemon Server] - 2026-05-25T18:27:39.023Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:27:39.024Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:39.025Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.030Z - Time taken for 'total for creating and serializing project graph' 0.4282499998807907ms
+[NX Daemon Server] - 2026-05-25T18:27:39.030Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:39.031Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.031Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 6.
+[NX Daemon Server] - 2026-05-25T18:27:39.036Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:27:39.036Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:27:39.036Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:39.089Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:27:39.090Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:39.090Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:39.090Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.091Z - Time taken for 'total for creating and serializing project graph' 0.16047300398349762ms
+[NX Daemon Server] - 2026-05-25T18:27:39.091Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:27:39.091Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.091Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:27:39.095Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:39.095Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.096Z - Time taken for 'total for creating and serializing project graph' 0.3000830039381981ms
+[NX Daemon Server] - 2026-05-25T18:27:39.096Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:39.096Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:27:39.099Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:27:42.559Z - Time taken for 'changed-projects' 0.03401000052690506ms
+[NX Daemon Server] - 2026-05-25T18:27:42.660Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:27:42.661Z - [REQUEST]: apps/api-gateway/tsconfig.json
+[NX Daemon Server] - 2026-05-25T18:27:42.661Z - [REQUEST]: apps/api-gateway/tsconfig.json.tmp.2331729.a70150eadafc
+[NX Daemon Server] - 2026-05-25T18:27:42.673Z - Time taken for 'hash changed files from watcher' 0.4671910032629967ms
+[NX Daemon Server] - 2026-05-25T18:27:42.697Z - Time taken for 'build-project-configs' 30.377783998847008ms
+[NX Daemon Server] - 2026-05-25T18:27:42.739Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:27:42.739Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:27:42.739Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:27:42.740Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:42.740Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:42.740Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:42.740Z - Time taken for 'total execution time for createProjectGraph()' 38.00019799917936ms
+[NX Daemon Server] - 2026-05-25T18:27:53.752Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:27:53.754Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:53.754Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.757Z - Time taken for 'total for creating and serializing project graph' 0.5863009989261627ms
+[NX Daemon Server] - 2026-05-25T18:27:53.757Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:53.757Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.757Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 3.
+[NX Daemon Server] - 2026-05-25T18:27:53.769Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:27:53.770Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:27:53.770Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:27:53.852Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:27:53.853Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:53.854Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:53.854Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.856Z - Time taken for 'total for creating and serializing project graph' 0.2028999999165535ms
+[NX Daemon Server] - 2026-05-25T18:27:53.856Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:27:53.856Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.856Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T18:27:53.859Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:27:53.859Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.859Z - Time taken for 'total for creating and serializing project graph' 0.1496810019016266ms
+[NX Daemon Server] - 2026-05-25T18:27:53.859Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:27:53.860Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:27:53.862Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:27:57.073Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:27:57.076Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T18:27:57.077Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:57.077Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:57.077Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:57.077Z - Time taken for 'changed-projects' 0.055021993815898895ms
+[NX Daemon Server] - 2026-05-25T18:27:57.177Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:27:57.177Z - [REQUEST]: apps/rpa-worker/tsconfig.json
+[NX Daemon Server] - 2026-05-25T18:27:57.177Z - [REQUEST]: apps/rpa-worker/tsconfig.json.tmp.2331729.0940c7425caf
+[NX Daemon Server] - 2026-05-25T18:27:57.181Z - Time taken for 'hash changed files from watcher' 0.15231899917125702ms
+[NX Daemon Server] - 2026-05-25T18:27:57.197Z - Time taken for 'build-project-configs' 15.954186998307705ms
+[NX Daemon Server] - 2026-05-25T18:27:57.230Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:27:57.231Z - Time taken for 'total execution time for createProjectGraph()' 28.61761499941349ms
+[NX Daemon Server] - 2026-05-25T18:28:07.888Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:07.890Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:07.890Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:07.892Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:07.892Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:07.893Z - Time taken for 'total for creating and serializing project graph' 0.12908300012350082ms
+[NX Daemon Server] - 2026-05-25T18:28:07.893Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:07.893Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:07.933Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:28:07.933Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:28:07.933Z - Handled HASH_TASKS. Handling time: 10. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:08.238Z - Established a connection. Number of open connections: 4
+[NX Daemon Server] - 2026-05-25T18:28:08.238Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:08.239Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.239Z - Time taken for 'total for creating and serializing project graph' 0.1633549928665161ms
+[NX Daemon Server] - 2026-05-25T18:28:08.239Z - Closed a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:08.239Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.239Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:08.244Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:08.244Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:08.244Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:08.296Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:08.297Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:08.297Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:08.297Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.298Z - Time taken for 'total for creating and serializing project graph' 0.16099900007247925ms
+[NX Daemon Server] - 2026-05-25T18:28:08.298Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:08.298Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.298Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:08.301Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:08.301Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.301Z - Time taken for 'total for creating and serializing project graph' 0.18016599863767624ms
+[NX Daemon Server] - 2026-05-25T18:28:08.302Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:08.302Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:08.304Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:08.549Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:28:08.549Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:28:08.549Z - Handled RECORD_OUTPUTS_HASH. Handling time: 3. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:08.560Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - [WATCHER]: tmp/apps/api-gateway/build/tsconfig.generated.json was deleted
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:28:08.561Z - Time taken for 'changed-projects' 0.0432559996843338ms
+[NX Daemon Server] - 2026-05-25T18:28:08.661Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:28:08.661Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:28:08.661Z - [REQUEST]: tmp/apps/api-gateway/build/tsconfig.generated.json
+[NX Daemon Server] - 2026-05-25T18:28:08.668Z - Time taken for 'hash changed files from watcher' 0.10548599809408188ms
+[NX Daemon Server] - 2026-05-25T18:28:08.686Z - Time taken for 'build-project-configs' 17.275848999619484ms
+[NX Daemon Server] - 2026-05-25T18:28:08.719Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:28:08.720Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:28:08.720Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:28:08.720Z - Time taken for 'total execution time for createProjectGraph()' 26.693251997232437ms
+[NX Daemon Server] - 2026-05-25T18:28:19.574Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:19.575Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:19.576Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.577Z - Time taken for 'total for creating and serializing project graph' 0.4972270056605339ms
+[NX Daemon Server] - 2026-05-25T18:28:19.577Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:19.578Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.578Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 2.
+[NX Daemon Server] - 2026-05-25T18:28:19.583Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:19.584Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:19.584Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:19.664Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:28:19.664Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:19.665Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:19.665Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.665Z - Time taken for 'total for creating and serializing project graph' 0.15867899358272552ms
+[NX Daemon Server] - 2026-05-25T18:28:19.665Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:28:19.666Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.666Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:19.668Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:19.669Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.669Z - Time taken for 'total for creating and serializing project graph' 0.15735899657011032ms
+[NX Daemon Server] - 2026-05-25T18:28:19.669Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:19.669Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:19.672Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:35.473Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:35.474Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:35.475Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:35.476Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:35.477Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:35.477Z - Time taken for 'total for creating and serializing project graph' 0.12967899441719055ms
+[NX Daemon Server] - 2026-05-25T18:28:35.478Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:35.478Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:35.509Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:28:35.509Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2026-05-25T18:28:35.509Z - Handled HASH_TASKS. Handling time: 12. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:36.025Z - [WATCHER]: tmp/apps/api-gateway/build/tsconfig.generated.json was created or restored
+[NX Daemon Server] - 2026-05-25T18:28:36.025Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:28:36.125Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:28:36.126Z - [REQUEST]: tmp/apps/api-gateway/build/tsconfig.generated.json
+[NX Daemon Server] - 2026-05-25T18:28:36.126Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:28:36.130Z - Time taken for 'hash changed files from watcher' 0.10332000255584717ms
+[NX Daemon Server] - 2026-05-25T18:28:36.138Z - Time taken for 'build-project-configs' 9.702137999236584ms
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:36.154Z - Time taken for 'total execution time for createProjectGraph()' 12.05935899913311ms
+[NX Daemon Server] - 2026-05-25T18:28:37.942Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:28:37.942Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2026-05-25T18:28:37.942Z - Handled RECORD_OUTPUTS_HASH. Handling time: 4. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:37.951Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:37.951Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:28:37.957Z - [WATCHER]: tmp/apps/api-gateway/build/tsconfig.generated.json was deleted
+[NX Daemon Server] - 2026-05-25T18:28:37.957Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:37.957Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:37.957Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:37.957Z - Time taken for 'changed-projects' 0.038454994559288025ms
+[NX Daemon Server] - 2026-05-25T18:28:38.158Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:28:38.158Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:28:38.158Z - [REQUEST]: tmp/apps/api-gateway/build/tsconfig.generated.json
+[NX Daemon Server] - 2026-05-25T18:28:38.165Z - Time taken for 'hash changed files from watcher' 0.2665629982948303ms
+[NX Daemon Server] - 2026-05-25T18:28:38.206Z - Time taken for 'build-project-configs' 36.252925001084805ms
+[NX Daemon Server] - 2026-05-25T18:28:38.232Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:28:38.232Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:28:38.232Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:28:38.232Z - Time taken for 'total execution time for createProjectGraph()' 29.280937999486923ms
+[NX Daemon Server] - 2026-05-25T18:28:48.962Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:28:48.963Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:48.963Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:48.964Z - Time taken for 'total for creating and serializing project graph' 0.19323799759149551ms
+[NX Daemon Server] - 2026-05-25T18:28:48.964Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:48.964Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:48.964Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:48.967Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:48.967Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:28:48.967Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:49.028Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:28:49.029Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:49.029Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:28:49.029Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:49.029Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:49.030Z - Time taken for 'total for creating and serializing project graph' 0.16201099753379822ms
+[NX Daemon Server] - 2026-05-25T18:28:49.030Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:49.030Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:49.033Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:28:49.033Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:28:49.033Z - Time taken for 'total for creating and serializing project graph' 0.1896210014820099ms
+[NX Daemon Server] - 2026-05-25T18:28:49.034Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:28:49.034Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:28:49.036Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:28:55.597Z - [WATCHER]: infra/terraform/modules/api-gateway/api-gateway.zip was created or restored
+[NX Daemon Server] - 2026-05-25T18:28:55.597Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T18:28:55.697Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T18:28:55.697Z - [REQUEST]: infra/terraform/modules/api-gateway/api-gateway.zip
+[NX Daemon Server] - 2026-05-25T18:28:55.697Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T18:28:55.699Z - Time taken for 'hash changed files from watcher' 0.12530700117349625ms
+[NX Daemon Server] - 2026-05-25T18:28:55.709Z - Time taken for 'build-project-configs' 9.001573994755745ms
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T18:28:55.728Z - Time taken for 'total execution time for createProjectGraph()' 13.897650003433228ms
+[NX Daemon Server] - 2026-05-25T18:29:06.740Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T18:29:06.741Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:29:06.742Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.744Z - Time taken for 'total for creating and serializing project graph' 0.5281300023198128ms
+[NX Daemon Server] - 2026-05-25T18:29:06.744Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:29:06.745Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.745Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 3.
+[NX Daemon Server] - 2026-05-25T18:29:06.756Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:29:06.757Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T18:29:06.757Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:29:06.843Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:29:06.844Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T18:29:06.844Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:29:06.844Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.845Z - Time taken for 'total for creating and serializing project graph' 0.1297679990530014ms
+[NX Daemon Server] - 2026-05-25T18:29:06.845Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T18:29:06.845Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.845Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:29:06.848Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T18:29:06.848Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.848Z - Time taken for 'total for creating and serializing project graph' 0.14443600177764893ms
+[NX Daemon Server] - 2026-05-25T18:29:06.849Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T18:29:06.849Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T18:29:06.851Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T21:29:06.951Z - There are 2 open connections. Reset inactivity timer.
+[NX Daemon Server] - 2026-05-25T22:34:31.770Z - [WATCHER]: infra/terraform/modules/api-gateway/api-gateway.zip was modified
+[NX Daemon Server] - 2026-05-25T22:34:31.801Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:34:31.805Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:34:31.805Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 6.
+[NX Daemon Server] - 2026-05-25T22:34:31.806Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T22:34:31.809Z - Time taken for 'changed-projects' 8.309340998530388ms
+[NX Daemon Server] - 2026-05-25T22:34:31.896Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T22:34:31.898Z - [REQUEST]: infra/terraform/modules/api-gateway/api-gateway.zip
+[NX Daemon Server] - 2026-05-25T22:34:31.898Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T22:34:31.954Z - Time taken for 'hash changed files from watcher' 9.328100010752678ms
+[NX Daemon Server] - 2026-05-25T22:34:32.209Z - Time taken for 'build-project-configs' 245.44295300543308ms
+[NX Daemon Server] - 2026-05-25T22:34:32.303Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T22:34:32.303Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T22:34:32.303Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T22:34:32.303Z - Time taken for 'total execution time for createProjectGraph()' 111.12731100618839ms
+[NX Daemon Server] - 2026-05-25T22:34:42.917Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T22:34:42.919Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:34:42.919Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:34:42.921Z - Time taken for 'total for creating and serializing project graph' 0.36353200674057007ms
+[NX Daemon Server] - 2026-05-25T22:34:42.921Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:34:42.923Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:34:42.923Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 4.
+[NX Daemon Server] - 2026-05-25T22:34:42.963Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:34:42.963Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:34:42.963Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:34:43.448Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:34:43.449Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:34:43.450Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:34:43.450Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:34:43.452Z - Time taken for 'total for creating and serializing project graph' 0.27717700600624084ms
+[NX Daemon Server] - 2026-05-25T22:34:43.452Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:34:43.452Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:34:43.452Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T22:34:43.457Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:34:43.458Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:34:43.459Z - Time taken for 'total for creating and serializing project graph' 0.3624480068683624ms
+[NX Daemon Server] - 2026-05-25T22:34:43.459Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:34:43.459Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T22:34:43.465Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:37:44.839Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T22:37:44.840Z - [WATCHER]: infra/terraform/modules/api-gateway/api-gateway.zip was modified
+[NX Daemon Server] - 2026-05-25T22:37:44.841Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:44.841Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:44.841Z - Handled FILE-WATCH-CHANGED. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:37:44.841Z - Time taken for 'changed-projects' 0.039629995822906494ms
+[NX Daemon Server] - 2026-05-25T22:37:44.942Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T22:37:44.942Z - [REQUEST]: infra/terraform/modules/api-gateway/api-gateway.zip
+[NX Daemon Server] - 2026-05-25T22:37:44.942Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T22:37:44.948Z - Time taken for 'hash changed files from watcher' 0.325545996427536ms
+[NX Daemon Server] - 2026-05-25T22:37:44.981Z - Time taken for 'build-project-configs' 29.428873002529144ms
+[NX Daemon Server] - 2026-05-25T22:37:45.013Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T22:37:45.013Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T22:37:45.013Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T22:37:45.013Z - Time taken for 'total execution time for createProjectGraph()' 31.933787003159523ms
+[NX Daemon Server] - 2026-05-25T22:37:55.850Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T22:37:55.851Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:37:55.851Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.852Z - Time taken for 'total for creating and serializing project graph' 0.16888199746608734ms
+[NX Daemon Server] - 2026-05-25T22:37:55.852Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:37:55.853Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.853Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T22:37:55.861Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:37:55.861Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:37:55.861Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:37:55.929Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:37:55.934Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:37:55.934Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:37:55.935Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.935Z - Time taken for 'total for creating and serializing project graph' 0.19581501185894012ms
+[NX Daemon Server] - 2026-05-25T22:37:55.935Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:37:55.936Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.936Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T22:37:55.942Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:37:55.942Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.943Z - Time taken for 'total for creating and serializing project graph' 0.1889299899339676ms
+[NX Daemon Server] - 2026-05-25T22:37:55.944Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:37:55.944Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T22:37:55.948Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:37:56.933Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T22:37:56.934Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:56.934Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:56.934Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:37:56.934Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T22:37:56.934Z - Time taken for 'changed-projects' 0.04948000609874725ms
+[NX Daemon Server] - 2026-05-25T22:37:57.035Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T22:37:57.035Z - [REQUEST]: infra/terraform/modules/worker/main.tf
+[NX Daemon Server] - 2026-05-25T22:37:57.035Z - [REQUEST]: infra/terraform/modules/worker/main.tf.tmp.2331729.98b09bf8d3e3
+[NX Daemon Server] - 2026-05-25T22:37:57.039Z - Time taken for 'hash changed files from watcher' 0.2502779960632324ms
+[NX Daemon Server] - 2026-05-25T22:37:57.067Z - Time taken for 'build-project-configs' 24.423708006739616ms
+[NX Daemon Server] - 2026-05-25T22:37:57.115Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T22:37:57.116Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T22:37:57.116Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T22:37:57.116Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:57.116Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:37:57.116Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:37:57.117Z - Time taken for 'total execution time for createProjectGraph()' 45.10782200098038ms
+[NX Daemon Server] - 2026-05-25T22:38:04.296Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T22:38:04.297Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:38:04.297Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:38:04.297Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:38:04.297Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T22:38:04.297Z - Time taken for 'changed-projects' 0.051159992814064026ms
+[NX Daemon Server] - 2026-05-25T22:38:04.398Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T22:38:04.398Z - [REQUEST]: infra/terraform/modules/worker/main.tf
+[NX Daemon Server] - 2026-05-25T22:38:04.398Z - [REQUEST]: infra/terraform/modules/worker/main.tf.tmp.2331729.a0745d4a3cf2
+[NX Daemon Server] - 2026-05-25T22:38:04.400Z - Time taken for 'hash changed files from watcher' 0.1622299998998642ms
+[NX Daemon Server] - 2026-05-25T22:38:04.413Z - Time taken for 'build-project-configs' 11.005759000778198ms
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T22:38:04.448Z - Time taken for 'total execution time for createProjectGraph()' 31.946194007992744ms
+[NX Daemon Server] - 2026-05-25T22:38:15.461Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T22:38:15.464Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:38:15.469Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.471Z - Time taken for 'total for creating and serializing project graph' 4.999158009886742ms
+[NX Daemon Server] - 2026-05-25T22:38:15.472Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:38:15.473Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.473Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 6. Response time: 4.
+[NX Daemon Server] - 2026-05-25T22:38:15.490Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:38:15.490Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T22:38:15.491Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 1.
+[NX Daemon Server] - 2026-05-25T22:38:15.641Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:38:15.642Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T22:38:15.643Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:38:15.643Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.644Z - Time taken for 'total for creating and serializing project graph' 0.19485899806022644ms
+[NX Daemon Server] - 2026-05-25T22:38:15.644Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T22:38:15.644Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.644Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T22:38:15.652Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T22:38:15.652Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.653Z - Time taken for 'total for creating and serializing project graph' 0.21879298985004425ms
+[NX Daemon Server] - 2026-05-25T22:38:15.654Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T22:38:15.654Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-25T22:38:15.662Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T23:40:33.013Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T23:40:33.014Z - [WATCHER]: infra/terraform/modules/api-gateway/api-gateway.zip was modified
+[NX Daemon Server] - 2026-05-25T23:40:33.014Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2026-05-25T23:40:33.014Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T23:40:33.014Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2026-05-25T23:40:33.015Z - Time taken for 'changed-projects' 0.03451099991798401ms
+[NX Daemon Server] - 2026-05-25T23:40:33.114Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-25T23:40:33.114Z - [REQUEST]: infra/terraform/modules/api-gateway/api-gateway.zip
+[NX Daemon Server] - 2026-05-25T23:40:33.114Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-25T23:40:33.116Z - Time taken for 'hash changed files from watcher' 0.1295579969882965ms
+[NX Daemon Server] - 2026-05-25T23:40:33.130Z - Time taken for 'build-project-configs' 9.455862000584602ms
+[NX Daemon Server] - 2026-05-25T23:40:33.151Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-25T23:40:33.151Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX Daemon Server] - 2026-05-25T23:40:33.151Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX Daemon Server] - 2026-05-25T23:40:33.151Z - Time taken for 'total execution time for createProjectGraph()' 21.744697004556656ms
+[NX Daemon Server] - 2026-05-25T23:40:44.024Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2026-05-25T23:40:44.025Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T23:40:44.026Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T23:40:44.027Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.033Z - Time taken for 'total for creating and serializing project graph' 0.5831990092992783ms
+[NX Daemon Server] - 2026-05-25T23:40:44.033Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.034Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 1. Response time: 7.
+[NX Daemon Server] - 2026-05-25T23:40:44.046Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-25T23:40:44.046Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-25T23:40:44.046Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-25T23:40:44.110Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T23:40:44.115Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T23:40:44.116Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T23:40:44.116Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.117Z - Time taken for 'total for creating and serializing project graph' 0.17946700751781464ms
+[NX Daemon Server] - 2026-05-25T23:40:44.117Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T23:40:44.117Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.117Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T23:40:44.120Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-25T23:40:44.120Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.121Z - Time taken for 'total for creating and serializing project graph' 0.15493600070476532ms
+[NX Daemon Server] - 2026-05-25T23:40:44.121Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-25T23:40:44.121Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2026-05-25T23:40:44.124Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-25T23:42:21.513Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2026-05-25T23:42:21.519Z - [WATCHER]: 1 file(s) created or restored, 0 file(s) modified, 1 file(s) deleted
+[NX Daemon Server] - 2026-05-25T23:42:21.521Z - [REQUEST]: Responding to the client. File watch changed
+Error [ERR_STREAM_DESTROYED]: Cannot call write after a stream was destroyed
+    at _write (node:internal/streams/writable:489:11)
+    at Writable.write (node:internal/streams/writable:508:10)
+    at /home/moacir/dev/automatos-ide/node_modules/nx/src/daemon/server/shutdown-utils.js:71:16
+    at new Promise (<anonymous>)
+    at respondToClient (/home/moacir/dev/automatos-ide/node_modules/nx/src/daemon/server/shutdown-utils.js:67:12)
+    at handleResult (/home/moacir/dev/automatos-ide/node_modules/nx/src/daemon/server/server.js:178:52)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Promise.all (index 0)
+    at async /home/moacir/dev/automatos-ide/node_modules/nx/src/daemon/server/file-watching/file-watcher-sockets.js:27:9
+    at async /home/moacir/dev/automatos-ide/node_modules/nx/src/utils/promised-based-queue.js:19:21 {
+  code: 'ERR_STREAM_DESTROYED'
+}
+[NX Daemon Server] - 2026-05-25T23:42:21.532Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2026-05-25T23:42:21.532Z - Handled FILE-WATCH-CHANGED. Handling time: 1. Response time: 11.
+[NX Daemon Server] - 2026-05-25T23:42:21.532Z - Time taken for 'changed-projects' 0.055997997522354126ms
+[NX Daemon Server] - 2026-05-25T23:42:21.532Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-25T23:42:21.533Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-25T23:42:21.533Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (sources)
+[NX Daemon Server] - 2026-05-25T23:42:21.533Z - [WATCHER]: Stopping the watcher for /home/moacir/dev/automatos-ide (outputs)
+[NX Daemon Server] - 2026-05-25T23:42:21.537Z - Server stopped because: "Stopping the daemon the set of ignored files changed (native)"
+[NX Daemon Server] - 2026-05-26T00:17:13.217Z - Started listening on: /tmp/9050f583a9b67dd2bb85/d.sock
+[NX Daemon Server] - 2026-05-26T00:17:13.221Z - [WATCHER]: Subscribed to changes within: /home/moacir/dev/automatos-ide (native)
+[NX Daemon Server] - 2026-05-26T00:17:13.225Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-26T00:17:13.230Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-26T00:17:13.262Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-26T00:17:13.264Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2026-05-26T00:17:13.264Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-26T00:17:13.267Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-26T00:17:13.580Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2026-05-26T00:17:13.580Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-26T00:17:13.580Z - [REQUEST]: 
+[NX Daemon Server] - 2026-05-26T00:17:13.590Z - Time taken for 'loadNxPlugins' 311.32086799999996ms
+[NX Daemon Server] - 2026-05-26T00:17:13.632Z - Time taken for 'build-project-configs' 26.347707000000014ms
+[NX Daemon Server] - 2026-05-26T00:17:13.659Z - [SYNC]: collect registered sync generators
+[NX Daemon Server] - 2026-05-26T00:17:13.661Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.662Z - Time taken for 'total for creating and serializing project graph' 393.53989ms
+[NX Daemon Server] - 2026-05-26T00:17:13.663Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.663Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 394. Response time: 2.
+[NX Daemon Server] - 2026-05-26T00:17:13.669Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX Daemon Server] - 2026-05-26T00:17:13.669Z - Done responding to the client handleContextFileData
+[NX Daemon Server] - 2026-05-26T00:17:13.669Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2026-05-26T00:17:13.913Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2026-05-26T00:17:13.914Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-26T00:17:13.914Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.915Z - Time taken for 'total for creating and serializing project graph' 0.3571110000000317ms
+[NX Daemon Server] - 2026-05-26T00:17:13.915Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2026-05-26T00:17:13.916Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.916Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-26T00:17:13.920Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2026-05-26T00:17:13.920Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.921Z - Time taken for 'total for creating and serializing project graph' 0.411974999999984ms
+[NX Daemon Server] - 2026-05-26T00:17:13.921Z - Done responding to the client project-graph
+[NX Daemon Server] - 2026-05-26T00:17:13.922Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 2.
+[NX Daemon Server] - 2026-05-26T00:17:13.926Z - Established a connection. Number of open connections: 2
