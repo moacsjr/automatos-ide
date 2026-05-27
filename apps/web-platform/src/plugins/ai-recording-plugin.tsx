@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { pluginRegistry } from "@pluggable-js/core";
+import { Script } from "./scripts-plugin/schema";
+import { DynamoDbScriptsService } from "./scripts-plugin/service";
 import {
   ReactFlow,
   MiniMap,
@@ -22,7 +24,13 @@ interface TimelineStep {
   description: string;
 }
 
-export function AiRecordingComponent() {
+export function AiRecordingComponent({
+  recordingScript,
+  onCloseRecording,
+}: {
+  recordingScript?: Script;
+  onCloseRecording?: () => void;
+}) {
   // Browser Connection & Stream State
   const [isConnected, setIsConnected] = useState(false);
   const [sessionType, setSessionType] = useState<
@@ -77,6 +85,57 @@ export function AiRecordingComponent() {
   const logsEndRef = useRef<HTMLDivElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const isInputFocusedRef = useRef(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleFinishRecording = async () => {
+    if (!recordingScript) return;
+
+    setIsSaving(true);
+    try {
+      // 1. Parar a sessão se estiver ativa
+      if (sessionType !== "idle") {
+        await stopSession();
+      }
+
+      // 2. Resolver o serviço de scripts
+      const service =
+        pluginRegistry.getService<DynamoDbScriptsService>("scripts-service");
+
+      // 3. Atualizar o rawScript com o código gerado
+      await service.update(recordingScript.id, {
+        ...recordingScript,
+        rawScript: generatedCode || "// Nenhum comando foi gravado.",
+      });
+
+      alert(
+        `Script "${recordingScript.Title}" atualizado com sucesso com as ações gravadas!`,
+      );
+
+      if (onCloseRecording) {
+        onCloseRecording();
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(`Erro ao salvar o script no DynamoDB: ${err.message}`);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelRecording = () => {
+    if (
+      generatedCode &&
+      !confirm("Deseja descartar as ações gravadas para este script?")
+    ) {
+      return;
+    }
+    if (sessionType !== "idle") {
+      stopSession().catch(() => {});
+    }
+    if (onCloseRecording) {
+      onCloseRecording();
+    }
+  };
 
   // Auto-scroll chat to bottom
   useEffect(() => {
@@ -620,681 +679,783 @@ export function AiRecordingComponent() {
   };
 
   return (
-    <div className="recording-workspace-grid">
-      {/* COLUMN 1: The Mirror Viewport */}
-      <div className="glass-panel">
-        <div className="viewport-controls">
-          <button
-            className="btn-secondary"
-            onClick={connectBrowser}
-            disabled={isConnected}
-            style={{
-              borderColor: isConnected
-                ? "var(--color-success)"
-                : "var(--border-color)",
-            }}
-          >
-            {isConnected ? "🟢 Conectado" : "🔌 Conectar"}
-          </button>
-
-          <input
-            type="text"
-            className="control-input"
-            value={inputUrl}
-            onChange={(e) => setInputUrl(e.target.value)}
-            placeholder="Navegar para URL..."
-            onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
-            onFocus={() => {
-              isInputFocusedRef.current = true;
-            }}
-            onBlur={() => {
-              isInputFocusedRef.current = false;
-            }}
-          />
-
-          <button
-            className="btn-primary"
-            onClick={handleNavigate}
-            disabled={!isConnected}
-          >
-            Ir
-          </button>
-        </div>
-
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        gap: "16px",
+      }}
+    >
+      {recordingScript && (
         <div
-          className="panel-content"
-          style={{ display: "flex", flexDirection: "column", padding: "10px" }}
+          className="glass-panel"
+          style={{
+            padding: "12px 20px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            background: "rgba(220, 38, 38, 0.08)",
+            borderColor: "rgba(220, 38, 38, 0.25)",
+            boxShadow: "0 0 15px rgba(220, 38, 38, 0.15)",
+            animation: "slide-in 0.3s ease-out",
+          }}
         >
-          <div className="viewport-container">
-            {isConnected && frameSrc ? (
-              <div
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span
+              style={{
+                display: "inline-block",
+                width: "10px",
+                height: "10px",
+                borderRadius: "50%",
+                background: "#ef4444",
+                animation: "pulse-glow 1s infinite",
+              }}
+            />
+            <div>
+              <span
                 style={{
-                  position: "relative",
-                  display: "inline-block",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
+                  fontSize: "0.85rem",
+                  fontWeight: "bold",
+                  color: "#f87171",
                 }}
               >
-                <img
-                  src={frameSrc}
-                  alt="Mirror View"
+                Modo de Gravação Ativo:
+              </span>
+              <span
+                style={{
+                  fontSize: "0.85rem",
+                  marginLeft: "6px",
+                  fontWeight: "600",
+                }}
+              >
+                {recordingScript.Title} ({recordingScript.Name})
+              </span>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              className="btn-secondary"
+              style={{
+                fontSize: "0.8rem",
+                padding: "6px 14px",
+                borderColor: "rgba(255,255,255,0.15)",
+              }}
+              onClick={handleCancelRecording}
+            >
+              Cancelar
+            </button>
+            <button
+              className="btn-primary"
+              style={{
+                fontSize: "0.8rem",
+                padding: "6px 14px",
+                background: "var(--color-success)",
+                boxShadow: "0 0 10px var(--color-success-glow)",
+              }}
+              onClick={handleFinishRecording}
+              disabled={isSaving}
+            >
+              {isSaving ? "Salvando..." : "💾 Concluir Gravação"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div
+        className="recording-workspace-grid"
+        style={{
+          marginTop: 0,
+          height: recordingScript
+            ? "calc(100vh - 180px)"
+            : "calc(100vh - 120px)",
+        }}
+      >
+        {/* COLUMN 1: The Mirror Viewport */}
+        <div className="glass-panel">
+          <div className="viewport-controls">
+            <button
+              className="btn-secondary"
+              onClick={connectBrowser}
+              disabled={isConnected}
+              style={{
+                borderColor: isConnected
+                  ? "var(--color-success)"
+                  : "var(--border-color)",
+              }}
+            >
+              {isConnected ? "🟢 Conectado" : "🔌 Conectar"}
+            </button>
+
+            <input
+              type="text"
+              className="control-input"
+              value={inputUrl}
+              onChange={(e) => setInputUrl(e.target.value)}
+              placeholder="Navegar para URL..."
+              onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
+              onFocus={() => {
+                isInputFocusedRef.current = true;
+              }}
+              onBlur={() => {
+                isInputFocusedRef.current = false;
+              }}
+            />
+
+            <button
+              className="btn-primary"
+              onClick={handleNavigate}
+              disabled={!isConnected}
+            >
+              Ir
+            </button>
+          </div>
+
+          <div
+            className="panel-content"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "10px",
+            }}
+          >
+            <div className="viewport-container">
+              {isConnected && frameSrc ? (
+                <div
                   style={{
+                    position: "relative",
+                    display: "inline-block",
                     maxWidth: "100%",
                     maxHeight: "100%",
-                    width: "auto",
-                    height: "auto",
-                    display: "block",
-                    borderRadius: "4px",
                   }}
+                >
+                  <img
+                    src={frameSrc}
+                    alt="Mirror View"
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      width: "auto",
+                      height: "auto",
+                      display: "block",
+                      borderRadius: "4px",
+                    }}
+                  />
+                  <div
+                    className="viewport-overlay"
+                    onClick={handleViewportClick}
+                  />
+                </div>
+              ) : (
+                <div className="viewport-placeholder">
+                  <span className="viewport-placeholder-icon">📺</span>
+                  <p style={{ fontSize: "0.9rem" }}>
+                    {isConnected
+                      ? "Aguardando transmissão do browser..."
+                      : "Conecte o Chrome para espelhar a tela em tempo real."}
+                  </p>
+                  {!isConnected && (
+                    <button
+                      className="btn-primary"
+                      onClick={connectBrowser}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Conectar Agora
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Quick Interaction Bar */}
+            {isConnected && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  marginTop: "10px",
+                  alignItems: "center",
+                }}
+              >
+                <button
+                  className="btn-secondary"
+                  style={{ fontSize: "0.8rem", padding: "6px 12px" }}
+                  onClick={() => setShowTypingPanel(!showTypingPanel)}
+                >
+                  {showTypingPanel
+                    ? "Ocultar Painel Escrita"
+                    : "⌨️ Digitar Texto"}
+                </button>
+
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "var(--text-muted)",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Browser URL: {browserUrl}
+                </span>
+              </div>
+            )}
+
+            {/* Overlay Panel for Input Typing */}
+            {showTypingPanel && (
+              <div
+                style={{
+                  background: "rgba(0, 0, 0, 0.8)",
+                  border: "1px solid var(--border-color)",
+                  padding: "12px",
+                  borderRadius: "8px",
+                  marginTop: "10px",
+                  display: "flex",
+                  gap: "8px",
+                  animation: "slide-in 0.2s ease-out",
+                }}
+              >
+                <input
+                  type="text"
+                  className="control-input"
+                  value={typingValue}
+                  onChange={(e) => setTypingValue(e.target.value)}
+                  placeholder="Insira o texto e pressione Enviar..."
+                  onKeyDown={(e) => e.key === "Enter" && handleTypeSubmit()}
+                  autoFocus
                 />
-                <div
-                  className="viewport-overlay"
-                  onClick={handleViewportClick}
-                />
+                <button
+                  className="btn-primary"
+                  style={{ padding: "6px 12px" }}
+                  onClick={handleTypeSubmit}
+                >
+                  Enviar
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* COLUMN 2: Workflow Timeline & Code */}
+        <div className="glass-panel">
+          <div
+            className="panel-header"
+            style={{ gap: "10px", flexWrap: "wrap" }}
+          >
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <h3 className="panel-title">
+                <span>📊</span> Workspace
+              </h3>
+
+              {/* Tabs for Timeline and Code */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                  background: "rgba(255, 255, 255, 0.03)",
+                  padding: "2px",
+                  borderRadius: "6px",
+                  border: "1px solid var(--border-color)",
+                }}
+              >
+                <button
+                  className={`tab-btn`}
+                  style={{
+                    padding: "4px 10px",
+                    fontSize: "0.75rem",
+                    borderRadius: "4px",
+                    background:
+                      activeTimelineTab === "timeline"
+                        ? "var(--color-primary)"
+                        : "transparent",
+                    color:
+                      activeTimelineTab === "timeline"
+                        ? "#fff"
+                        : "var(--text-secondary)",
+                    boxShadow:
+                      activeTimelineTab === "timeline"
+                        ? "0 2px 6px var(--color-primary-glow)"
+                        : "none",
+                  }}
+                  onClick={() => setActiveTimelineTab("timeline")}
+                >
+                  Fluxo Visual
+                </button>
+                <button
+                  className={`tab-btn`}
+                  style={{
+                    padding: "4px 10px",
+                    fontSize: "0.75rem",
+                    borderRadius: "4px",
+                    background:
+                      activeTimelineTab === "code"
+                        ? "var(--color-primary)"
+                        : "transparent",
+                    color:
+                      activeTimelineTab === "code"
+                        ? "#fff"
+                        : "var(--text-secondary)",
+                    boxShadow:
+                      activeTimelineTab === "code"
+                        ? "0 2px 6px var(--color-primary-glow)"
+                        : "none",
+                  }}
+                  onClick={() => setActiveTimelineTab("code")}
+                >
+                  Código Playwright
+                </button>
+              </div>
+            </div>
+            {sessionType !== "idle" ? (
+              <button
+                className="btn-primary"
+                style={{
+                  background: "var(--color-danger)",
+                  fontSize: "0.8rem",
+                  padding: "4px 10px",
+                }}
+                onClick={stopSession}
+              >
+                🛑 Parar
+              </button>
+            ) : (
+              <button
+                className="btn-primary"
+                style={{
+                  background: "var(--color-success)",
+                  fontSize: "0.8rem",
+                  padding: "4px 10px",
+                }}
+                onClick={startRecording}
+                disabled={!isConnected}
+              >
+                🎙️ Gravar
+              </button>
+            )}
+          </div>
+
+          <div className="panel-content" style={{ padding: 0 }}>
+            {activeTimelineTab === "timeline" ? (
+              <div className="timeline-flow-container">
+                <ReactFlow
+                  nodes={nodes}
+                  edges={edges}
+                  onNodesChange={onNodesChange}
+                  onEdgesChange={onEdgesChange}
+                  fitView
+                >
+                  <Background color="#222" gap={16} />
+                  <Controls
+                    style={{
+                      background: "#1f2937",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: "6px",
+                    }}
+                  />
+                </ReactFlow>
               </div>
             ) : (
-              <div className="viewport-placeholder">
-                <span className="viewport-placeholder-icon">📺</span>
-                <p style={{ fontSize: "0.9rem" }}>
-                  {isConnected
-                    ? "Aguardando transmissão do browser..."
-                    : "Conecte o Chrome para espelhar a tela em tempo real."}
-                </p>
-                {!isConnected && (
-                  <button
-                    className="btn-primary"
-                    onClick={connectBrowser}
-                    style={{ marginTop: "10px" }}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                  padding: "20px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "12px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "var(--text-secondary)",
+                    }}
                   >
-                    Conectar Agora
-                  </button>
+                    {recordedSteps.length} passos registrados
+                  </span>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button
+                      className="btn-secondary"
+                      style={{
+                        fontSize: "0.75rem",
+                        padding: "4px 10px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        borderColor: isTesting
+                          ? "var(--color-primary)"
+                          : "var(--border-color)",
+                        color: isTesting
+                          ? "var(--color-primary)"
+                          : "var(--text-primary)",
+                      }}
+                      onClick={runPlaywrightTest}
+                      disabled={!generatedCode || isTesting}
+                    >
+                      {isTesting ? "⏳ Testando..." : "🧪 Testar Script"}
+                    </button>
+                    <button
+                      className="btn-secondary"
+                      style={{
+                        fontSize: "0.75rem",
+                        padding: "4px 10px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        borderColor: copied
+                          ? "var(--color-success)"
+                          : "var(--border-color)",
+                        color: copied
+                          ? "var(--color-success)"
+                          : "var(--text-primary)",
+                      }}
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          generatedCode || "// Nenhum script gerado ainda.",
+                        );
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
+                      }}
+                      disabled={!generatedCode}
+                    >
+                      {copied ? "Copiado!" : "📋 Copiar Código"}
+                    </button>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    overflow: "auto",
+                    background: "rgba(0,0,0,0.4)",
+                    border: "1px solid var(--border-color)",
+                    borderRadius: "var(--radius-md)",
+                    padding: "16px",
+                  }}
+                >
+                  <pre
+                    style={{
+                      margin: 0,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.75rem",
+                      color: "var(--text-primary)",
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {generatedCode || (
+                      <span
+                        style={{
+                          color: "var(--text-muted)",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        O script do Playwright será compilado e exibido aqui à
+                        medida que as ações forem executadas ou quando você
+                        clicar em "Parar".
+                      </span>
+                    )}
+                  </pre>
+                </div>
+
+                {/* Painel do Terminal de Logs de Execução do Teste */}
+                {showTerminal && (
+                  <div
+                    style={{
+                      marginTop: "16px",
+                      background: "#0c0f12",
+                      border: "1px solid #1f2937",
+                      borderRadius: "6px",
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "220px",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#161b22",
+                        padding: "6px 12px",
+                        borderBottom: "1px solid #1f2937",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        borderTopLeftRadius: "5px",
+                        borderTopRightRadius: "5px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "0.7rem",
+                          fontFamily: "var(--font-mono)",
+                          color: "#8b949e",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        💻 TERMINAL DE EXECUÇÃO PLAYWRIGHT
+                      </span>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "8px",
+                          alignItems: "center",
+                        }}
+                      >
+                        {testFailed && (
+                          <button
+                            style={{
+                              background:
+                                "linear-gradient(135deg, var(--color-primary), var(--color-accent))",
+                              border: "none",
+                              color: "#fff",
+                              fontSize: "0.68rem",
+                              cursor: isHealing ? "not-allowed" : "pointer",
+                              padding: "3px 8px",
+                              borderRadius: "4px",
+                              fontWeight: "bold",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              boxShadow: "0 2px 8px rgba(99, 102, 241, 0.4)",
+                              opacity: isHealing ? 0.7 : 1,
+                              transition: "var(--transition-smooth)",
+                            }}
+                            onClick={handleSelfHealingScript}
+                            disabled={isHealing}
+                          >
+                            {isHealing
+                              ? "🩹 Auto-corrigindo..."
+                              : "🔧 Auto-corrigir (Self-Healing)"}
+                          </button>
+                        )}
+                        <button
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#8b949e",
+                            fontSize: "0.7rem",
+                            cursor: "pointer",
+                            padding: "2px 6px",
+                            borderRadius: "4px",
+                          }}
+                          onClick={() => setTestLogs([])}
+                        >
+                          Limpar
+                        </button>
+                        <button
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "var(--color-danger)",
+                            fontSize: "0.75rem",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            padding: "2px 6px",
+                          }}
+                          onClick={() => setShowTerminal(false)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      ref={terminalEndRef}
+                      style={{
+                        flex: 1,
+                        overflow: "auto",
+                        padding: "12px",
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.7rem",
+                        color: "#c9d1d9",
+                        whiteSpace: "pre-wrap",
+                        wordBreak: "break-all",
+                        lineHeight: "1.4",
+                      }}
+                    >
+                      {testLogs.length === 0 ? (
+                        <span style={{ color: "#8b949e", fontStyle: "italic" }}>
+                          Aguardando início do teste...
+                        </span>
+                      ) : (
+                        testLogs.map((log, index) => {
+                          let color = "#c9d1d9";
+                          if (
+                            log.includes("Passed") ||
+                            log.includes("sucesso") ||
+                            log.includes("✓")
+                          )
+                            color = "#3fb950";
+                          if (
+                            log.includes("erro") ||
+                            log.includes("Error") ||
+                            log.includes("❌") ||
+                            log.includes("💥")
+                          )
+                            color = "#f85149";
+                          if (
+                            log.includes("Iniciando") ||
+                            log.includes("Running")
+                          )
+                            color = "#58a6ff";
+                          return (
+                            <div key={index} style={{ color }}>
+                              {log}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
             )}
           </div>
+        </div>
 
-          {/* Quick Interaction Bar */}
-          {isConnected && (
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                marginTop: "10px",
-                alignItems: "center",
-              }}
-            >
-              <button
-                className="btn-secondary"
-                style={{ fontSize: "0.8rem", padding: "6px 12px" }}
-                onClick={() => setShowTypingPanel(!showTypingPanel)}
-              >
-                {showTypingPanel
-                  ? "Ocultar Painel Escrita"
-                  : "⌨️ Digitar Texto"}
-              </button>
-
+        {/* COLUMN 3: AI Assistant & Variables */}
+        <div className="glass-panel">
+          <div className="panel-header">
+            <h3 className="panel-title">
+              <span>🧠</span> Co-piloto de IA
+            </h3>
+            {sessionType === "recording_copilot" ? (
               <span
                 style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Browser URL: {browserUrl}
-              </span>
-            </div>
-          )}
-
-          {/* Overlay Panel for Input Typing */}
-          {showTypingPanel && (
-            <div
-              style={{
-                background: "rgba(0, 0, 0, 0.8)",
-                border: "1px solid var(--border-color)",
-                padding: "12px",
-                borderRadius: "8px",
-                marginTop: "10px",
-                display: "flex",
-                gap: "8px",
-                animation: "slide-in 0.2s ease-out",
-              }}
-            >
-              <input
-                type="text"
-                className="control-input"
-                value={typingValue}
-                onChange={(e) => setTypingValue(e.target.value)}
-                placeholder="Insira o texto e pressione Enviar..."
-                onKeyDown={(e) => e.key === "Enter" && handleTypeSubmit()}
-                autoFocus
-              />
-              <button
-                className="btn-primary"
-                style={{ padding: "6px 12px" }}
-                onClick={handleTypeSubmit}
-              >
-                Enviar
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* COLUMN 2: Workflow Timeline & Code */}
-      <div className="glass-panel">
-        <div className="panel-header" style={{ gap: "10px", flexWrap: "wrap" }}>
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <h3 className="panel-title">
-              <span>📊</span> Workspace
-            </h3>
-
-            {/* Tabs for Timeline and Code */}
-            <div
-              style={{
-                display: "flex",
-                gap: "4px",
-                background: "rgba(255, 255, 255, 0.03)",
-                padding: "2px",
-                borderRadius: "6px",
-                border: "1px solid var(--border-color)",
-              }}
-            >
-              <button
-                className={`tab-btn`}
-                style={{
-                  padding: "4px 10px",
-                  fontSize: "0.75rem",
+                  fontSize: "0.7rem",
+                  background: "rgba(239, 68, 68, 0.15)",
+                  color: "var(--color-danger)",
+                  padding: "3px 8px",
                   borderRadius: "4px",
-                  background:
-                    activeTimelineTab === "timeline"
-                      ? "var(--color-primary)"
-                      : "transparent",
-                  color:
-                    activeTimelineTab === "timeline"
-                      ? "#fff"
-                      : "var(--text-secondary)",
-                  boxShadow:
-                    activeTimelineTab === "timeline"
-                      ? "0 2px 6px var(--color-primary-glow)"
-                      : "none",
-                }}
-                onClick={() => setActiveTimelineTab("timeline")}
-              >
-                Fluxo Visual
-              </button>
-              <button
-                className={`tab-btn`}
-                style={{
-                  padding: "4px 10px",
-                  fontSize: "0.75rem",
-                  borderRadius: "4px",
-                  background:
-                    activeTimelineTab === "code"
-                      ? "var(--color-primary)"
-                      : "transparent",
-                  color:
-                    activeTimelineTab === "code"
-                      ? "#fff"
-                      : "var(--text-secondary)",
-                  boxShadow:
-                    activeTimelineTab === "code"
-                      ? "0 2px 6px var(--color-primary-glow)"
-                      : "none",
-                }}
-                onClick={() => setActiveTimelineTab("code")}
-              >
-                Código Playwright
-              </button>
-            </div>
-          </div>
-          {sessionType !== "idle" ? (
-            <button
-              className="btn-primary"
-              style={{
-                background: "var(--color-danger)",
-                fontSize: "0.8rem",
-                padding: "4px 10px",
-              }}
-              onClick={stopSession}
-            >
-              🛑 Parar
-            </button>
-          ) : (
-            <button
-              className="btn-primary"
-              style={{
-                background: "var(--color-success)",
-                fontSize: "0.8rem",
-                padding: "4px 10px",
-              }}
-              onClick={startRecording}
-              disabled={!isConnected}
-            >
-              🎙️ Gravar
-            </button>
-          )}
-        </div>
-
-        <div className="panel-content" style={{ padding: 0 }}>
-          {activeTimelineTab === "timeline" ? (
-            <div className="timeline-flow-container">
-              <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                fitView
-              >
-                <Background color="#222" gap={16} />
-                <Controls
-                  style={{
-                    background: "#1f2937",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "6px",
-                  }}
-                />
-              </ReactFlow>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                padding: "20px",
-              }}
-            >
-              <div
-                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: "bold",
                   display: "flex",
-                  justifyContent: "space-between",
                   alignItems: "center",
-                  marginBottom: "12px",
+                  gap: "6px",
+                  border: "1px solid rgba(239, 68, 68, 0.3)",
                 }}
               >
                 <span
-                  style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}
-                >
-                  {recordedSteps.length} passos registrados
-                </span>
-                <div style={{ display: "flex", gap: "8px" }}>
-                  <button
-                    className="btn-secondary"
-                    style={{
-                      fontSize: "0.75rem",
-                      padding: "4px 10px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      borderColor: isTesting
-                        ? "var(--color-primary)"
-                        : "var(--border-color)",
-                      color: isTesting
-                        ? "var(--color-primary)"
-                        : "var(--text-primary)",
-                    }}
-                    onClick={runPlaywrightTest}
-                    disabled={!generatedCode || isTesting}
-                  >
-                    {isTesting ? "⏳ Testando..." : "🧪 Testar Script"}
-                  </button>
-                  <button
-                    className="btn-secondary"
-                    style={{
-                      fontSize: "0.75rem",
-                      padding: "4px 10px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      borderColor: copied
-                        ? "var(--color-success)"
-                        : "var(--border-color)",
-                      color: copied
-                        ? "var(--color-success)"
-                        : "var(--text-primary)",
-                    }}
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        generatedCode || "// Nenhum script gerado ainda.",
-                      );
-                      setCopied(true);
-                      setTimeout(() => setCopied(false), 2000);
-                    }}
-                    disabled={!generatedCode}
-                  >
-                    {copied ? "Copiado!" : "📋 Copiar Código"}
-                  </button>
-                </div>
-              </div>
-              <div
-                style={{
-                  flex: 1,
-                  overflow: "auto",
-                  background: "rgba(0,0,0,0.4)",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "var(--radius-md)",
-                  padding: "16px",
-                }}
-              >
-                <pre
                   style={{
-                    margin: 0,
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.75rem",
-                    color: "var(--text-primary)",
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-all",
+                    width: "6px",
+                    height: "6px",
+                    borderRadius: "50%",
+                    background: "var(--color-danger)",
+                    animation: "pulse-glow 1.5s infinite",
                   }}
-                >
-                  {generatedCode || (
-                    <span
-                      style={{
-                        color: "var(--text-muted)",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      O script do Playwright será compilado e exibido aqui à
-                      medida que as ações forem executadas ou quando você clicar
-                      em "Parar".
-                    </span>
-                  )}
-                </pre>
-              </div>
-
-              {/* Painel do Terminal de Logs de Execução do Teste */}
-              {showTerminal && (
-                <div
-                  style={{
-                    marginTop: "16px",
-                    background: "#0c0f12",
-                    border: "1px solid #1f2937",
-                    borderRadius: "6px",
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "220px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  <div
-                    style={{
-                      background: "#161b22",
-                      padding: "6px 12px",
-                      borderBottom: "1px solid #1f2937",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      borderTopLeftRadius: "5px",
-                      borderTopRightRadius: "5px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "0.7rem",
-                        fontFamily: "var(--font-mono)",
-                        color: "#8b949e",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      💻 TERMINAL DE EXECUÇÃO PLAYWRIGHT
-                    </span>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "8px",
-                        alignItems: "center",
-                      }}
-                    >
-                      {testFailed && (
-                        <button
-                          style={{
-                            background:
-                              "linear-gradient(135deg, var(--color-primary), var(--color-accent))",
-                            border: "none",
-                            color: "#fff",
-                            fontSize: "0.68rem",
-                            cursor: isHealing ? "not-allowed" : "pointer",
-                            padding: "3px 8px",
-                            borderRadius: "4px",
-                            fontWeight: "bold",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "4px",
-                            boxShadow: "0 2px 8px rgba(99, 102, 241, 0.4)",
-                            opacity: isHealing ? 0.7 : 1,
-                            transition: "var(--transition-smooth)",
-                          }}
-                          onClick={handleSelfHealingScript}
-                          disabled={isHealing}
-                        >
-                          {isHealing
-                            ? "🩹 Auto-corrigindo..."
-                            : "🔧 Auto-corrigir (Self-Healing)"}
-                        </button>
-                      )}
-                      <button
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "#8b949e",
-                          fontSize: "0.7rem",
-                          cursor: "pointer",
-                          padding: "2px 6px",
-                          borderRadius: "4px",
-                        }}
-                        onClick={() => setTestLogs([])}
-                      >
-                        Limpar
-                      </button>
-                      <button
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "var(--color-danger)",
-                          fontSize: "0.75rem",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                          padding: "2px 6px",
-                        }}
-                        onClick={() => setShowTerminal(false)}
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    ref={terminalEndRef}
-                    style={{
-                      flex: 1,
-                      overflow: "auto",
-                      padding: "12px",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.7rem",
-                      color: "#c9d1d9",
-                      whiteSpace: "pre-wrap",
-                      wordBreak: "break-all",
-                      lineHeight: "1.4",
-                    }}
-                  >
-                    {testLogs.length === 0 ? (
-                      <span style={{ color: "#8b949e", fontStyle: "italic" }}>
-                        Aguardando início do teste...
-                      </span>
-                    ) : (
-                      testLogs.map((log, index) => {
-                        let color = "#c9d1d9";
-                        if (
-                          log.includes("Passed") ||
-                          log.includes("sucesso") ||
-                          log.includes("✓")
-                        )
-                          color = "#3fb950";
-                        if (
-                          log.includes("erro") ||
-                          log.includes("Error") ||
-                          log.includes("❌") ||
-                          log.includes("💥")
-                        )
-                          color = "#f85149";
-                        if (
-                          log.includes("Iniciando") ||
-                          log.includes("Running")
-                        )
-                          color = "#58a6ff";
-                        return (
-                          <div key={index} style={{ color }}>
-                            {log}
-                          </div>
-                        );
-                      })
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* COLUMN 3: AI Assistant & Variables */}
-      <div className="glass-panel">
-        <div className="panel-header">
-          <h3 className="panel-title">
-            <span>🧠</span> Co-piloto de IA
-          </h3>
-          {sessionType === "recording_copilot" ? (
-            <span
-              style={{
-                fontSize: "0.7rem",
-                background: "rgba(239, 68, 68, 0.15)",
-                color: "var(--color-danger)",
-                padding: "3px 8px",
-                borderRadius: "4px",
-                fontFamily: "var(--font-sans)",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                border: "1px solid rgba(239, 68, 68, 0.3)",
-              }}
-            >
-              <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  background: "var(--color-danger)",
-                  animation: "pulse-glow 1.5s infinite",
-                }}
-              />
-              COPILOT GRAVANDO
-            </span>
-          ) : sessionType === "running_agent" ? (
-            <span
-              style={{
-                fontSize: "0.7rem",
-                background: "var(--color-primary-glow)",
-                color: "var(--color-primary)",
-                padding: "3px 8px",
-                borderRadius: "4px",
-                fontFamily: "var(--font-sans)",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                border: "1px solid rgba(59, 130, 246, 0.3)",
-              }}
-            >
-              <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  background: "var(--color-primary)",
-                  animation: "pulse-glow 1s infinite",
-                }}
-              />
-              IA EXECUTANDO
-            </span>
-          ) : (
-            <span
-              style={{
-                fontSize: "0.7rem",
-                background: "rgba(255, 255, 255, 0.04)",
-                color: "var(--text-muted)",
-                padding: "3px 8px",
-                borderRadius: "4px",
-                fontFamily: "var(--font-sans)",
-                fontWeight: "bold",
-                border: "1px solid var(--border-color)",
-              }}
-            >
-              INATIVO
-            </span>
-          )}
-        </div>
-
-        <div className="panel-content">
-          <div className="chat-container">
-            <div className="chat-messages">
-              {logs.map((log, index) => (
-                <div key={index} className={`chat-bubble ${log.sender}`}>
-                  {log.text}
-                </div>
-              ))}
-              <div ref={logsEndRef} />
-            </div>
-
-            {/* Variable Binder Section */}
-            <div className="variables-panel">
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-secondary)",
-                  display: "block",
-                  marginBottom: "8px",
-                  fontWeight: "600",
-                }}
-              >
-                Variáveis Disponíveis
+                />
+                COPILOT GRAVANDO
               </span>
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {variables.map((v, i) => (
-                  <span
-                    key={i}
-                    className="variable-badge"
-                    onClick={() => {
-                      setPrompt((p) => p + " " + v);
-                    }}
-                  >
-                    {v}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="chat-input-container">
-              <input
-                type="text"
-                className="control-input"
-                placeholder={
-                  sessionType === "running_agent"
-                    ? "IA está executando..."
-                    : "Instrua a IA..."
-                }
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && startAutonomousAgent()}
-                disabled={sessionType === "running_agent"}
-              />
-              <button
-                className="btn-primary"
-                onClick={startAutonomousAgent}
-                disabled={sessionType === "running_agent" || !prompt.trim()}
+            ) : sessionType === "running_agent" ? (
+              <span
+                style={{
+                  fontSize: "0.7rem",
+                  background: "var(--color-primary-glow)",
+                  color: "var(--color-primary)",
+                  padding: "3px 8px",
+                  borderRadius: "4px",
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                }}
               >
-                Enviar
-              </button>
+                <span
+                  style={{
+                    width: "6px",
+                    height: "6px",
+                    borderRadius: "50%",
+                    background: "var(--color-primary)",
+                    animation: "pulse-glow 1s infinite",
+                  }}
+                />
+                IA EXECUTANDO
+              </span>
+            ) : (
+              <span
+                style={{
+                  fontSize: "0.7rem",
+                  background: "rgba(255, 255, 255, 0.04)",
+                  color: "var(--text-muted)",
+                  padding: "3px 8px",
+                  borderRadius: "4px",
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: "bold",
+                  border: "1px solid var(--border-color)",
+                }}
+              >
+                INATIVO
+              </span>
+            )}
+          </div>
+
+          <div className="panel-content">
+            <div className="chat-container">
+              <div className="chat-messages">
+                {logs.map((log, index) => (
+                  <div key={index} className={`chat-bubble ${log.sender}`}>
+                    {log.text}
+                  </div>
+                ))}
+                <div ref={logsEndRef} />
+              </div>
+
+              {/* Variable Binder Section */}
+              <div className="variables-panel">
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "var(--text-secondary)",
+                    display: "block",
+                    marginBottom: "8px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Variáveis Disponíveis
+                </span>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {variables.map((v, i) => (
+                    <span
+                      key={i}
+                      className="variable-badge"
+                      onClick={() => {
+                        setPrompt((p) => p + " " + v);
+                      }}
+                    >
+                      {v}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="chat-input-container">
+                <input
+                  type="text"
+                  className="control-input"
+                  placeholder={
+                    sessionType === "running_agent"
+                      ? "IA está executando..."
+                      : "Instrua a IA..."
+                  }
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && startAutonomousAgent()}
+                  disabled={sessionType === "running_agent"}
+                />
+                <button
+                  className="btn-primary"
+                  onClick={startAutonomousAgent}
+                  disabled={sessionType === "running_agent" || !prompt.trim()}
+                >
+                  Enviar
+                </button>
+              </div>
             </div>
           </div>
         </div>

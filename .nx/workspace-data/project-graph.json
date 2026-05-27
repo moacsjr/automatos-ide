@@ -7979,6 +7979,15 @@
         "hash": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
       }
     },
+    "npm:zod": {
+      "type": "npm",
+      "name": "npm:zod",
+      "data": {
+        "version": "4.4.3",
+        "packageName": "zod",
+        "hash": "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="
+      }
+    },
     "npm:zustand": {
       "type": "npm",
       "name": "npm:zustand",
@@ -8026,6 +8035,21 @@
       {
         "source": "web-platform",
         "target": "npm:@xyflow/react",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:zod",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:@aws-sdk/client-dynamodb",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:@aws-sdk/lib-dynamodb",
         "type": "static"
       },
       {

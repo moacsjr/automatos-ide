@@ -119,6 +119,25 @@ resource "aws_dynamodb_table" "workflows" {
 }
 
 # ============================================================
+# DynamoDB — Scripts storage
+# ============================================================
+
+resource "aws_dynamodb_table" "scripts" {
+  name         = "${var.environment}-rpa-scripts"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+}
+
+# ============================================================
 # GitHub OIDC — Trust relationship for GitHub Actions
 # ============================================================
 
@@ -204,7 +223,10 @@ resource "aws_iam_role_policy" "github_actions_policy" {
           "dynamodb:Query",
           "dynamodb:Scan"
         ]
-        Resource = aws_dynamodb_table.workflows.arn
+        Resource = [
+          aws_dynamodb_table.workflows.arn,
+          aws_dynamodb_table.scripts.arn
+        ]
       },
       {
         Effect = "Allow"
@@ -309,7 +331,10 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
           "dynamodb:Query",
           "dynamodb:Scan"
         ]
-        Resource = aws_dynamodb_table.workflows.arn
+        Resource = [
+          aws_dynamodb_table.workflows.arn,
+          aws_dynamodb_table.scripts.arn
+        ]
       },
       {
         Effect = "Allow"

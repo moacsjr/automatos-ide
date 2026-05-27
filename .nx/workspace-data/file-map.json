@@ -10,32 +10,56 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "infra/terraform/modules/worker/variables.tf",
-        "hash": "11035229372650461245"
-      },
-      {
-        "file": "package.json",
-        "hash": "4379983418163042488"
+        "file": "CLAUDE.md",
+        "hash": "5415787746193617800"
       },
       {
         "file": "infra/terraform/variables.tf",
         "hash": "9104473964377905550"
       },
       {
-        "file": "infra/terraform/main.tf",
-        "hash": "11678353729951147692"
-      },
-      {
-        "file": "nx.json",
-        "hash": "18441618428516821911"
+        "file": "vitest.config.ts",
+        "hash": "8474122775387053023"
       },
       {
         "file": "infra/terraform/modules/api-gateway/main.tf",
         "hash": "3708852695701826669"
       },
       {
+        "file": "package-lock.json",
+        "hash": "14924592414014172083"
+      },
+      {
         "file": ".github/workflows/ci.yml",
         "hash": "4338688394186475451"
+      },
+      {
+        "file": "infra/terraform/modules/api-gateway/variables.tf",
+        "hash": "14924647147524902970"
+      },
+      {
+        "file": "infra/terraform/modules/worker/main.tf",
+        "hash": "6620390725053847750"
+      },
+      {
+        "file": "infra/terraform/modules/worker/outputs.tf",
+        "hash": "3656155045454587602"
+      },
+      {
+        "file": "infra/terraform/outputs.tf",
+        "hash": "1643998245491849629"
+      },
+      {
+        "file": "infra/terraform/.terraform.lock.hcl",
+        "hash": "10500727478297678056"
+      },
+      {
+        "file": "infra/terraform/modules/worker/variables.tf",
+        "hash": "11035229372650461245"
+      },
+      {
+        "file": "spec/PRD.md",
+        "hash": "5914251370956536656"
       },
       {
         "file": "infra/terraform/environments/staging/terraform.tfvars",
@@ -46,63 +70,80 @@
         "hash": "9621626596679175228"
       },
       {
-        "file": "CLAUDE.md",
-        "hash": "5415787746193617800"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "13459218376556776021"
-      },
-      {
-        "file": "infra/terraform/modules/api-gateway/outputs.tf",
-        "hash": "7304213074612353422"
-      },
-      {
-        "file": "spec/PRD.md",
-        "hash": "5914251370956536656"
-      },
-      {
-        "file": "infra/terraform/outputs.tf",
-        "hash": "10767145834241843889"
-      },
-      {
-        "file": "infra/terraform/.terraform.lock.hcl",
-        "hash": "10500727478297678056"
+        "file": "package.json",
+        "hash": "17428094331176697202"
       },
       {
         "file": ".husky/pre-commit",
         "hash": "13469207043343598078"
       },
       {
-        "file": "infra/terraform/modules/worker/outputs.tf",
-        "hash": "3656155045454587602"
-      },
-      {
-        "file": "infra/terraform/modules/worker/main.tf",
-        "hash": "6620390725053847750"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "4540331657760457424"
-      },
-      {
-        "file": "infra/terraform/modules/api-gateway/variables.tf",
-        "hash": "14924647147524902970"
+        "file": "tsconfig.base.json",
+        "hash": "13459218376556776021"
       },
       {
         "file": "infra/terraform/scripts/bootstrap-backend.sh",
         "hash": "10949709096971767778"
       },
       {
-        "file": "vitest.config.ts",
-        "hash": "8474122775387053023"
+        "file": "infra/terraform/modules/api-gateway/outputs.tf",
+        "hash": "7304213074612353422"
       },
       {
-        "file": "package-lock.json",
-        "hash": "8094617546952235602"
+        "file": ".gitignore",
+        "hash": "4540331657760457424"
+      },
+      {
+        "file": "nx.json",
+        "hash": "18441618428516821911"
+      },
+      {
+        "file": "infra/terraform/main.tf",
+        "hash": "7679454921792285468"
       }
     ],
     "projectFileMap": {
+      "api-gateway": [
+        {
+          "file": "apps/api-gateway/project.json",
+          "hash": "8330365261793112977"
+        },
+        {
+          "file": "apps/api-gateway/src/index.ts",
+          "hash": "3334511802324143277",
+          "deps": [
+            "npm:@aws-sdk/client-sqs",
+            "npm:@aws-sdk/client-dynamodb",
+            "npm:@aws-sdk/lib-dynamodb"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/tsconfig.json",
+          "hash": "7560254509823135558"
+        }
+      ],
+      "rpa-worker": [
+        {
+          "file": "apps/rpa-worker/Dockerfile",
+          "hash": "12228910377605745315"
+        },
+        {
+          "file": "apps/rpa-worker/project.json",
+          "hash": "8837638755650127891"
+        },
+        {
+          "file": "apps/rpa-worker/src/index.ts",
+          "hash": "8629448787600072913",
+          "deps": [
+            "npm:@aws-sdk/client-sqs",
+            "automation-core"
+          ]
+        },
+        {
+          "file": "apps/rpa-worker/tsconfig.json",
+          "hash": "10523325140169526749"
+        }
+      ],
       "web-platform": [
         {
           "file": "apps/web-platform/index.html",
@@ -118,7 +159,7 @@
         },
         {
           "file": "apps/web-platform/src/main.tsx",
-          "hash": "12302054709406972893",
+          "hash": "4486286685816993669",
           "deps": [
             "npm:react",
             "npm:react-dom",
@@ -128,7 +169,7 @@
         },
         {
           "file": "apps/web-platform/src/plugins/ai-recording-plugin.tsx",
-          "hash": "14852836052898325404",
+          "hash": "10865602664190152018",
           "deps": [
             "npm:react",
             "npm:@pluggable-js/core",
@@ -138,6 +179,36 @@
         {
           "file": "apps/web-platform/src/plugins/rpa-cockpit.tsx",
           "hash": "2296986851487460983",
+          "deps": [
+            "npm:react",
+            "npm:@pluggable-js/core"
+          ]
+        },
+        {
+          "file": "apps/web-platform/src/plugins/scripts-plugin/index.ts",
+          "hash": "9814907889911191565",
+          "deps": [
+            "npm:@pluggable-js/core"
+          ]
+        },
+        {
+          "file": "apps/web-platform/src/plugins/scripts-plugin/schema.ts",
+          "hash": "8286289825033813732",
+          "deps": [
+            "npm:zod"
+          ]
+        },
+        {
+          "file": "apps/web-platform/src/plugins/scripts-plugin/service.ts",
+          "hash": "15898643080954029004",
+          "deps": [
+            "npm:@aws-sdk/client-dynamodb",
+            "npm:@aws-sdk/lib-dynamodb"
+          ]
+        },
+        {
+          "file": "apps/web-platform/src/plugins/scripts-plugin/view.tsx",
+          "hash": "5215965374215047620",
           "deps": [
             "npm:react",
             "npm:@pluggable-js/core"
@@ -193,47 +264,6 @@
         {
           "file": "libs/automation-core/tsconfig.json",
           "hash": "17185600920438930580"
-        }
-      ],
-      "rpa-worker": [
-        {
-          "file": "apps/rpa-worker/Dockerfile",
-          "hash": "12228910377605745315"
-        },
-        {
-          "file": "apps/rpa-worker/project.json",
-          "hash": "8837638755650127891"
-        },
-        {
-          "file": "apps/rpa-worker/src/index.ts",
-          "hash": "8629448787600072913",
-          "deps": [
-            "npm:@aws-sdk/client-sqs",
-            "automation-core"
-          ]
-        },
-        {
-          "file": "apps/rpa-worker/tsconfig.json",
-          "hash": "10523325140169526749"
-        }
-      ],
-      "api-gateway": [
-        {
-          "file": "apps/api-gateway/project.json",
-          "hash": "8330365261793112977"
-        },
-        {
-          "file": "apps/api-gateway/src/index.ts",
-          "hash": "3334511802324143277",
-          "deps": [
-            "npm:@aws-sdk/client-sqs",
-            "npm:@aws-sdk/client-dynamodb",
-            "npm:@aws-sdk/lib-dynamodb"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/tsconfig.json",
-          "hash": "7560254509823135558"
         }
       ]
     }

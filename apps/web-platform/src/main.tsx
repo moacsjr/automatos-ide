@@ -5,13 +5,15 @@ import { pluginRegistry } from "@pluggable-js/core";
 import "./index.css";
 import "./plugins/rpa-cockpit";
 import "./plugins/ai-recording-plugin";
+import "./plugins/scripts-plugin";
 
 pluginRegistry.init();
 
 function App() {
-  const [activeTab, setActiveTab] = useState<"cockpit" | "recording">(
-    "recording",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "cockpit" | "recording" | "scripts"
+  >("recording");
+  const [recordingScript, setRecordingScript] = useState<any | null>(null);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 p-6 font-sans">
@@ -34,11 +36,21 @@ function App() {
           >
             Gravação Assistida por IA
           </button>
+          <button
+            className={`tab-btn ${activeTab === "scripts" ? "active" : ""}`}
+            onClick={() => setActiveTab("scripts")}
+          >
+            Gerenciador de Scripts
+          </button>
         </div>
       </header>
 
       <main
-        className={activeTab === "cockpit" ? "max-w-4xl mx-auto" : "w-full"}
+        className={
+          activeTab === "cockpit" || activeTab === "scripts"
+            ? "max-w-6xl mx-auto"
+            : "w-full"
+        }
         style={
           activeTab === "recording"
             ? { maxWidth: "1600px", margin: "0 auto" }
@@ -50,8 +62,27 @@ function App() {
             id="rpa-workspace-view"
             passProps={{ websocketUrl: "wss://api.rpa-saas.com/stream" }}
           />
+        ) : activeTab === "recording" ? (
+          <ExtensionPoint
+            id="ai-recording-view"
+            passProps={{
+              recordingScript,
+              onCloseRecording: () => {
+                setRecordingScript(null);
+                setActiveTab("scripts");
+              },
+            }}
+          />
         ) : (
-          <ExtensionPoint id="ai-recording-view" passProps={{}} />
+          <ExtensionPoint
+            id="scripts-crud-view"
+            passProps={{
+              onRecordScript: (script: any) => {
+                setRecordingScript(script);
+                setActiveTab("recording");
+              },
+            }}
+          />
         )}
       </main>
     </div>
