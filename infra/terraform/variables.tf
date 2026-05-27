@@ -13,11 +13,13 @@ variable "environment" {
 variable "github_owner" {
   description = "GitHub username or org"
   type        = string
+  default     = "moacsjr"
 }
 
 variable "github_repo" {
   description = "GitHub repository name"
   type        = string
+  default     = "automatos-ide"
 }
 
 variable "vpc_id" {

@@ -54,11 +54,11 @@ jobs:
         run: |
           IMAGE_TAG=${GITHUB_SHA::8}
           # Build & push rpa-worker
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest apps/rpa-worker/
+          docker build -f apps/rpa-worker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           
           # Build & push automatos-ia
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_AUTOMATOS_IA:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_AUTOMATOS_IA:latest apps/automatos-ia/
+          docker build -f apps/automatos-ia/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY_AUTOMATOS_IA:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_AUTOMATOS_IA:latest .
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY_AUTOMATOS_IA
           
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT

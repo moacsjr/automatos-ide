@@ -228,7 +228,13 @@ resource "aws_iam_role_policy" "github_actions_policy" {
       {
         Effect = "Allow"
         Action = [
-          "ecr:GetAuthorizationToken",
+          "ecr:GetAuthorizationToken"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchGetImage",
