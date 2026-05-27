@@ -1,4 +1,4 @@
-export type ActionType = 'navigate' | 'click' | 'fill' | 'condition';
+export type ActionType = "navigate" | "click" | "fill" | "condition";
 
 export interface AutomationStep {
   id: string;
@@ -11,7 +11,7 @@ export interface AutomationStep {
   };
   conditionConfig?: {
     condition: {
-      type: 'element_visible' | 'text_contains';
+      type: "element_visible" | "text_contains";
       selector: string;
       expectedText?: string;
     };

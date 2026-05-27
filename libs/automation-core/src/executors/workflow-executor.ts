@@ -1,6 +1,6 @@
-import { chromium } from 'playwright';
-import { WorkflowJob } from '../domain/types.js';
-import { SafeAutomationInterpreter } from '../interpreter/safe-runner.js';
+import { chromium } from "playwright";
+import { WorkflowJob } from "../domain/types.js";
+import { SafeAutomationInterpreter } from "../interpreter/safe-runner.js";
 
 export async function executeWorkflow(job: WorkflowJob): Promise<void> {
   const browser = await chromium.launch({ headless: true });
