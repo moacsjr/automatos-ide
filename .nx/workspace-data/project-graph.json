@@ -2966,6 +2966,60 @@
         "hash": "sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q=="
       }
     },
+    "npm:@types/d3-color": {
+      "type": "npm",
+      "name": "npm:@types/d3-color",
+      "data": {
+        "version": "3.1.3",
+        "packageName": "@types/d3-color",
+        "hash": "sha512-iO90scth9WAbmgv7ogoq57O9YpKmFBbmoEoCHDB2xMBY0+/KVrqAaCDyCE16dUspeOvIxFFRI+0sEtqDqy2b4A=="
+      }
+    },
+    "npm:@types/d3-drag": {
+      "type": "npm",
+      "name": "npm:@types/d3-drag",
+      "data": {
+        "version": "3.0.7",
+        "packageName": "@types/d3-drag",
+        "hash": "sha512-HE3jVKlzU9AaMazNufooRJ5ZpWmLIoc90A37WU2JMmeq28w1FQqCZswHZ3xR+SuxYftzHq6WU6KJHvqxKzTxxQ=="
+      }
+    },
+    "npm:@types/d3-interpolate": {
+      "type": "npm",
+      "name": "npm:@types/d3-interpolate",
+      "data": {
+        "version": "3.0.4",
+        "packageName": "@types/d3-interpolate",
+        "hash": "sha512-mgLPETlrpVV1YRJIglr4Ez47g7Yxjl1lj7YKsiMCb27VJH9W8NVM6Bb9d8kkpG/uAQS5AmbA48q2IAolKKo1MA=="
+      }
+    },
+    "npm:@types/d3-selection": {
+      "type": "npm",
+      "name": "npm:@types/d3-selection",
+      "data": {
+        "version": "3.0.11",
+        "packageName": "@types/d3-selection",
+        "hash": "sha512-bhAXu23DJWsrI45xafYpkQ4NtcKMwWnAC/vKrd2l+nxMFuvOT3XMYTIj2opv8vq8AO5Yh7Qac/nSeP/3zjTK0w=="
+      }
+    },
+    "npm:@types/d3-transition": {
+      "type": "npm",
+      "name": "npm:@types/d3-transition",
+      "data": {
+        "version": "3.0.9",
+        "packageName": "@types/d3-transition",
+        "hash": "sha512-uZS5shfxzO3rGlu0cC3bjmMFKsXv+SmZZcgp0KD22ts4uGXp5EVYGzu/0YdwZeKmddhcAccYtREJKkPfXkZuCg=="
+      }
+    },
+    "npm:@types/d3-zoom": {
+      "type": "npm",
+      "name": "npm:@types/d3-zoom",
+      "data": {
+        "version": "3.0.8",
+        "packageName": "@types/d3-zoom",
+        "hash": "sha512-iqMC4/YlFCSlO8+2Ii1GGGliCAY4XdeG748w5vQUbevlbDu0zSjH/+jojorQVBK/se0j6DUFNPBGSqD3YWYnDw=="
+      }
+    },
     "npm:@types/estree": {
       "type": "npm",
       "name": "npm:@types/estree",
@@ -3270,6 +3324,24 @@
         "version": "4.2.2",
         "packageName": "@xtuc/long",
         "hash": "sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ=="
+      }
+    },
+    "npm:@xyflow/react": {
+      "type": "npm",
+      "name": "npm:@xyflow/react",
+      "data": {
+        "version": "12.10.2",
+        "packageName": "@xyflow/react",
+        "hash": "sha512-CgIi6HwlcHXwlkTpr0fxLv/0sRVNZ8IdwKLzzeCscaYBwpvfcH1QFOCeaTCuEn1FQEs/B8CjnTSjhs8udgmBgQ=="
+      }
+    },
+    "npm:@xyflow/system": {
+      "type": "npm",
+      "name": "npm:@xyflow/system",
+      "data": {
+        "version": "0.0.76",
+        "packageName": "@xyflow/system",
+        "hash": "sha512-hvwvnRS1B3REwVDlWexsq7YQaPZeG3/mKo1jv38UmnpWmxihp14bW6VtEOuHEwJX2FvzFw8k77LyKSk/wiZVNA=="
       }
     },
     "npm:@yarnpkg/lockfile": {
@@ -3938,6 +4010,15 @@
         "hash": "sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ=="
       }
     },
+    "npm:classcat": {
+      "type": "npm",
+      "name": "npm:classcat",
+      "data": {
+        "version": "5.0.5",
+        "packageName": "classcat",
+        "hash": "sha512-JhZUT7JFcQy/EzW605k/ktHtncoo9vnyW/2GspNYwFlN1C/WmjuV/xtS04e9SOkL2sTdw0VAZ2UGCcQ9lR6p6w=="
+      }
+    },
     "npm:cli-cursor": {
       "type": "npm",
       "name": "npm:cli-cursor",
@@ -4278,6 +4359,87 @@
         "version": "3.2.3",
         "packageName": "csstype",
         "hash": "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ=="
+      }
+    },
+    "npm:d3-color": {
+      "type": "npm",
+      "name": "npm:d3-color",
+      "data": {
+        "version": "3.1.0",
+        "packageName": "d3-color",
+        "hash": "sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA=="
+      }
+    },
+    "npm:d3-dispatch": {
+      "type": "npm",
+      "name": "npm:d3-dispatch",
+      "data": {
+        "version": "3.0.1",
+        "packageName": "d3-dispatch",
+        "hash": "sha512-rzUyPU/S7rwUflMyLc1ETDeBj0NRuHKKAcvukozwhshr6g6c5d8zh4c2gQjY2bZ0dXeGLWc1PF174P2tVvKhfg=="
+      }
+    },
+    "npm:d3-drag": {
+      "type": "npm",
+      "name": "npm:d3-drag",
+      "data": {
+        "version": "3.0.0",
+        "packageName": "d3-drag",
+        "hash": "sha512-pWbUJLdETVA8lQNJecMxoXfH6x+mO2UQo8rSmZ+QqxcbyA3hfeprFgIT//HW2nlHChWeIIMwS2Fq+gEARkhTkg=="
+      }
+    },
+    "npm:d3-ease": {
+      "type": "npm",
+      "name": "npm:d3-ease",
+      "data": {
+        "version": "3.0.1",
+        "packageName": "d3-ease",
+        "hash": "sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w=="
+      }
+    },
+    "npm:d3-interpolate": {
+      "type": "npm",
+      "name": "npm:d3-interpolate",
+      "data": {
+        "version": "3.0.1",
+        "packageName": "d3-interpolate",
+        "hash": "sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g=="
+      }
+    },
+    "npm:d3-selection": {
+      "type": "npm",
+      "name": "npm:d3-selection",
+      "data": {
+        "version": "3.0.0",
+        "packageName": "d3-selection",
+        "hash": "sha512-fmTRWbNMmsmWq6xJV8D19U/gw/bwrHfNXxrIN+HfZgnzqTHp9jOmKMhsTUjXOJnZOdZY9Q28y4yebKzqDKlxlQ=="
+      }
+    },
+    "npm:d3-timer": {
+      "type": "npm",
+      "name": "npm:d3-timer",
+      "data": {
+        "version": "3.0.1",
+        "packageName": "d3-timer",
+        "hash": "sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA=="
+      }
+    },
+    "npm:d3-transition": {
+      "type": "npm",
+      "name": "npm:d3-transition",
+      "data": {
+        "version": "3.0.1",
+        "packageName": "d3-transition",
+        "hash": "sha512-ApKvfjsSR6tg06xrL434C0WydLr7JewBB3V+/39RMHsaXTOG0zmt/OAXeng5M5LBm0ojmxJrpomQVZ1aPvBL4w=="
+      }
+    },
+    "npm:d3-zoom": {
+      "type": "npm",
+      "name": "npm:d3-zoom",
+      "data": {
+        "version": "3.0.0",
+        "packageName": "d3-zoom",
+        "hash": "sha512-b8AmV3kfQaqWAuacbPuNbL6vahnOJflOhexLzMMNLga62+/nh0JzvJ0aO/5a5MVgUFGS7Hu1P9P03o3fJkDCyw=="
       }
     },
     "npm:date-format": {
@@ -7583,6 +7745,15 @@
         "hash": "sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA=="
       }
     },
+    "npm:use-sync-external-store": {
+      "type": "npm",
+      "name": "npm:use-sync-external-store",
+      "data": {
+        "version": "1.6.0",
+        "packageName": "use-sync-external-store",
+        "hash": "sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w=="
+      }
+    },
     "npm:util-deprecate": {
       "type": "npm",
       "name": "npm:util-deprecate",
@@ -7807,6 +7978,15 @@
         "packageName": "yocto-queue",
         "hash": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
       }
+    },
+    "npm:zustand": {
+      "type": "npm",
+      "name": "npm:zustand",
+      "data": {
+        "version": "4.5.7",
+        "packageName": "zustand",
+        "hash": "sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw=="
+      }
     }
   },
   "dependencies": {
@@ -7841,6 +8021,11 @@
       {
         "source": "web-platform",
         "target": "npm:@pluggable-js/core",
+        "type": "static"
+      },
+      {
+        "source": "web-platform",
+        "target": "npm:@xyflow/react",
         "type": "static"
       },
       {
@@ -12677,6 +12862,39 @@
         "type": "static"
       }
     ],
+    "npm:@types/d3-drag": [
+      {
+        "source": "npm:@types/d3-drag",
+        "target": "npm:@types/d3-selection",
+        "type": "static"
+      }
+    ],
+    "npm:@types/d3-interpolate": [
+      {
+        "source": "npm:@types/d3-interpolate",
+        "target": "npm:@types/d3-color",
+        "type": "static"
+      }
+    ],
+    "npm:@types/d3-transition": [
+      {
+        "source": "npm:@types/d3-transition",
+        "target": "npm:@types/d3-selection",
+        "type": "static"
+      }
+    ],
+    "npm:@types/d3-zoom": [
+      {
+        "source": "npm:@types/d3-zoom",
+        "target": "npm:@types/d3-interpolate",
+        "type": "static"
+      },
+      {
+        "source": "npm:@types/d3-zoom",
+        "target": "npm:@types/d3-selection",
+        "type": "static"
+      }
+    ],
     "npm:@types/http-proxy": [
       {
         "source": "npm:@types/http-proxy",
@@ -13043,6 +13261,80 @@
       {
         "source": "npm:@webassemblyjs/wast-printer",
         "target": "npm:@xtuc/long",
+        "type": "static"
+      }
+    ],
+    "npm:@xyflow/react": [
+      {
+        "source": "npm:@xyflow/react",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/react",
+        "target": "npm:react-dom",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/react",
+        "target": "npm:@xyflow/system",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/react",
+        "target": "npm:classcat",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/react",
+        "target": "npm:zustand",
+        "type": "static"
+      }
+    ],
+    "npm:@xyflow/system": [
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:@types/d3-drag",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:@types/d3-interpolate",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:@types/d3-selection",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:@types/d3-transition",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:@types/d3-zoom",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:d3-drag",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:d3-interpolate",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:d3-selection",
+        "type": "static"
+      },
+      {
+        "source": "npm:@xyflow/system",
+        "target": "npm:d3-zoom",
         "type": "static"
       }
     ],
@@ -13776,6 +14068,84 @@
       {
         "source": "npm:css-tree@2.2.1",
         "target": "npm:source-map-js",
+        "type": "static"
+      }
+    ],
+    "npm:d3-drag": [
+      {
+        "source": "npm:d3-drag",
+        "target": "npm:d3-dispatch",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-drag",
+        "target": "npm:d3-selection",
+        "type": "static"
+      }
+    ],
+    "npm:d3-interpolate": [
+      {
+        "source": "npm:d3-interpolate",
+        "target": "npm:d3-color",
+        "type": "static"
+      }
+    ],
+    "npm:d3-transition": [
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-selection",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-color",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-dispatch",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-ease",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-interpolate",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-transition",
+        "target": "npm:d3-timer",
+        "type": "static"
+      }
+    ],
+    "npm:d3-zoom": [
+      {
+        "source": "npm:d3-zoom",
+        "target": "npm:d3-dispatch",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-zoom",
+        "target": "npm:d3-drag",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-zoom",
+        "target": "npm:d3-interpolate",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-zoom",
+        "target": "npm:d3-selection",
+        "type": "static"
+      },
+      {
+        "source": "npm:d3-zoom",
+        "target": "npm:d3-transition",
         "type": "static"
       }
     ],
@@ -17136,6 +17506,13 @@
         "type": "static"
       }
     ],
+    "npm:use-sync-external-store": [
+      {
+        "source": "npm:use-sync-external-store",
+        "target": "npm:react",
+        "type": "static"
+      }
+    ],
     "npm:vite": [
       {
         "source": "npm:vite",
@@ -17534,6 +17911,23 @@
       {
         "source": "npm:yargs",
         "target": "npm:yargs-parser",
+        "type": "static"
+      }
+    ],
+    "npm:zustand": [
+      {
+        "source": "npm:zustand",
+        "target": "npm:@types/react",
+        "type": "static"
+      },
+      {
+        "source": "npm:zustand",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "npm:zustand",
+        "target": "npm:use-sync-external-store",
         "type": "static"
       }
     ]
