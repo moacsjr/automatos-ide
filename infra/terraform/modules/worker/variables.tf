@@ -7,6 +7,11 @@ variable "ecr_repository_uri" {
   type        = string
 }
 
+variable "automatos_ia_ecr_repository_uri" {
+  description = "Base ECR URI for automatos-ia (image tag is added at runtime)"
+  type        = string
+}
+
 variable "job_queue_url" {
   type = string
 }

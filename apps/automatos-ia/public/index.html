@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatos-IA | Painel de Controle</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: rgba(17, 24, 39, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --accent-blue: #06b6d4;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-warn: #f59e0b;
+      --glow-purple: rgba(139, 92, 246, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    header {
+      backdrop-filter: blur(12px);
+      background-color: rgba(11, 15, 25, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      font-size: 1.75rem;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.375rem 0.875rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--text-muted);
+    }
+
+    .status-connected .status-dot {
+      background-color: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+    
+    .status-disconnected .status-dot {
+      background-color: var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-column {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    input[type="text"], input[type="number"], textarea {
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 0 3px var(--glow-purple);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      width: 100%;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--accent-red) 0%, #dc2626 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* Live Logger Component */
+    .logger-container {
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+    }
+
+    .logger-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .console-box {
+      flex: 1;
+      background-color: #05070c;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .log-line {
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .log-info { color: #e2e8f0; }
+    .log-warn { color: var(--accent-warn); }
+    .log-error { color: var(--accent-red); font-weight: bold; }
+    .log-system { color: #a78bfa; font-style: italic; }
+
+    /* Steps Visualizer */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .step-card {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .step-card:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .step-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-navigate { background-color: rgba(6, 182, 212, 0.15); color: var(--accent-blue); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-click { background-color: rgba(139, 92, 246, 0.15); color: var(--primary); border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-fill { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-wait { background-color: rgba(245, 158, 11, 0.15); color: var(--accent-warn); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .step-text {
+      flex: 1;
+      color: #e2e8f0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .step-selector {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .empty-steps {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      text-align: center;
+      padding: 2rem 0;
+      font-style: italic;
+    }
+
+    /* Generated Code Component */
+    .code-container {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 1.25rem);
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .code-box-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 400px;
+      display: flex;
+    }
+
+    .code-box {
+      flex: 1;
+      background-color: #05070c;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      overflow: auto;
+      white-space: pre;
+      color: #38bdf8; /* Soft blue */
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    /* State indicators */
+    .pulse-animation {
+      animation: pulse-border 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    @keyframes pulse-border {
+      0% { border-color: rgba(139, 92, 246, 0.2); }
+      100% { border-color: var(--primary); box-shadow: 0 0 10px rgba(139, 92, 246, 0.15); }
+    }
+
+    /* Scrollbars custom styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">🤖</span>
+      <div>
+        <h1>AUTOMATOS-IA</h1>
+        <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Playwright Generator & AI Agent</p>
+      </div>
+    </div>
+
+    <div class="status-badge status-disconnected" id="connection-badge">
+      <span class="status-dot"></span>
+      <span id="connection-text">Verificando...</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Coluna da Esquerda: Controles, Logs e Configurações -->
+    <div class="panel-column">
+      
+      <!-- Card: Conexão CDP (Oculto, pois a conexão é automática na inicialização) -->
+      <div class="card" style="display: none;">
+        <div class="card-title">🔌 Conectar ao Chrome</div>
+        <div class="form-group">
+          <label for="cdp-port">Porta de Depuração CDP (Chrome)</label>
+          <div class="input-row">
+            <input type="number" id="cdp-port" value="9222" placeholder="9222">
+            <button class="btn btn-primary" id="btn-connect">Conectar</button>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.4;">
+            Inicie o Chrome com: <code>google-chrome --remote-debugging-port=9222</code>
+          </p>
+        </div>
+      </div>
+
+      <!-- Card: Modo Agente Autônomo & Co-piloto -->
+      <div class="card" id="control-card">
+        <div class="card-title">🎮 Painel de Ações</div>
+        
+        <div class="form-group">
+          <label for="agent-objective">Objetivo do Agente Autônomo</label>
+          <textarea id="agent-objective" placeholder="Ex: Pesquisar por Playwright no Google e clicar no primeiro resultado."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="max-steps">Limite Máximo de Passos</label>
+          <input type="number" id="max-steps" value="20" min="1" max="50" style="max-width: 100px;">
+        </div>
+
+        <div class="btn-group" style="margin-top: 1.5rem;">
+          <button class="btn btn-primary" id="btn-start-agent" disabled>
+            🤖 Iniciar Agente
+          </button>
+          <button class="btn btn-secondary" id="btn-start-copilot" disabled>
+            🎙️ Iniciar Co-piloto
+          </button>
+          <button class="btn btn-danger" id="btn-stop" disabled>
+            🛑 Parar Sessão
+          </button>
+        </div>
+      </div>
+
+      <!-- Card: Logs em tempo real (SSE) -->
+      <div class="card logger-container">
+        <div class="logger-header">
+          <div class="card-title" style="margin-bottom: 0;">📋 Logs de Execução</div>
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" id="btn-clear-logs">Limpar</button>
+        </div>
+        <div class="console-box" id="console-box">
+          <div class="log-line log-system">[Painel] Aguardando conexão ou comando...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Coluna da Direita: Passos Gravados e Código Compilado -->
+    <div class="panel-column">
+      
+      <!-- Card: Passos Registrados -->
+      <div class="card">
+        <div class="card-title">👣 Passos Registrados</div>
+        <div class="steps-container" id="steps-container">
+          <div class="empty-steps">Nenhum passo gravado na sessão atual.</div>
+        </div>
+      </div>
+
+      <!-- Card: Código Playwright Gerado -->
+      <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+        <div class="code-container">
+          <div class="code-header">
+            <div class="card-title" style="margin-bottom: 0;">💻 Código Playwright (TypeScript)</div>
+            <button class="btn btn-secondary" id="btn-copy-code" disabled>Copiar Código</button>
+          </div>
+          <div class="code-box-wrapper">
+            <div class="code-box" id="code-box">/* O código gerado aparecerá aqui após o término da gravação ou execução */</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // State management
+    let isConnected = false;
+    let currentSession = 'idle'; // 'idle', 'running_agent', 'recording_copilot'
+    let eventSource = null;
+
+    // Elements
+    const connectionBadge = document.getElementById('connection-badge');
+    const connectionText = document.getElementById('connection-text');
+    const cdpPortInput = document.getElementById('cdp-port');
+    const btnConnect = document.getElementById('btn-connect');
+    
+    const controlCard = document.getElementById('control-card');
+    const agentObjective = document.getElementById('agent-objective');
+    const maxSteps = document.getElementById('max-steps');
+    
+    const btnStartAgent = document.getElementById('btn-start-agent');
+    const btnStartCopilot = document.getElementById('btn-start-copilot');
+    const btnStop = document.getElementById('btn-stop');
+    
+    const consoleBox = document.getElementById('console-box');
+    const btnClearLogs = document.getElementById('btn-clear-logs');
+    
+    const stepsContainer = document.getElementById('steps-container');
+    const codeBox = document.getElementById('code-box');
+    const btnCopyCode = document.getElementById('btn-copy-code');
+
+    // Init
+    checkServerStatus();
+    setupEventSource();
+
+    // Event Listeners
+    btnConnect.addEventListener('click', connectCdp);
+    btnStartAgent.addEventListener('click', startAgent);
+    btnStartCopilot.addEventListener('click', startCopilot);
+    btnStop.addEventListener('click', stopSession);
+    btnClearLogs.addEventListener('click', () => {
+      consoleBox.innerHTML = '';
+    });
+    btnCopyCode.addEventListener('click', copyCodeToClipboard);
+
+    // Methods
+    function addLog(message, level = 'info') {
+      const line = document.createElement('div');
+      line.className = `log-line log-${level}`;
+      // Substitui novas linhas por quebras para exibição correta
+      line.textContent = message;
+      consoleBox.appendChild(line);
+      consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    function updateUiState() {
+      // Badge de conexão
+      if (isConnected) {
+        connectionBadge.className = 'status-badge status-connected';
+        connectionText.textContent = `Conectado (Porta ${cdpPortInput.value})`;
+        cdpPortInput.disabled = true;
+        btnConnect.textContent = 'Reconectar';
+      } else {
+        connectionBadge.className = 'status-badge status-disconnected';
+        connectionText.textContent = 'Desconectado';
+        cdpPortInput.disabled = false;
+        btnConnect.textContent = 'Conectar';
+      }
+
+      // Sessão e Botões
+      if (currentSession === 'idle') {
+        controlCard.classList.remove('pulse-animation');
+        btnStartAgent.disabled = !isConnected;
+        btnStartCopilot.disabled = !isConnected;
+        btnStop.disabled = true;
+        
+        agentObjective.disabled = false;
+        maxSteps.disabled = false;
+      } else {
+        controlCard.classList.add('pulse-animation');
+        btnStartAgent.disabled = true;
+        btnStartCopilot.disabled = true;
+        btnStop.disabled = false;
+        
+        agentObjective.disabled = true;
+        maxSteps.disabled = true;
+      }
+    }
+
+    async function checkServerStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        
+        isConnected = data.connected;
+        currentSession = data.sessionType;
+        if (data.cdpPort) {
+          cdpPortInput.value = data.cdpPort;
+        }
+        
+        updateUiState();
+        if (isConnected) {
+          fetchCurrentScript();
+        }
+      } catch (err) {
+        addLog(`Erro ao checar status do servidor: ${err.message}`, 'error');
+      }
+    }
+
+    function setupEventSource() {
+      if (eventSource) {
+        eventSource.close();
+      }
+
+      eventSource = new EventSource('/api/events');
+
+      eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'status') {
+          currentSession = data.status;
+          updateUiState();
+        } else if (data.type === 'log') {
+          addLog(data.message, data.level);
+        } else if (data.type === 'step') {
+          appendStepCard(data.step);
+          fetchCurrentScript(); // Atualiza o box de código em tempo real
+        }
+      };
+
+      eventSource.onerror = (err) => {
+        addLog('Conexão SSE perdida. Tentando reconectar...', 'warn');
+        eventSource.close();
+        setTimeout(setupEventSource, 3000);
+      };
+    }
+
+    async function connectCdp() {
+      const port = cdpPortInput.value;
+      btnConnect.disabled = true;
+      
+      try {
+        addLog(`Conectando à porta ${port}...`, 'system');
+        const res = await fetch('/api/connect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ port })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          isConnected = true;
+          addLog(`Navegador conectado com sucesso na porta ${port}`, 'info');
+        } else {
+          isConnected = false;
+          addLog(`Falha na conexão: ${data.error}`, 'error');
+        }
+      } catch (err) {
+        isConnected = false;
+        addLog(`Erro de rede ao conectar: ${err.message}`, 'error');
+      } finally {
+        updateUiState();
+      }
+    }
+
+    async function startAgent() {
+      const objective = agentObjective.value.trim();
+      const steps = maxSteps.value;
+
+      if (!objective) {
+        alert('Por favor, digite um objetivo para o agente autônomo.');
+        return;
+      }
+
+      // Limpa dados de sessões anteriores
+      stepsContainer.innerHTML = '';
+      codeBox.textContent = '/* O agente autônomo está sendo executado... acompanhe os logs */';
+      btnCopyCode.disabled = true;
+
+      try {
+        addLog('Iniciando Agente Autônomo...', 'system');
+        const res = await fetch('/api/agent/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ objective, maxSteps: steps })
+        });
+        const data = await res.json();
+        if (!data.success) {
+          addLog(`Erro ao iniciar agente: ${data.error}`, 'error');
+        }
+      } catch (err) {
+        addLog(`Erro ao iniciar agente: ${err.message}`, 'error');
+      }
+    }
+
+    async function startCopilot() {
+      stepsContainer.innerHTML = '';
+      codeBox.textContent = '/* O co-piloto está escutando suas ações no Chrome... realize ações para ver o código */';
+      btnCopyCode.disabled = true;
+
+      try {
+        addLog('Iniciando modo Co-piloto de gravação...', 'system');
+        const res = await fetch('/api/copilot/start', {
+          method: 'POST'
+        });
+        const data = await res.json();
+        if (!data.success) {
+          addLog(`Erro ao iniciar co-piloto: ${data.error}`, 'error');
+        }
+      } catch (err) {
+        addLog(`Erro ao iniciar co-piloto: ${err.message}`, 'error');
+      }
+    }
+
+    async function stopSession() {
+      try {
+        addLog('Finalizando sessão ativa...', 'system');
+        const res = await fetch('/api/session/stop', {
+          method: 'POST'
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          currentSession = 'idle';
+          updateUiState();
+          
+          // Renderiza os passos e o código final
+          renderSteps(data.steps);
+          codeBox.textContent = data.code || '/* Nenhum código gerado */';
+          btnCopyCode.disabled = !data.code;
+          addLog('Sessão finalizada. Script do Playwright atualizado.', 'system');
+        }
+      } catch (err) {
+        addLog(`Erro ao parar sessão: ${err.message}`, 'error');
+      }
+    }
+
+    async function fetchCurrentScript() {
+      try {
+        const res = await fetch('/api/script');
+        const data = await res.json();
+        if (data.code) {
+          codeBox.textContent = data.code;
+          btnCopyCode.disabled = false;
+        }
+        if (data.steps && data.steps.length > 0) {
+          renderSteps(data.steps);
+        }
+      } catch (err) {
+        console.error('Erro ao buscar script atual:', err);
+      }
+    }
+
+    function renderSteps(steps) {
+      stepsContainer.innerHTML = '';
+      if (!steps || steps.length === 0) {
+        stepsContainer.innerHTML = '<div class="empty-steps">Nenhum passo gravado na sessão atual.</div>';
+        return;
+      }
+      steps.forEach(appendStepCard);
+    }
+
+    function appendStepCard(step) {
+      // Remove placeholder vazio se existir
+      const placeholder = stepsContainer.querySelector('.empty-steps');
+      if (placeholder) {
+        placeholder.remove();
+      }
+
+      const card = document.createElement('div');
+      card.className = 'step-card';
+      
+      const badge = document.createElement('span');
+      badge.className = `step-badge badge-${step.action}`;
+      badge.textContent = step.action;
+      
+      const text = document.createElement('span');
+      text.className = 'step-text';
+      text.textContent = step.description || '';
+
+      card.appendChild(badge);
+      card.appendChild(text);
+
+      if (step.selector) {
+        const selector = document.createElement('span');
+        selector.className = 'step-selector';
+        selector.textContent = step.selector;
+        selector.title = step.selector;
+        card.appendChild(selector);
+      }
+
+      stepsContainer.appendChild(card);
+      stepsContainer.scrollTop = stepsContainer.scrollHeight;
+    }
+
+    function copyCodeToClipboard() {
+      const code = codeBox.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const prevText = btnCopyCode.textContent;
+        btnCopyCode.textContent = 'Copiado! ✓';
+        btnCopyCode.style.color = 'var(--accent-green)';
+        setTimeout(() => {
+          btnCopyCode.textContent = prevText;
+          btnCopyCode.style.color = '';
+        }, 2000);
+      }).catch(err => {
+        alert('Falha ao copiar código: ' + err.message);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -100,3 +100,81 @@ resource "aws_appautoscaling_policy" "scale_up" {
     }
   }
 }
+
+# ============================================================
+# ECS Task & Service for Automatos-IA
+# ============================================================
+
+resource "aws_ecs_task_definition" "automatos_ia" {
+  family                   = "${var.environment}-automatos-ia"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "3072"
+
+  execution_role_arn = var.execution_role_arn
+  task_role_arn      = var.execution_role_arn
+
+  container_definitions = jsonencode([
+    {
+      name  = "automatos-ia"
+      image = "${var.automatos_ia_ecr_repository_uri}:latest"
+      portMappings = [
+        {
+          containerPort = 3001
+          hostPort      = 3001
+        }
+      ]
+      environment = [
+        { name = "NODE_ENV", value = "production" },
+        { name = "PORT",     value = "3001" }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.automatos_ia.name
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = "automatos-ia"
+        }
+      }
+    }
+  ])
+}
+
+resource "aws_cloudwatch_log_group" "automatos_ia" {
+  name              = "/ecs/${var.environment}-automatos-ia"
+  retention_in_days = 30
+}
+
+resource "aws_ecs_service" "automatos_ia" {
+  name            = "${var.environment}-automatos-ia-service"
+  cluster         = aws_ecs_cluster.worker.id
+  task_definition = aws_ecs_task_definition.automatos_ia.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = length(var.subnet_ids) > 0 ? var.subnet_ids : data.aws_subnets.default[0].ids
+    assign_public_ip = true
+    security_groups  = [aws_security_group.automatos_ia_sg.id]
+  }
+}
+
+resource "aws_security_group" "automatos_ia_sg" {
+  name   = "${var.environment}-automatos-ia-sg"
+  vpc_id = length(var.subnet_ids) > 0 ? var.vpc_id : data.aws_vpc.default[0].id
+
+  ingress {
+    from_port   = 3001
+    to_port     = 3001
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

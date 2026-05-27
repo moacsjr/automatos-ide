@@ -31,8 +31,9 @@ output "github_actions_role_arn" {
 output "secrets_created" {
   description = "GitHub secrets that were created"
   value = {
-    AWS_ROLE_ARN   = github_actions_secret.aws_role_arn.secret_name
-    AWS_REGION     = github_actions_secret.aws_region.secret_name
-    ECR_REPOSITORY = github_actions_secret.ecr_repository.secret_name
+    AWS_ROLE_ARN                = github_actions_secret.aws_role_arn.secret_name
+    AWS_REGION                  = github_actions_secret.aws_region.secret_name
+    ECR_REPOSITORY              = github_actions_secret.ecr_repository.secret_name
+    ECR_REPOSITORY_AUTOMATOS_IA = github_actions_secret.ecr_repository_automatos_ia.secret_name
   }
 }

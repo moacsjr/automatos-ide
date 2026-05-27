@@ -80,6 +80,44 @@ resource "aws_ecr_lifecycle_policy" "rpa_worker" {
 }
 
 # ============================================================
+# ECR — Docker image registry for automatos-ia
+# ============================================================
+
+resource "aws_ecr_repository" "automatos_ia" {
+  name                 = "automatos-ia"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+}
+
+resource "aws_ecr_lifecycle_policy" "automatos_ia" {
+  repository = aws_ecr_repository.automatos_ia.name
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Keep last 10 images, expire older"
+        selection = {
+          tagStatus   = "any"
+          countType   = "imageCountMoreThan"
+          countNumber = 10
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
+  })
+}
+
+# ============================================================
 # SQS — Job queue (API Gateway enqueues, RPA Worker consumes)
 # ============================================================
 
@@ -199,7 +237,10 @@ resource "aws_iam_role_policy" "github_actions_policy" {
           "ecr:CompleteLayerUpload",
           "ecr:PutImage"
         ]
-        Resource = aws_ecr_repository.rpa_worker.arn
+        Resource = [
+          aws_ecr_repository.rpa_worker.arn,
+          aws_ecr_repository.automatos_ia.arn
+        ]
       },
       {
         Effect = "Allow"
@@ -371,12 +412,13 @@ module "api_gateway" {
 module "worker" {
   source = "./modules/worker"
 
-  environment        = var.environment
-  ecr_repository_uri = aws_ecr_repository.rpa_worker.repository_url
-  job_queue_url      = aws_sqs_queue.workflow_queue.url
-  execution_role_arn = aws_iam_role.rpa_execution_role.arn
-  vpc_id             = var.vpc_id
-  subnet_ids         = var.subnet_ids
+  environment                     = var.environment
+  ecr_repository_uri              = aws_ecr_repository.rpa_worker.repository_url
+  automatos_ia_ecr_repository_uri = aws_ecr_repository.automatos_ia.repository_url
+  job_queue_url                   = aws_sqs_queue.workflow_queue.url
+  execution_role_arn              = aws_iam_role.rpa_execution_role.arn
+  vpc_id                          = var.vpc_id
+  subnet_ids                      = var.subnet_ids
 }
 
 # ============================================================
@@ -409,6 +451,12 @@ resource "github_actions_secret" "ecr_repository" {
   repository      = var.github_repo
   secret_name     = "ECR_REPOSITORY"
   plaintext_value = aws_ecr_repository.rpa_worker.name
+}
+
+resource "github_actions_secret" "ecr_repository_automatos_ia" {
+  repository      = var.github_repo
+  secret_name     = "ECR_REPOSITORY_AUTOMATOS_IA"
+  plaintext_value = aws_ecr_repository.automatos_ia.name
 }
 
 resource "github_actions_environment_secret" "aws_role_arn_env" {

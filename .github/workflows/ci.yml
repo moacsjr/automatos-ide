@@ -21,6 +21,7 @@ jobs:
       - run: npx tsc --noEmit --project apps/web-platform/tsconfig.json
       - run: npx tsc --noEmit --project apps/api-gateway/tsconfig.json
       - run: npx tsc --noEmit --project apps/rpa-worker/tsconfig.json
+      - run: npx tsc --noEmit --project apps/automatos-ia/tsconfig.json
 
   test:
     name: Tests
@@ -50,7 +51,7 @@ jobs:
           node-version: 22
           cache: 'npm'
       - run: npm ci
-      - run: npx nx run-many -t build --projects=api-gateway,rpa-worker,web-platform
+      - run: npx nx run-many -t build --projects=api-gateway,rpa-worker,web-platform,automatos-ia
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
