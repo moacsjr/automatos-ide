@@ -28,6 +28,11 @@ output "github_actions_role_arn" {
   value       = aws_iam_role.github_actions_role.arn
 }
 
+output "web_platform_url" {
+  description = "Static Website URL for web-platform"
+  value       = aws_s3_bucket_website_configuration.web_platform.website_endpoint
+}
+
 output "secrets_created" {
   description = "GitHub secrets that were created"
   value = {
@@ -35,5 +40,6 @@ output "secrets_created" {
     AWS_REGION                  = github_actions_secret.aws_region.secret_name
     ECR_REPOSITORY              = github_actions_secret.ecr_repository.secret_name
     ECR_REPOSITORY_AUTOMATOS_IA = github_actions_secret.ecr_repository_automatos_ia.secret_name
+    WEB_PLATFORM_BUCKET         = github_actions_secret.web_platform_bucket.secret_name
   }
 }

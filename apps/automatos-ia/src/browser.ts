@@ -58,22 +58,11 @@ export async function launchBrowser(): Promise<{
     process.env.NODE_ENV === "production" || process.env.HEADLESS === "true";
   console.log(`Lançando navegador Chrome (headless: ${isHeadless})...`);
   let browser;
-  try {
-    // Tenta usar o canal 'chrome' instalado no sistema
-    browser = await chromium.launch({
-      headless: isHeadless,
-      channel: "chrome",
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--remote-debugging-port=9222",
-      ],
-    });
-  } catch (err) {
-    console.warn(
-      "⚠️ Aviso: Falha ao lançar com canal 'chrome'. Tentando com o Chromium padrão do Playwright...",
-      err,
-    );
+
+  // Em ambiente de produção (contêiner), usamos diretamente o Chromium padrão pré-instalado
+  const useDefaultChromium = process.env.NODE_ENV === "production";
+
+  if (useDefaultChromium) {
     browser = await chromium.launch({
       headless: isHeadless,
       args: [
@@ -82,6 +71,32 @@ export async function launchBrowser(): Promise<{
         "--remote-debugging-port=9222",
       ],
     });
+  } else {
+    try {
+      // Tenta usar o canal 'chrome' instalado localmente no sistema do desenvolvedor
+      browser = await chromium.launch({
+        headless: isHeadless,
+        channel: "chrome",
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--remote-debugging-port=9222",
+        ],
+      });
+    } catch (err) {
+      console.warn(
+        "⚠️ Aviso: Falha ao lançar com canal 'chrome'. Tentando com o Chromium padrão do Playwright...",
+        err,
+      );
+      browser = await chromium.launch({
+        headless: isHeadless,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--remote-debugging-port=9222",
+        ],
+      });
+    }
   }
 
   const context = await browser.newContext();

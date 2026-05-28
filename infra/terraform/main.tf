@@ -308,7 +308,9 @@ resource "aws_iam_role_policy" "github_actions_policy" {
         ]
         Resource = [
           "arn:aws:s3:::rpa-terraform-state-3778",
-          "arn:aws:s3:::rpa-terraform-state-3778/*"
+          "arn:aws:s3:::rpa-terraform-state-3778/*",
+          "arn:aws:s3:::${var.environment}-automatos-web-platform-${local.account_id}",
+          "arn:aws:s3:::${var.environment}-automatos-web-platform-${local.account_id}/*"
         ]
       },
       {
@@ -442,6 +444,55 @@ module "worker" {
 }
 
 # ============================================================
+# S3 — Static Website Hosting for web-platform
+# ============================================================
+
+resource "aws_s3_bucket" "web_platform" {
+  bucket        = "${var.environment}-automatos-web-platform-${local.account_id}"
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_website_configuration" "web_platform" {
+  bucket = aws_s3_bucket.web_platform.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "index.html"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "web_platform" {
+  bucket = aws_s3_bucket.web_platform.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_policy" "web_platform" {
+  bucket = aws_s3_bucket.web_platform.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.web_platform.arn}/*"
+      }
+    ]
+  })
+
+  depends_on = [aws_s3_bucket_public_access_block.web_platform]
+}
+
+# ============================================================
 # GitHub Secrets — created automatically on terraform apply
 # ============================================================
 
@@ -477,6 +528,12 @@ resource "github_actions_secret" "ecr_repository_automatos_ia" {
   repository      = var.github_repo
   secret_name     = "ECR_REPOSITORY_AUTOMATOS_IA"
   plaintext_value = aws_ecr_repository.automatos_ia.name
+}
+
+resource "github_actions_secret" "web_platform_bucket" {
+  repository      = var.github_repo
+  secret_name     = "WEB_PLATFORM_BUCKET"
+  plaintext_value = aws_s3_bucket.web_platform.id
 }
 
 resource "github_actions_environment_secret" "aws_role_arn_env" {

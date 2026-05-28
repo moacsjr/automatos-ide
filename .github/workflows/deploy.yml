@@ -33,7 +33,14 @@ jobs:
       - name: Install & Build
         run: |
           npm ci
-          npx nx run-many -t build --projects=rpa-worker,automatos-ia
+          npx nx run-many -t build --projects=rpa-worker,automatos-ia,web-platform
+
+      - name: Upload Web Platform Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-platform-build
+          path: dist/apps/web-platform/
+          retention-days: 1
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -110,3 +117,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: terraform apply -auto-approve tfplan
+
+      - name: Download Web Platform Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-platform-build
+          path: dist/apps/web-platform/
+
+      - name: Deploy Frontend to S3
+        run: |
+          aws s3 sync dist/apps/web-platform/ s3://${{ secrets.WEB_PLATFORM_BUCKET }} --delete
