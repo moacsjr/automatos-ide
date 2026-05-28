@@ -406,6 +406,15 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
           aws_ecr_repository.rpa_worker.arn,
           aws_ecr_repository.automatos_ia.arn
         ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecs:ListTasks",
+          "ecs:DescribeTasks",
+          "ec2:DescribeNetworkInterfaces"
+        ]
+        Resource = "*"
       }
     ]
   })
@@ -420,6 +429,7 @@ module "api_gateway" {
 
   environment         = var.environment
   workflow_table_name = aws_dynamodb_table.workflows.name
+  scripts_table_name  = aws_dynamodb_table.scripts.name
   job_queue_url       = aws_sqs_queue.workflow_queue.url
   execution_role_arn  = aws_iam_role.rpa_execution_role.arn
   vpc_id              = var.vpc_id

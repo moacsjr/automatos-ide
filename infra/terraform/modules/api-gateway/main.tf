@@ -20,7 +20,9 @@ resource "aws_lambda_function" "api_handler" {
   environment {
     variables = {
       WORKFLOW_TABLE = var.workflow_table_name
+      SCRIPTS_TABLE  = var.scripts_table_name
       JOB_QUEUE_URL  = var.job_queue_url
+      ENVIRONMENT    = var.environment
       NODE_ENV       = "production"
     }
   }
@@ -52,6 +54,13 @@ resource "aws_security_group" "lambda_sg" {
 resource "aws_apigatewayv2_api" "api" {
   name          = "${var.environment}-rpa-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_headers = ["*"]
+    allow_methods = ["*"]
+    allow_origins = ["*"]
+    max_age       = 300
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda" {
@@ -62,15 +71,9 @@ resource "aws_apigatewayv2_integration" "lambda" {
   payload_format_version = "2.0"
 }
 
-resource "aws_apigatewayv2_route" "post_workflows" {
+resource "aws_apigatewayv2_route" "default" {
   api_id    = aws_apigatewayv2_api.api.id
-  route_key = "POST /workflows"
-  target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
-}
-
-resource "aws_apigatewayv2_route" "get_workflow" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "GET /workflows/{workflowId}"
+  route_key = "$default"
   target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
 }
 

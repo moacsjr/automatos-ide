@@ -23,3 +23,7 @@ variable "subnet_ids" {
   type    = list(string)
   default = []
 }
+
+variable "scripts_table_name" {
+  type = string
+}

@@ -33,10 +33,7 @@ jobs:
 
       - name: Install & Build
         env:
-          VITE_AWS_ACCESS_KEY_ID: ${{ secrets.VITE_AWS_ACCESS_KEY_ID }}
-          VITE_AWS_SECRET_ACCESS_KEY: ${{ secrets.VITE_AWS_SECRET_ACCESS_KEY }}
-          VITE_AWS_REGION: ${{ env.AWS_REGION }}
-          VITE_SCRIPTS_TABLE: ${{ secrets.VITE_SCRIPTS_TABLE || 'staging-rpa-scripts' }}
+          VITE_API_URL: 'https://8agnfud1gh.execute-api.us-east-1.amazonaws.com'
           VITE_APP_VERSION: ${{ github.sha }}
         run: |
           npm ci

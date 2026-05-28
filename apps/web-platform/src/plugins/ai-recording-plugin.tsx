@@ -15,7 +15,13 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
-const API_BASE = "http://localhost:3001";
+const isLocal =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://8agnfud1gh.execute-api.us-east-1.amazonaws.com";
+const API_BASE = isLocal ? "http://localhost:3001" : `${API_BASE_URL}/ia`;
 
 interface TimelineStep {
   action: string;
@@ -162,80 +168,112 @@ export function AiRecordingComponent({
 
   // Connect or disconnect the SSE EventSource
   const setupEventSource = useCallback(() => {
+    let active = true;
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
     }
 
-    const source = new EventSource(`${API_BASE}/api/events`);
-    eventSourceRef.current = source;
+    const init = async () => {
+      let sseUrl = "http://localhost:3001/api/events";
 
-    source.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-
-        if (data.type === "frame") {
-          setFrameSrc(`data:image/jpeg;base64,${data.image}`);
-        } else if (data.type === "status") {
-          setSessionType(data.status);
-        } else if (data.type === "step") {
-          setRecordedSteps((prev) => {
-            // Previne adicionar duplicados se já estiver na lista
-            const stepExists = prev.some(
-              (s) =>
-                s.action === data.step.action &&
-                s.selector === data.step.selector &&
-                s.value === data.step.value &&
-                s.description === data.step.description,
-            );
-            if (stepExists) return prev;
-            return [...prev, data.step];
-          });
-          // Ao registrar um passo, vamos buscar o código mais atualizado do script
-          fetch(`${API_BASE}/api/script`)
-            .then((res) => res.json())
-            .then((resData) => {
-              if (resData.code) {
-                setGeneratedCode(resData.code);
-              }
-            })
-            .catch(() => {});
-        } else if (data.type === "log") {
-          const isThought =
-            data.message.includes("🧠") || data.message.includes("Pensando");
-          setLogs((prev) => [
-            ...prev,
-            {
-              sender: isThought ? "ai-thought" : "assistant",
-              text: data.message,
-            },
-          ]);
-        } else if (data.type === "error") {
-          setLogs((prev) => [...prev, { sender: "error", text: data.message }]);
-        } else if (data.type === "warn") {
-          setLogs((prev) => [
-            ...prev,
-            { sender: "system", text: `⚠️ ${data.message}` },
-          ]);
+      if (!isLocal) {
+        try {
+          const res = await fetch(`${API_BASE_URL}/ia-host`);
+          const data = await res.json();
+          if (active && data.publicIp) {
+            sseUrl = `http://${data.publicIp}:3001/api/events`;
+          }
+        } catch (err) {
+          console.error(
+            "Failed to fetch IA public host, falling back to localhost:",
+            err,
+          );
         }
-      } catch (err) {
-        console.error("Erro ao decodificar evento SSE:", err);
       }
+
+      if (!active) return;
+
+      const source = new EventSource(sseUrl);
+      eventSourceRef.current = source;
+
+      source.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+
+          if (data.type === "frame") {
+            setFrameSrc(`data:image/jpeg;base64,${data.image}`);
+          } else if (data.type === "status") {
+            setSessionType(data.status);
+          } else if (data.type === "step") {
+            setRecordedSteps((prev) => {
+              // Previne adicionar duplicados se já estiver na lista
+              const stepExists = prev.some(
+                (s) =>
+                  s.action === data.step.action &&
+                  s.selector === data.step.selector &&
+                  s.value === data.step.value &&
+                  s.description === data.step.description,
+              );
+              if (stepExists) return prev;
+              return [...prev, data.step];
+            });
+            // Ao registrar um passo, vamos buscar o código mais atualizado do script
+            fetch(`${API_BASE}/api/script`)
+              .then((res) => res.json())
+              .then((resData) => {
+                if (resData.code) {
+                  setGeneratedCode(resData.code);
+                }
+              })
+              .catch(() => {});
+          } else if (data.type === "log") {
+            const isThought =
+              data.message.includes("🧠") || data.message.includes("Pensando");
+            setLogs((prev) => [
+              ...prev,
+              {
+                sender: isThought ? "ai-thought" : "assistant",
+                text: data.message,
+              },
+            ]);
+          } else if (data.type === "error") {
+            setLogs((prev) => [
+              ...prev,
+              { sender: "error", text: data.message },
+            ]);
+          } else if (data.type === "warn") {
+            setLogs((prev) => [
+              ...prev,
+              { sender: "system", text: `⚠️ ${data.message}` },
+            ]);
+          }
+        } catch (err) {
+          console.error("Erro ao decodificar evento SSE:", err);
+        }
+      };
+
+      source.onerror = () => {
+        console.warn("SSE desconectado. Tentando reconectar...");
+        setIsConnected(false);
+      };
     };
 
-    source.onerror = () => {
-      console.warn("SSE desconectado. Tentando reconectar...");
-      setIsConnected(false);
+    init();
+
+    return () => {
+      active = false;
     };
   }, []);
 
   // Trigger initial checks and connection
   useEffect(() => {
     checkStatus();
-    setupEventSource();
+    const cleanupEventSource = setupEventSource();
 
     const interval = setInterval(checkStatus, 3000);
     return () => {
       clearInterval(interval);
+      cleanupEventSource();
       eventSourceRef.current?.close();
     };
   }, [checkStatus, setupEventSource]);

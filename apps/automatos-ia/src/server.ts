@@ -15,7 +15,8 @@ import { PlaywrightGenerator } from "./generator/playwright.js";
 import { agentEvents } from "./utils/logger.js";
 import { healPlaywrightScript } from "./agent/llm.js";
 
-dotenv.config();
+// Carrega as variáveis do arquivo .env localizado na raiz do módulo automatos-ia
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const app = express();
 const PORT = process.env.PORT || 3001;

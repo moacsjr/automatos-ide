@@ -1,80 +1,65 @@
 /// <reference types="vite/client" />
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  DynamoDBDocumentClient,
-  ScanCommand,
-  GetCommand,
-  PutCommand,
-  DeleteCommand,
-} from "@aws-sdk/lib-dynamodb";
 import { Script, ScriptSchema } from "./schema";
 
-const region = import.meta.env.VITE_AWS_REGION || "us-east-2";
-const accessKeyId = import.meta.env.VITE_AWS_ACCESS_KEY_ID || "";
-const secretAccessKey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || "";
-const tableName = import.meta.env.VITE_SCRIPTS_TABLE || "rpa-scripts";
-
-let docClient: DynamoDBDocumentClient | null = null;
-
-if (accessKeyId && secretAccessKey) {
-  const client = new DynamoDBClient({
-    region,
-    credentials: {
-      accessKeyId,
-      secretAccessKey,
-    },
-  });
-  docClient = DynamoDBDocumentClient.from(client);
-}
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://8agnfud1gh.execute-api.us-east-1.amazonaws.com";
 
 export class DynamoDbScriptsService {
-  private getClient(): DynamoDBDocumentClient {
-    if (!docClient) {
-      throw new Error(
-        "AWS Credentials are not configured. Please define VITE_AWS_ACCESS_KEY_ID and VITE_AWS_SECRET_ACCESS_KEY in your web-platform/.env file.",
-      );
-    }
-    return docClient;
-  }
-
   async list(): Promise<Script[]> {
-    const client = this.getClient();
-    const command = new ScanCommand({ TableName: tableName });
-    const response = await client.send(command);
-    const items = response.Items || [];
-    return items.map((item) => ScriptSchema.parse(item));
+    const res = await fetch(`${API_BASE_URL}/scripts`);
+    if (!res.ok) {
+      throw new Error(`Erro ao listar scripts: ${res.statusText}`);
+    }
+    const items = await res.json();
+    return items.map((item: any) => ScriptSchema.parse(item));
   }
 
   async get(id: string): Promise<Script> {
-    const client = this.getClient();
-    const command = new GetCommand({ TableName: tableName, Key: { id } });
-    const response = await client.send(command);
-    if (!response.Item) {
+    const res = await fetch(`${API_BASE_URL}/scripts/${id}`);
+    if (!res.ok) {
       throw new Error(`Script com ID ${id} não encontrado.`);
     }
-    return ScriptSchema.parse(response.Item);
+    const item = await res.json();
+    return ScriptSchema.parse(item);
   }
 
   async create(data: Omit<Script, "id">): Promise<Script> {
-    const client = this.getClient();
-    const id = self.crypto.randomUUID();
-    const script: Script = ScriptSchema.parse({ ...data, id });
-    const command = new PutCommand({ TableName: tableName, Item: script });
-    await client.send(command);
-    return script;
+    const res = await fetch(`${API_BASE_URL}/scripts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error(`Erro ao criar script: ${res.statusText}`);
+    }
+    const item = await res.json();
+    return ScriptSchema.parse(item);
   }
 
   async update(id: string, data: Omit<Script, "id">): Promise<Script> {
-    const client = this.getClient();
-    const script: Script = ScriptSchema.parse({ ...data, id });
-    const command = new PutCommand({ TableName: tableName, Item: script });
-    await client.send(command);
-    return script;
+    const res = await fetch(`${API_BASE_URL}/scripts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error(`Erro ao atualizar script: ${res.statusText}`);
+    }
+    const item = await res.json();
+    return ScriptSchema.parse(item);
   }
 
   async delete(id: string): Promise<void> {
-    const client = this.getClient();
-    const command = new DeleteCommand({ TableName: tableName, Key: { id } });
-    await client.send(command);
+    const res = await fetch(`${API_BASE_URL}/scripts/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      throw new Error(`Erro ao excluir script: ${res.statusText}`);
+    }
   }
 }
