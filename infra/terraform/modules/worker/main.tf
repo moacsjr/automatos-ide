@@ -41,6 +41,13 @@ resource "aws_ecs_task_definition" "worker" {
         { name = "JOB_QUEUE_URL", value = var.job_queue_url },
         { name = "AWS_REGION",    value = "us-east-1" }
       ]
+      healthCheck = {
+        command     = ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -129,6 +136,13 @@ resource "aws_ecs_task_definition" "automatos_ia" {
         { name = "NODE_ENV", value = "production" },
         { name = "PORT",     value = "3001" }
       ]
+      healthCheck = {
+        command     = ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3001/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
       logConfiguration = {
         logDriver = "awslogs"
         options = {

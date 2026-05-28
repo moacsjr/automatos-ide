@@ -1,3 +1,4 @@
+import http from "http";
 import {
   SQSClient,
   ReceiveMessageCommand,
@@ -49,6 +50,23 @@ async function pollQueue(): Promise<void> {
 }
 
 async function main() {
+  const HEALTH_PORT = process.env.PORT || 3000;
+  const server = http.createServer((req, res) => {
+    if (req.url === "/health") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ status: "ok" }));
+    } else {
+      res.writeHead(404);
+      res.end();
+    }
+  });
+
+  server.listen(HEALTH_PORT, () => {
+    console.log(
+      `[worker] health check server listening on port ${HEALTH_PORT}`,
+    );
+  });
+
   console.log("[worker] starting RPA worker loop");
   while (true) {
     await pollQueue();

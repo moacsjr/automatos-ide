@@ -33,6 +33,11 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 // Servir os arquivos estáticos do Dashboard Web
 const publicPath = path.resolve("public");
 app.use(express.static(publicPath));
