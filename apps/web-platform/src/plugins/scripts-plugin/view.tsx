@@ -17,13 +17,22 @@ export function ScriptsCrudComponent({
   // Modais
   const [showFormModal, setShowFormModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
+  const [showExecuteModal, setShowExecuteModal] = useState(false);
 
   // Script sendo editado ou visualizado
   const [activeScript, setActiveScript] = useState<Script | null>(null);
 
+  // Estados para execução de scripts
+  const [scriptToExecute, setScriptToExecute] = useState<Script | null>(null);
+  const [variablesToFill, setVariablesToFill] = useState<string[]>([]);
+  const [variableValues, setVariableValues] = useState<Record<string, string>>(
+    {},
+  );
+  const [executing, setExecuting] = useState(false);
+
   // Código ativo no visualizador de scripts
   const [activeCodeTab, setActiveCodeTab] = useState<
-    "raw" | "compiled" | "automated"
+    "raw" | "compiled" | "automated" | "warnings"
   >("raw");
 
   // Formulário State
@@ -147,6 +156,98 @@ export function ScriptsCrudComponent({
     }
   };
 
+  // Iniciar a execução do script
+  const handleExecuteScript = (script: Script) => {
+    setError(null);
+    setSuccess(null);
+
+    if (!script.automatedScript) {
+      setError("Erro: O script não possui código automatizado para executar.");
+      return;
+    }
+
+    let steps: any;
+    try {
+      steps = JSON.parse(script.automatedScript);
+    } catch (e: any) {
+      setError(
+        `Erro: Código IA/Automatizado não é um JSON válido. (${e.message})`,
+      );
+      return;
+    }
+
+    if (!Array.isArray(steps)) {
+      setError("Erro: O código automatizado deve ser um array JSON de passos.");
+      return;
+    }
+
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i];
+      if (!step.id || !step.action || !step.description) {
+        setError(
+          `Erro no passo ${i + 1}: Cada passo precisa ter 'id', 'action' e 'description'.`,
+        );
+        return;
+      }
+    }
+
+    const regex = /\{\{\s*([a-zA-Z0-9_.-]+)\s*\}\}/g;
+    const matches = Array.from(script.automatedScript.matchAll(regex));
+    const uniqueVars = Array.from(new Set(matches.map((m) => m[1].trim())));
+
+    setScriptToExecute(script);
+    setVariablesToFill(uniqueVars);
+
+    const initialValues: Record<string, string> = {};
+    uniqueVars.forEach((v) => {
+      initialValues[v] = "";
+    });
+    setVariableValues(initialValues);
+    setShowExecuteModal(true);
+  };
+
+  // Confirmar a execução com os placeholders substituídos
+  const handleConfirmExecution = async () => {
+    if (!scriptToExecute || !scriptToExecute.automatedScript) return;
+    setExecuting(true);
+    setError(null);
+
+    try {
+      let scriptJsonText = scriptToExecute.automatedScript;
+      for (const [varName, varValue] of Object.entries(variableValues)) {
+        const escapedVarName = varName.replace(
+          /[-\/\\^$*+?.()|[\]{}]/g,
+          "\\$&",
+        );
+        const regex = new RegExp(`\\{\\{\\s*${escapedVarName}\\s*\\}\\}`, "g");
+        scriptJsonText = scriptJsonText.replace(regex, varValue);
+      }
+
+      const bytes = new TextEncoder().encode(scriptJsonText).length;
+      if (bytes > 64 * 1024) {
+        throw new Error(
+          "O tamanho do script com os valores preenchidos excede o limite de 64KB.",
+        );
+      }
+
+      const resolvedSteps = JSON.parse(scriptJsonText);
+
+      await service.runWorkflow(resolvedSteps);
+
+      setSuccess(
+        `Script "${scriptToExecute.Title}" enviado para a fila de execução com sucesso!`,
+      );
+      setShowExecuteModal(false);
+      setScriptToExecute(null);
+
+      setTimeout(() => setSuccess(null), 4000);
+    } catch (err: any) {
+      setError(`Erro ao iniciar execução: ${err.message}`);
+    } finally {
+      setExecuting(false);
+    }
+  };
+
   // Enviar formulário (Criar ou Atualizar)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -173,10 +274,17 @@ export function ScriptsCrudComponent({
 
     try {
       if (activeScript) {
-        await service.update(activeScript.id, formData);
+        await service.update(activeScript.id, {
+          ...formData,
+          warnings: activeScript.warnings || [],
+          automationScript: activeScript.automationScript,
+        });
         setSuccess(`Script "${formData.Title}" atualizado com sucesso!`);
       } else {
-        await service.create(formData);
+        await service.create({
+          ...formData,
+          warnings: [],
+        });
         setSuccess(`Script "${formData.Title}" cadastrado com sucesso!`);
       }
       setShowFormModal(false);
@@ -418,6 +526,14 @@ export function ScriptsCrudComponent({
                       🤖
                     </span>
                   )}
+                  {script.warnings && script.warnings.length > 0 && (
+                    <span
+                      title={`${script.warnings.length} alerta(s) de tradução`}
+                      style={{ fontSize: "0.7rem", color: "#f59e0b" }}
+                    >
+                      ⚠️
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -463,6 +579,27 @@ export function ScriptsCrudComponent({
                   flexWrap: "wrap",
                 }}
               >
+                {script.automatedScript && (
+                  <button
+                    className="btn-primary"
+                    style={{
+                      flex: 1,
+                      minWidth: "90px",
+                      fontSize: "0.75rem",
+                      padding: "6px",
+                      background: "var(--color-success)",
+                      borderColor: "var(--color-success)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "4px",
+                    }}
+                    onClick={() => handleExecuteScript(script)}
+                    title="Executar Script de Automação"
+                  >
+                    ▶️ Executar
+                  </button>
+                )}
                 <button
                   className="btn-secondary"
                   style={{
@@ -952,6 +1089,26 @@ export function ScriptsCrudComponent({
               >
                 Código IA (automated)
               </button>
+              {activeScript.warnings && activeScript.warnings.length > 0 && (
+                <button
+                  className="tab-btn"
+                  style={{
+                    padding: "4px 10px",
+                    fontSize: "0.75rem",
+                    borderRadius: "4px",
+                    background:
+                      activeCodeTab === "warnings"
+                        ? "#f59e0b"
+                        : "rgba(245, 158, 11, 0.1)",
+                    border: "1px solid rgba(245, 158, 11, 0.3)",
+                    color: activeCodeTab === "warnings" ? "#fff" : "#f59e0b",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setActiveCodeTab("warnings")}
+                >
+                  ⚠️ Alertas ({activeScript.warnings.length})
+                </button>
+              )}
             </div>
 
             {/* Visualizador de Texto de Código */}
@@ -1029,6 +1186,67 @@ export function ScriptsCrudComponent({
                   )}
                 </pre>
               )}
+              {activeCodeTab === "warnings" && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  <div
+                    style={{
+                      background: "rgba(245, 158, 11, 0.1)",
+                      border: "1px solid rgba(245, 158, 11, 0.2)",
+                      borderRadius: "6px",
+                      padding: "12px",
+                      color: "#f59e0b",
+                      fontSize: "0.8rem",
+                      display: "flex",
+                      gap: "8px",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <span>⚠️</span>
+                    <span>
+                      Algumas instruções deste script não puderam ser traduzidas
+                      para os passos estruturados do RPA Core e foram ignoradas
+                      na execução automatizada.
+                    </span>
+                  </div>
+                  {activeScript.warnings && activeScript.warnings.length > 0 ? (
+                    activeScript.warnings.map(
+                      (warning: string, index: number) => (
+                        <div
+                          key={index}
+                          style={{
+                            background: "rgba(255, 255, 255, 0.02)",
+                            borderLeft: "3px solid #f59e0b",
+                            padding: "8px 12px",
+                            fontSize: "0.75rem",
+                            fontFamily: "var(--font-mono)",
+                            color: "#e2e8f0",
+                            borderRadius: "0 4px 4px 0",
+                          }}
+                        >
+                          {warning}
+                        </div>
+                      ),
+                    )
+                  ) : (
+                    <div
+                      style={{
+                        color: "var(--text-secondary)",
+                        fontSize: "0.8rem",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      Nenhum alerta encontrado.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Footer */}
@@ -1062,6 +1280,163 @@ export function ScriptsCrudComponent({
                 }
               >
                 📋 Copiar Código
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE EXECUÇÃO / VARIÁVEIS */}
+      {showExecuteModal && scriptToExecute && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            className="glass-panel animation-fade-in"
+            style={{
+              width: "90%",
+              maxWidth: "500px",
+              maxHeight: "90vh",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.8)",
+              border: "1px solid var(--border-hover)",
+            }}
+          >
+            <div className="panel-header">
+              <h3 className="panel-title">
+                ▶️ Executar Script: {scriptToExecute.Title}
+              </h3>
+              <button
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#8b949e",
+                  fontSize: "1.2rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setShowExecuteModal(false);
+                  setScriptToExecute(null);
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div
+              style={{
+                padding: "20px",
+                overflowY: "auto",
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
+              }}
+            >
+              {variablesToFill.length > 0 ? (
+                <>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    Este script contém variáveis dinâmicas. Por favor, forneça
+                    os valores para cada uma delas para prosseguir com a
+                    execução:
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "12px",
+                    }}
+                  >
+                    {variablesToFill.map((v) => (
+                      <div key={v}>
+                        <label
+                          style={{
+                            fontSize: "0.75rem",
+                            fontWeight: "bold",
+                            display: "block",
+                            marginBottom: "4px",
+                            color: "var(--text-secondary)",
+                          }}
+                        >
+                          {v}
+                        </label>
+                        <input
+                          type="text"
+                          className="control-input"
+                          placeholder={`Digite o valor para {{${v}}}`}
+                          value={variableValues[v] || ""}
+                          onChange={(e) =>
+                            setVariableValues({
+                              ...variableValues,
+                              [v]: e.target.value,
+                            })
+                          }
+                          style={{ width: "100%" }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  Este script não possui variáveis dinâmicas. Deseja enviá-lo
+                  para a fila de execução do rpaWorker agora?
+                </p>
+              )}
+            </div>
+
+            <div
+              style={{
+                padding: "16px 20px",
+                background: "rgba(0,0,0,0.3)",
+                borderTop: "1px solid var(--border-color)",
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "10px",
+              }}
+            >
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  setShowExecuteModal(false);
+                  setScriptToExecute(null);
+                }}
+                disabled={executing}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="btn-primary"
+                style={{
+                  background: "var(--color-success)",
+                  borderColor: "var(--color-success)",
+                }}
+                onClick={handleConfirmExecution}
+                disabled={executing}
+              >
+                {executing ? "⏳ Executando..." : "Confirmar Execução"}
               </button>
             </div>
           </div>

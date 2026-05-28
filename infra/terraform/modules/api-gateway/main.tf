@@ -147,3 +147,60 @@ resource "aws_lambda_permission" "eventbridge" {
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.script_updated.arn
 }
+
+# Lambda function — Script Translator
+resource "aws_lambda_function" "translator" {
+  function_name    = "${var.environment}-rpa-script-translator"
+  role             = var.execution_role_arn
+  handler          = "src/translator.handler"
+  runtime          = "nodejs22.x"
+  timeout          = 30
+  memory_size      = 256
+
+  filename         = data.archive_file.api_lambda_zip.output_path
+  source_code_hash = data.archive_file.api_lambda_zip.output_base64sha256
+
+  environment {
+    variables = {
+      WORKFLOW_TABLE = var.workflow_table_name
+      SCRIPTS_TABLE  = var.scripts_table_name
+      JOB_QUEUE_URL  = var.job_queue_url
+      ENVIRONMENT    = var.environment
+      NODE_ENV       = "production"
+    }
+  }
+
+  dynamic "vpc_config" {
+    for_each = length(var.subnet_ids) > 0 ? [1] : []
+    content {
+      subnet_ids         = var.subnet_ids
+      security_group_ids = [aws_security_group.lambda_sg[0].id]
+    }
+  }
+}
+
+# EventBridge Rule — script compiled / updated events
+resource "aws_cloudwatch_event_rule" "compiled_script_updated" {
+  name        = "${var.environment}-compiled-script-updated-rule"
+  description = "Triggered when a script compiledScript is updated"
+  event_pattern = jsonencode({
+    source      = ["rpa.scripts"]
+    detail-type = ["CompiledScriptUpdated"]
+  })
+}
+
+# EventBridge Target — invoke translator Lambda
+resource "aws_cloudwatch_event_target" "translator_target" {
+  rule      = aws_cloudwatch_event_rule.compiled_script_updated.name
+  target_id = "translator-lambda"
+  arn       = aws_lambda_function.translator.arn
+}
+
+# Lambda Permission — Allow EventBridge to invoke translator Lambda
+resource "aws_lambda_permission" "eventbridge_translator" {
+  statement_id  = "AllowEventBridgeInvokeTranslator"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.translator.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.compiled_script_updated.arn
+}

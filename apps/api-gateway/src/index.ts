@@ -275,10 +275,30 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       );
 
       if (JOB_QUEUE_URL) {
+        const messageBody = JSON.stringify({
+          workflowId,
+          executionId,
+          dataSourceFileKey,
+          steps,
+        });
+
+        // Enforce the 64KB message size limit for SQS payload
+        const bytes = Buffer.byteLength(messageBody, "utf8");
+        if (bytes > 64 * 1024) {
+          return {
+            statusCode: 400,
+            headers: CORS_HEADERS,
+            body: JSON.stringify({
+              error:
+                "O tamanho do script excede o limite de 64KB permitido na fila.",
+            }),
+          };
+        }
+
         await sqs.send(
           new SendMessageCommand({
             QueueUrl: JOB_QUEUE_URL,
-            MessageBody: JSON.stringify({ workflowId, executionId }),
+            MessageBody: messageBody,
           }),
         );
       }

@@ -1,9 +1,14 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  EventBridgeClient,
+  PutEventsCommand,
+} from "@aws-sdk/client-eventbridge";
 
 const docClient = DynamoDBDocumentClient.from(
   new DynamoDBClient({ region: "us-east-1" }),
 );
+const eventbridge = new EventBridgeClient({ region: "us-east-1" });
 
 const SCRIPTS_TABLE = process.env.SCRIPTS_TABLE ?? "rpa-scripts";
 
@@ -238,6 +243,32 @@ export async function handler(event: any): Promise<void> {
     );
 
     console.log(`Successfully updated compiledScript for script ${id}`);
+
+    // Emit CompiledScriptUpdated event to EventBridge
+    try {
+      await eventbridge.send(
+        new PutEventsCommand({
+          Entries: [
+            {
+              Source: "rpa.scripts",
+              DetailType: "CompiledScriptUpdated",
+              Detail: JSON.stringify({
+                id,
+                compiledScript,
+              }),
+            },
+          ],
+        }),
+      );
+      console.log(
+        `EventBridge CompiledScriptUpdated event sent for script ${id}`,
+      );
+    } catch (ebErr) {
+      console.error(
+        `Failed to emit CompiledScriptUpdated event for script ${id}:`,
+        ebErr,
+      );
+    }
   } catch (err) {
     console.error(`Failed to process compilation for script ${id}:`, err);
     throw err;

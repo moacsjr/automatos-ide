@@ -62,4 +62,41 @@ export class DynamoDbScriptsService {
       throw new Error(`Erro ao excluir script: ${res.statusText}`);
     }
   }
+
+  async runWorkflow(steps: any[]): Promise<any> {
+    const workflowId = `wf-${Math.random().toString(36).substring(2, 9)}`;
+    const executionId = `exec-${Math.random().toString(36).substring(2, 9)}`;
+
+    const payload = {
+      workflowId,
+      executionId,
+      dataSourceFileKey: "manual",
+      steps,
+    };
+
+    const payloadStr = JSON.stringify(payload);
+    const bytes = new TextEncoder().encode(payloadStr).length;
+    if (bytes > 64 * 1024) {
+      throw new Error(
+        "O tamanho do script excede o limite de 64KB permitido para execução.",
+      );
+    }
+
+    const res = await fetch(`${API_BASE_URL}/workflows`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: payloadStr,
+    });
+
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(
+        errBody.error || `Erro ao iniciar execução: ${res.statusText}`,
+      );
+    }
+
+    return res.json();
+  }
 }

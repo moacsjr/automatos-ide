@@ -8,6 +8,8 @@ export const ScriptSchema = z.object({
   rawScript: z.string().optional().default(""),
   compiledScript: z.string().optional().default(""),
   automatedScript: z.string().optional().default(""),
+  automationScript: z.any().optional(),
+  warnings: z.array(z.string()).optional().default([]),
 });
 
 export type Script = z.infer<typeof ScriptSchema>;
