@@ -480,13 +480,16 @@ app.post("/api/session/test", async (req, res) => {
 
   res.write("🧪 [Automatos-IA] Iniciando Playwright Test Runner...\n");
 
-  const child = spawn(
-    "npx",
-    ["playwright", "test", "spec/temp_test.spec.ts", "--headed"],
-    {
-      env: { ...process.env, FORCE_COLOR: "0" }, // Desativa cores ANSI nos logs
-    },
-  );
+  const testArgs = ["playwright", "test", "spec/temp_test.spec.ts"];
+  const isHeadless =
+    process.env.NODE_ENV === "production" || process.env.HEADLESS === "true";
+  if (!isHeadless) {
+    testArgs.push("--headed");
+  }
+
+  const child = spawn("npx", testArgs, {
+    env: { ...process.env, FORCE_COLOR: "0" }, // Desativa cores ANSI nos logs
+  });
 
   child.stdout.on("data", (data) => {
     res.write(data.toString());

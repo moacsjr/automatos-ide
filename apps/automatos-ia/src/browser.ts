@@ -54,12 +54,14 @@ export async function launchBrowser(): Promise<{
   context: BrowserContext;
   page: Page;
 }> {
-  console.log("Lançando navegador Chrome...");
+  const isHeadless =
+    process.env.NODE_ENV === "production" || process.env.HEADLESS === "true";
+  console.log(`Lançando navegador Chrome (headless: ${isHeadless})...`);
   let browser;
   try {
     // Tenta usar o canal 'chrome' instalado no sistema
     browser = await chromium.launch({
-      headless: false,
+      headless: isHeadless,
       channel: "chrome",
       args: [
         "--no-sandbox",
@@ -73,7 +75,7 @@ export async function launchBrowser(): Promise<{
       err,
     );
     browser = await chromium.launch({
-      headless: false,
+      headless: isHeadless,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
