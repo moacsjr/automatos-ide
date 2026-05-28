@@ -391,6 +391,25 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
           "logs:PutLogEvents"
         ]
         Resource = "arn:aws:logs:*:*:*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetAuthorizationToken"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage"
+        ]
+        Resource = [
+          aws_ecr_repository.rpa_worker.arn,
+          aws_ecr_repository.automatos_ia.arn
+        ]
       }
     ]
   })
