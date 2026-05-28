@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "worker" {
   container_definitions = jsonencode([
     {
       name  = "rpa-worker"
-      image = "${var.ecr_repository_uri}:latest"
+      image = "${var.ecr_repository_uri}:${var.image_tag}"
       environment = [
         { name = "NODE_ENV",      value = "production" },
         { name = "JOB_QUEUE_URL", value = var.job_queue_url },
@@ -125,7 +125,7 @@ resource "aws_ecs_task_definition" "automatos_ia" {
   container_definitions = jsonencode([
     {
       name  = "automatos-ia"
-      image = "${var.automatos_ia_ecr_repository_uri}:latest"
+      image = "${var.automatos_ia_ecr_repository_uri}:${var.image_tag}"
       portMappings = [
         {
           containerPort = 3001

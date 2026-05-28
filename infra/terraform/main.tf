@@ -438,6 +438,7 @@ module "worker" {
   execution_role_arn              = aws_iam_role.rpa_execution_role.arn
   vpc_id                          = var.vpc_id
   subnet_ids                      = var.subnet_ids
+  image_tag                       = var.image_tag
 }
 
 # ============================================================

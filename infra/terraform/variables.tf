@@ -33,3 +33,10 @@ variable "subnet_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "image_tag" {
+  description = "Docker image tag for ECS deployment"
+  type        = string
+  default     = "latest"
+}
+

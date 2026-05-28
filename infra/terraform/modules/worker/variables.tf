@@ -29,3 +29,10 @@ variable "subnet_ids" {
   type    = list(string)
   default = []
 }
+
+variable "image_tag" {
+  description = "Docker image tag for task definitions"
+  type        = string
+  default     = "latest"
+}
+
