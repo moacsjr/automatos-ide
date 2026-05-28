@@ -10,76 +10,12 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".github/workflows/ci.yml",
-        "hash": "15848888493268273737"
-      },
-      {
-        "file": ".github/workflows/deploy.yml",
-        "hash": "9587671484208349554"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "4540331657760457424"
-      },
-      {
-        "file": ".husky/pre-commit",
-        "hash": "13469207043343598078"
-      },
-      {
-        "file": "CLAUDE.md",
-        "hash": "5415787746193617800"
-      },
-      {
-        "file": "infra/terraform/.terraform.lock.hcl",
-        "hash": "10500727478297678056"
-      },
-      {
-        "file": "infra/terraform/environments/staging/terraform.tfvars",
-        "hash": "2943926040789622921"
-      },
-      {
-        "file": "infra/terraform/main.tf",
-        "hash": "15067577982287837385"
-      },
-      {
-        "file": "infra/terraform/modules/api-gateway/main.tf",
-        "hash": "3708852695701826669"
-      },
-      {
         "file": "infra/terraform/modules/api-gateway/outputs.tf",
         "hash": "7304213074612353422"
       },
       {
-        "file": "infra/terraform/modules/api-gateway/variables.tf",
-        "hash": "14924647147524902970"
-      },
-      {
-        "file": "infra/terraform/modules/worker/main.tf",
-        "hash": "9736953603885436769"
-      },
-      {
-        "file": "infra/terraform/modules/worker/outputs.tf",
-        "hash": "3656155045454587602"
-      },
-      {
-        "file": "infra/terraform/modules/worker/variables.tf",
-        "hash": "17715914106165766877"
-      },
-      {
-        "file": "infra/terraform/outputs.tf",
-        "hash": "16475114564556376537"
-      },
-      {
-        "file": "infra/terraform/scripts/bootstrap-backend.sh",
-        "hash": "10949709096971767778"
-      },
-      {
-        "file": "infra/terraform/variables.tf",
-        "hash": "11566268497036299646"
-      },
-      {
-        "file": "nx.json",
-        "hash": "8959617564160177334"
+        "file": "tsconfig.base.json",
+        "hash": "13459218376556776021"
       },
       {
         "file": "package-lock.json",
@@ -90,16 +26,80 @@
         "hash": "10821769117541953142"
       },
       {
+        "file": "infra/terraform/modules/worker/variables.tf",
+        "hash": "17715914106165766877"
+      },
+      {
+        "file": "infra/terraform/main.tf",
+        "hash": "17792194385454261412"
+      },
+      {
+        "file": "infra/terraform/outputs.tf",
+        "hash": "16475114564556376537"
+      },
+      {
         "file": "spec/PRD.md",
         "hash": "18278954469188276960"
       },
       {
-        "file": "tsconfig.base.json",
-        "hash": "13459218376556776021"
+        "file": ".github/workflows/ci.yml",
+        "hash": "15848888493268273737"
+      },
+      {
+        "file": ".github/workflows/deploy.yml",
+        "hash": "9587671484208349554"
+      },
+      {
+        "file": "infra/terraform/modules/worker/main.tf",
+        "hash": "9736953603885436769"
+      },
+      {
+        "file": "infra/terraform/modules/worker/outputs.tf",
+        "hash": "3656155045454587602"
       },
       {
         "file": "vitest.config.ts",
         "hash": "3869708423167342012"
+      },
+      {
+        "file": "infra/terraform/modules/api-gateway/variables.tf",
+        "hash": "14924647147524902970"
+      },
+      {
+        "file": "nx.json",
+        "hash": "8959617564160177334"
+      },
+      {
+        "file": "infra/terraform/scripts/bootstrap-backend.sh",
+        "hash": "10949709096971767778"
+      },
+      {
+        "file": ".husky/pre-commit",
+        "hash": "13469207043343598078"
+      },
+      {
+        "file": "infra/terraform/modules/api-gateway/main.tf",
+        "hash": "3708852695701826669"
+      },
+      {
+        "file": "infra/terraform/environments/staging/terraform.tfvars",
+        "hash": "2943926040789622921"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "4540331657760457424"
+      },
+      {
+        "file": "infra/terraform/variables.tf",
+        "hash": "11566268497036299646"
+      },
+      {
+        "file": "infra/terraform/.terraform.lock.hcl",
+        "hash": "10500727478297678056"
+      },
+      {
+        "file": "CLAUDE.md",
+        "hash": "5415787746193617800"
       }
     ],
     "projectFileMap": {
@@ -189,7 +189,7 @@
       "rpa-worker": [
         {
           "file": "apps/rpa-worker/Dockerfile",
-          "hash": "12228910377605745315"
+          "hash": "2395713428504884852"
         },
         {
           "file": "apps/rpa-worker/project.json",
@@ -211,7 +211,7 @@
       "automatos-ia": [
         {
           "file": "apps/automatos-ia/Dockerfile",
-          "hash": "15355487312814507491"
+          "hash": "4410602060502567991"
         },
         {
           "file": "apps/automatos-ia/PRD.md",
