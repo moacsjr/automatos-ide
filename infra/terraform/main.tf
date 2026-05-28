@@ -451,6 +451,7 @@ module "worker" {
   vpc_id                          = var.vpc_id
   subnet_ids                      = var.subnet_ids
   image_tag                       = var.image_tag
+  gemini_api_key                  = var.gemini_api_key
 }
 
 # ============================================================

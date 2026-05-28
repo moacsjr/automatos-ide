@@ -36,3 +36,9 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "gemini_api_key" {
+  description = "Gemini API key for automatos-ia"
+  type        = string
+  sensitive   = true
+}
+
