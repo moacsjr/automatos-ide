@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ExtensionPoint } from "@pluggable-js/react";
@@ -18,9 +19,17 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 p-6 font-sans">
       <header className="mb-6 border-b border-slate-900 pb-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-          Cognitive RPA Engine
-        </h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+            Cognitive RPA Engine
+          </h1>
+          <span className="text-[10px] font-mono bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-800">
+            v
+            {import.meta.env.VITE_APP_VERSION
+              ? import.meta.env.VITE_APP_VERSION.substring(0, 8)
+              : "dev"}
+          </span>
+        </div>
 
         {/* Navigation Tabs */}
         <div className="nav-tabs">

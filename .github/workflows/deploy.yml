@@ -20,6 +20,7 @@ jobs:
   build-and-push:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
+    environment: staging
     outputs:
       image_tag: ${{ steps.push.outputs.image_tag }}
     steps:
@@ -36,6 +37,7 @@ jobs:
           VITE_AWS_SECRET_ACCESS_KEY: ${{ secrets.VITE_AWS_SECRET_ACCESS_KEY }}
           VITE_AWS_REGION: ${{ env.AWS_REGION }}
           VITE_SCRIPTS_TABLE: ${{ secrets.VITE_SCRIPTS_TABLE || 'staging-rpa-scripts' }}
+          VITE_APP_VERSION: ${{ github.sha }}
         run: |
           npm ci
           npx nx run-many -t build --projects=rpa-worker,automatos-ia,web-platform

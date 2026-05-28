@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
@@ -8,11 +9,10 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import { Script, ScriptSchema } from "./schema";
 
-const metaEnv = (import.meta as any).env || {};
-const region = metaEnv.VITE_AWS_REGION || "us-east-2";
-const accessKeyId = metaEnv.VITE_AWS_ACCESS_KEY_ID || "";
-const secretAccessKey = metaEnv.VITE_AWS_SECRET_ACCESS_KEY || "";
-const tableName = metaEnv.VITE_SCRIPTS_TABLE || "rpa-scripts";
+const region = import.meta.env.VITE_AWS_REGION || "us-east-2";
+const accessKeyId = import.meta.env.VITE_AWS_ACCESS_KEY_ID || "";
+const secretAccessKey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || "";
+const tableName = import.meta.env.VITE_SCRIPTS_TABLE || "rpa-scripts";
 
 let docClient: DynamoDBDocumentClient | null = null;
 
