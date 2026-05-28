@@ -98,7 +98,7 @@ jobs:
       - name: Terraform Plan
         working-directory: ${{ env.TERRAFORM_DIR }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           terraform plan \
             -var-file=environments/staging/terraform.tfvars \
@@ -107,5 +107,5 @@ jobs:
       - name: Terraform Apply
         working-directory: ${{ env.TERRAFORM_DIR }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: terraform apply -auto-approve tfplan

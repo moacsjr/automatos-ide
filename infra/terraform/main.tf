@@ -290,7 +290,8 @@ resource "aws_iam_role_policy" "github_actions_policy" {
         Resource = [
           "arn:aws:iam::${local.account_id}:role/${var.environment}-*",
           "arn:aws:iam::${local.account_id}:role/*github-actions*",
-          "arn:aws:iam::${local.account_id}:policy/*"
+          "arn:aws:iam::${local.account_id}:policy/*",
+          "arn:aws:iam::${local.account_id}:oidc-provider/*"
         ]
       },
       {
