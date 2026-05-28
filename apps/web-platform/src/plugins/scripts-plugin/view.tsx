@@ -107,11 +107,22 @@ export function ScriptsCrudComponent({
   };
 
   // Abrir modal de visualização
-  const handleViewScript = (script: Script) => {
-    setActiveScript(script);
-    if (script.automatedScript) {
+  const handleViewScript = async (script: Script) => {
+    let freshScript = script;
+    try {
+      freshScript = await service.get(script.id);
+      // Sincroniza a lista local com os dados atualizados do script
+      setScripts((prev) =>
+        prev.map((s) => (s.id === freshScript.id ? freshScript : s)),
+      );
+    } catch (e) {
+      console.warn("Falha ao buscar versão atualizada do script:", e);
+    }
+
+    setActiveScript(freshScript);
+    if (freshScript.automatedScript) {
       setActiveCodeTab("automated");
-    } else if (script.compiledScript) {
+    } else if (freshScript.compiledScript) {
       setActiveCodeTab("compiled");
     } else {
       setActiveCodeTab("raw");

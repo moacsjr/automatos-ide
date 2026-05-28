@@ -415,6 +415,13 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
           "ec2:DescribeNetworkInterfaces"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "events:PutEvents"
+        ]
+        Resource = "*"
       }
     ]
   })

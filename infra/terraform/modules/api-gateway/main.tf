@@ -90,3 +90,60 @@ resource "aws_lambda_permission" "api_gateway" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api.execution_arn}/*/*"
 }
+
+# Lambda function — Script Compiler
+resource "aws_lambda_function" "compiler" {
+  function_name    = "${var.environment}-rpa-script-compiler"
+  role             = var.execution_role_arn
+  handler          = "src/compiler.handler"
+  runtime          = "nodejs22.x"
+  timeout          = 30
+  memory_size      = 256
+
+  filename         = data.archive_file.api_lambda_zip.output_path
+  source_code_hash = data.archive_file.api_lambda_zip.output_base64sha256
+
+  environment {
+    variables = {
+      WORKFLOW_TABLE = var.workflow_table_name
+      SCRIPTS_TABLE  = var.scripts_table_name
+      JOB_QUEUE_URL  = var.job_queue_url
+      ENVIRONMENT    = var.environment
+      NODE_ENV       = "production"
+    }
+  }
+
+  dynamic "vpc_config" {
+    for_each = length(var.subnet_ids) > 0 ? [1] : []
+    content {
+      subnet_ids         = var.subnet_ids
+      security_group_ids = [aws_security_group.lambda_sg[0].id]
+    }
+  }
+}
+
+# EventBridge Rule — script update events
+resource "aws_cloudwatch_event_rule" "script_updated" {
+  name        = "${var.environment}-script-updated-rule"
+  description = "Triggered when a script rawScript is updated"
+  event_pattern = jsonencode({
+    source      = ["rpa.scripts"]
+    detail-type = ["ScriptUpdated"]
+  })
+}
+
+# EventBridge Target — invoke compiler Lambda
+resource "aws_cloudwatch_event_target" "compiler_target" {
+  rule      = aws_cloudwatch_event_rule.script_updated.name
+  target_id = "compiler-lambda"
+  arn       = aws_lambda_function.compiler.arn
+}
+
+# Lambda Permission — Allow EventBridge to invoke compiler Lambda
+resource "aws_lambda_permission" "eventbridge" {
+  statement_id  = "AllowEventBridgeInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.compiler.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.script_updated.arn
+}

@@ -16,6 +16,10 @@ import {
   EC2Client,
   DescribeNetworkInterfacesCommand,
 } from "@aws-sdk/client-ec2";
+import {
+  EventBridgeClient,
+  PutEventsCommand,
+} from "@aws-sdk/client-eventbridge";
 import { randomUUID } from "crypto";
 import type { APIGatewayProxyResult } from "aws-lambda";
 
@@ -25,6 +29,29 @@ const docClient = DynamoDBDocumentClient.from(
 );
 const ecs = new ECSClient({ region: "us-east-1" });
 const ec2 = new EC2Client({ region: "us-east-1" });
+const eventbridge = new EventBridgeClient({ region: "us-east-1" });
+
+async function emitScriptUpdatedEvent(script: any) {
+  try {
+    await eventbridge.send(
+      new PutEventsCommand({
+        Entries: [
+          {
+            Source: "rpa.scripts",
+            DetailType: "ScriptUpdated",
+            Detail: JSON.stringify({
+              id: script.id,
+              rawScript: script.rawScript,
+            }),
+          },
+        ],
+      }),
+    );
+    console.log(`EventBridge ScriptUpdated event sent for script ${script.id}`);
+  } catch (err) {
+    console.error("Failed to send EventBridge event:", err);
+  }
+}
 
 const WORKFLOW_TABLE = process.env.WORKFLOW_TABLE ?? "rpa-workflows";
 const SCRIPTS_TABLE = process.env.SCRIPTS_TABLE ?? "rpa-scripts";
@@ -346,6 +373,10 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
         }),
       );
 
+      if (item.rawScript) {
+        await emitScriptUpdatedEvent(item);
+      }
+
       return {
         statusCode: 201,
         headers: {
@@ -362,12 +393,31 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       const payload = JSON.parse(body ?? "{}");
       const item = { ...payload, id };
 
+      let rawScriptChanged = true;
+      try {
+        const getRes = await docClient.send(
+          new GetCommand({ TableName: SCRIPTS_TABLE, Key: { id } }),
+        );
+        if (getRes.Item && getRes.Item.rawScript === item.rawScript) {
+          rawScriptChanged = false;
+        }
+      } catch (err) {
+        console.warn(
+          "Failed to fetch existing script to compare rawScript:",
+          err,
+        );
+      }
+
       await docClient.send(
         new PutCommand({
           TableName: SCRIPTS_TABLE,
           Item: item,
         }),
       );
+
+      if (rawScriptChanged && item.rawScript) {
+        await emitScriptUpdatedEvent(item);
+      }
 
       return {
         statusCode: 200,
