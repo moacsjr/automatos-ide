@@ -319,6 +319,13 @@ resource "aws_iam_role_policy" "github_actions_policy" {
           "ec2:*"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "events:*"
+        ]
+        Resource = "*"
       }
     ]
   })
