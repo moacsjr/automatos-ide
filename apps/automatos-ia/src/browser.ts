@@ -1,4 +1,11 @@
-import { chromium, BrowserContext, Page, ElementHandle } from "playwright";
+// @ts-ignore
+import { chromium } from "playwright-extra";
+import { BrowserContext, Page, ElementHandle } from "playwright";
+// @ts-ignore
+import stealthPlugin from "puppeteer-extra-plugin-stealth";
+
+// Configure stealth plugin for Playwright
+chromium.use(stealthPlugin());
 
 export interface InteractiveElement {
   agentId: string;
@@ -69,6 +76,8 @@ export async function launchBrowser(): Promise<{
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--remote-debugging-port=9222",
+        "--disable-blink-features=AutomationControlled",
+        "--disable-infobars",
       ],
     });
   } else {
@@ -81,6 +90,8 @@ export async function launchBrowser(): Promise<{
           "--no-sandbox",
           "--disable-setuid-sandbox",
           "--remote-debugging-port=9222",
+          "--disable-blink-features=AutomationControlled",
+          "--disable-infobars",
         ],
       });
     } catch (err) {
@@ -94,6 +105,8 @@ export async function launchBrowser(): Promise<{
           "--no-sandbox",
           "--disable-setuid-sandbox",
           "--remote-debugging-port=9222",
+          "--disable-blink-features=AutomationControlled",
+          "--disable-infobars",
         ],
       });
     }
