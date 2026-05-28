@@ -9,7 +9,7 @@ data "archive_file" "api_lambda_zip" {
 resource "aws_lambda_function" "api_handler" {
   function_name    = "${var.environment}-rpa-api-handler"
   role             = var.execution_role_arn
-  handler          = "index.handler"
+  handler          = "src/index.handler"
   runtime          = "nodejs22.x"
   timeout          = 30
   memory_size      = 256

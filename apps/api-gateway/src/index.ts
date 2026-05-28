@@ -55,11 +55,20 @@ async function getIaContainerIps(): Promise<{
     }
 
     const descRes = await ecs.send(
-      new DescribeTasksCommand({ cluster, tasks: [listRes.taskArns[0]] }),
+      new DescribeTasksCommand({
+        cluster,
+        tasks: listRes.taskArns.slice(0, 10),
+      }),
     );
-    const task = descRes.tasks?.[0];
+
+    if (!descRes.tasks || descRes.tasks.length === 0) {
+      throw new Error("No tasks description returned");
+    }
+
+    // Prioritize RUNNING tasks to avoid rolling update/provisioning race conditions
+    let task = descRes.tasks.find((t) => t.lastStatus === "RUNNING");
     if (!task) {
-      throw new Error("Task description not found");
+      task = descRes.tasks[0];
     }
 
     const attachment = task.attachments?.find(
@@ -67,7 +76,7 @@ async function getIaContainerIps(): Promise<{
     );
     if (!attachment) {
       throw new Error(
-        "ElasticNetworkInterface attachment not found in task description",
+        `ElasticNetworkInterface attachment not found in task ${task.taskArn}`,
       );
     }
 
@@ -151,7 +160,7 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
         subPath = "/" + subPath;
       }
 
-      const { privateIp } = await getIaContainerIps();
+      const { privateIp, publicIp } = await getIaContainerIps();
 
       let queryString = "";
       if (event.rawQueryString) {
@@ -167,7 +176,9 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
             .join("&");
       }
 
-      const targetUrl = `http://${privateIp}:3001${subPath}${queryString}`;
+      const targetIp =
+        publicIp && publicIp !== "127.0.0.1" ? publicIp : privateIp;
+      const targetUrl = `http://${targetIp}:3001${subPath}${queryString}`;
 
       const headers: Record<string, string> = {};
       if (event.headers) {

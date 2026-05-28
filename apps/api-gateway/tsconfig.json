@@ -4,7 +4,8 @@
     "outDir": "../../dist/apps/api-gateway",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "baseUrl": "../../"
+    "baseUrl": "../../",
+    "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
