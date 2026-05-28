@@ -235,26 +235,14 @@ resource "aws_iam_role_policy" "github_actions_policy" {
       {
         Effect = "Allow"
         Action = [
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:InitiateLayerUpload",
-          "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload",
-          "ecr:PutImage"
+          "ecr:*"
         ]
-        Resource = [
-          aws_ecr_repository.rpa_worker.arn,
-          aws_ecr_repository.automatos_ia.arn
-        ]
+        Resource = "*"
       },
       {
         Effect = "Allow"
         Action = [
-          "sqs:SendMessage",
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes"
+          "sqs:*"
         ]
         Resource = [
           aws_sqs_queue.workflow_queue.arn,
@@ -264,28 +252,18 @@ resource "aws_iam_role_policy" "github_actions_policy" {
       {
         Effect = "Allow"
         Action = [
-          "dynamodb:PutItem",
-          "dynamodb:GetItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:Query",
-          "dynamodb:Scan"
+          "dynamodb:*"
         ]
         Resource = [
           aws_dynamodb_table.workflows.arn,
-          aws_dynamodb_table.scripts.arn
+          aws_dynamodb_table.scripts.arn,
+          "arn:aws:dynamodb:us-east-1:${local.account_id}:table/terraform-locks"
         ]
       },
       {
         Effect = "Allow"
         Action = [
-          "lambda:CreateFunction",
-          "lambda:UpdateFunctionCode",
-          "lambda:UpdateFunctionConfiguration",
-          "lambda:GetFunction",
-          "lambda:InvokeFunction",
-          "lambda:AddPermission",
-          "lambda:RemovePermission",
-          "lambda:PublishVersion"
+          "lambda:*"
         ]
         Resource = "arn:aws:lambda:${local.region}:${local.account_id}:function:${var.environment}-rpa-*"
       },
@@ -299,56 +277,45 @@ resource "aws_iam_role_policy" "github_actions_policy" {
       {
         Effect = "Allow"
         Action = [
-          "ecs:RunTask",
-          "ecs:UpdateService",
-          "ecs:DescribeServices",
-          "ecs:DescribeClusters",
-          "ecs:DescribeTaskDefinition",
-          "ecs:RegisterTaskDefinition"
+          "ecs:*",
+          "application-autoscaling:*"
         ]
         Resource = "*"
       },
       {
         Effect = "Allow"
         Action = [
-          "iam:PassRole"
+          "iam:*"
         ]
-        Resource = aws_iam_role.rpa_execution_role.arn
+        Resource = [
+          "arn:aws:iam::${local.account_id}:role/${var.environment}-*",
+          "arn:aws:iam::${local.account_id}:role/*github-actions*",
+          "arn:aws:iam::${local.account_id}:policy/*"
+        ]
       },
       {
         Effect = "Allow"
         Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
+          "logs:*"
         ]
-        Resource = "arn:aws:logs:*:*:*"
+        Resource = "*"
       },
       {
         Effect = "Allow"
         Action = [
-          "s3:ListBucket"
+          "s3:*"
         ]
-        Resource = "arn:aws:s3:::rpa-terraform-state-3778"
+        Resource = [
+          "arn:aws:s3:::rpa-terraform-state-3778",
+          "arn:aws:s3:::rpa-terraform-state-3778/*"
+        ]
       },
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:DeleteObject"
+          "ec2:*"
         ]
-        Resource = "arn:aws:s3:::rpa-terraform-state-3778/*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "dynamodb:DescribeTable",
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:DeleteItem"
-        ]
-        Resource = "arn:aws:dynamodb:us-east-1:${local.account_id}:table/terraform-locks"
+        Resource = "*"
       }
     ]
   })
