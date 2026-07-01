@@ -26,6 +26,16 @@ export interface AgentDecision {
   explanation: string;
 }
 
+/**
+ * Alguns modelos ignoram response_format: json_object e envolvem a resposta
+ * em um bloco de código markdown (```json ... ```). Remove o fence se presente.
+ */
+function stripMarkdownJsonFence(text: string): string {
+  const trimmed = text.trim();
+  const fenceMatch = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/);
+  return fenceMatch ? fenceMatch[1].trim() : trimmed;
+}
+
 function assertApiKeyConfigured() {
   if (
     !process.env.OPENROUTER_API_KEY ||
@@ -61,7 +71,7 @@ async function callOpenRouterJSON(
       if (!content) {
         throw new Error("Resposta vazia da LLM.");
       }
-      return content;
+      return stripMarkdownJsonFence(content);
     } catch (error: any) {
       lastError = error;
       const errorMessage = error.message || "";
