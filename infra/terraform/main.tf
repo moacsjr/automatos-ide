@@ -466,6 +466,7 @@ module "worker" {
   subnet_ids                      = var.subnet_ids
   image_tag                       = var.image_tag
   gemini_api_key                  = var.gemini_api_key
+  openrouter_api_key              = var.openrouter_api_key
 }
 
 # ============================================================

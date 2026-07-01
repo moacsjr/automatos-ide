@@ -135,7 +135,8 @@ resource "aws_ecs_task_definition" "automatos_ia" {
       environment = [
         { name = "NODE_ENV", value = "production" },
         { name = "PORT",     value = "3001" },
-        { name = "GEMINI_API_KEY", value = var.gemini_api_key }
+        { name = "GEMINI_API_KEY", value = var.gemini_api_key },
+        { name = "OPENROUTER_API_KEY", value = var.openrouter_api_key }
       ]
       healthCheck = {
         command     = ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3001/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]

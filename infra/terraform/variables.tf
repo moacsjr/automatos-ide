@@ -47,3 +47,10 @@ variable "gemini_api_key" {
   default     = ""
 }
 
+variable "openrouter_api_key" {
+  description = "OpenRouter API key for automatos-ia"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+

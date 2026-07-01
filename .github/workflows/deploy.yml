@@ -115,6 +115,7 @@ jobs:
             -var-file=environments/staging/terraform.tfvars \
             -var="image_tag=${{ needs.build-and-push.outputs.image_tag }}" \
             -var="gemini_api_key=${{ secrets.GEMINI_API_KEY }}" \
+            -var="openrouter_api_key=${{ secrets.OPENROUTER_API_KEY }}" \
             -out=tfplan
 
       - name: Terraform Apply

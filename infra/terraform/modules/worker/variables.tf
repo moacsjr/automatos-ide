@@ -42,3 +42,9 @@ variable "gemini_api_key" {
   sensitive   = true
 }
 
+variable "openrouter_api_key" {
+  description = "OpenRouter API key for automatos-ia"
+  type        = string
+  sensitive   = true
+}
+
