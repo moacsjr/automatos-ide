@@ -3,7 +3,7 @@ import fs from "fs";
 import { spawn } from "child_process";
 import path from "path";
 import dotenv from "dotenv";
-import { launchBrowser, getActivePage } from "./browser.js";
+import { launchBrowser, connectBrowser, getActivePage } from "./browser.js";
 import { runAutonomousAgent, stopAgentExecution } from "./agent/autonomous.js";
 import {
   runCopilotMode,
@@ -545,6 +545,23 @@ app.post("/api/session/heal", async (req, res) => {
   } catch (err: any) {
     console.error("❌ [Self-Healing] Erro no reparo do script:", err);
     res.status(500).json({ error: `Falha no Self-Healing: ${err.message}` });
+  }
+});
+
+/**
+ * Conecta a uma instância do Chrome já em execução via CDP
+ */
+app.post("/api/connect", async (req, res) => {
+  const port = Number(req.body?.port) || 9222;
+  try {
+    agentEvents.log(`Conectando ao Chrome via CDP na porta ${port}...`);
+    const connection = await connectBrowser(port);
+    await handleNewBrowserConnection(connection);
+    currentCdpPort = port;
+    res.json({ success: true });
+  } catch (err: any) {
+    agentEvents.log(`❌ Falha ao conectar ao Chrome: ${err.message}`);
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
