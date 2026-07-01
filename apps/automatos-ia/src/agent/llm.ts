@@ -13,6 +13,9 @@ const openrouter = new OpenAI({
     "HTTP-Referer": "https://github.com/moacsjr/automatos-ide",
     "X-Title": "Automatos IA",
   },
+  // Node's built-in fetch (undici) instead of the SDK's default node-fetch@2,
+  // which reliably drops gzip'd OpenRouter responses mid-stream (ERR_STREAM_PREMATURE_CLOSE).
+  fetch: fetch as any,
 });
 
 export interface AgentDecision {
