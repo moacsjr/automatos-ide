@@ -1,8 +1,33 @@
 import { Page, BrowserContext } from "playwright";
 import { captureDOMState, getActivePage } from "../browser.js";
-import { askGeminiForNextAction, AgentDecision } from "./llm.js";
+import { askLLMForNextAction, AgentDecision } from "./llm.js";
 import { PlaywrightGenerator } from "../generator/playwright.js";
 import { agentEvents } from "../utils/logger.js";
+
+function resolveSelectOptionLabel(
+  rawValue: string,
+  options?: string[],
+): string {
+  if (!options || options.length === 0) return rawValue;
+
+  const exact = options.find((o) => o === rawValue);
+  if (exact) return exact;
+
+  const normalized = rawValue.trim().toLowerCase();
+  const caseInsensitive = options.find(
+    (o) => o.trim().toLowerCase() === normalized,
+  );
+  if (caseInsensitive) return caseInsensitive;
+
+  const substring = options.find(
+    (o) =>
+      o.toLowerCase().includes(normalized) ||
+      normalized.includes(o.toLowerCase()),
+  );
+  if (substring) return substring;
+
+  return rawValue;
+}
 
 export let cancelAgentExecution = false;
 export let isAgentExecuting = false;
@@ -77,10 +102,10 @@ export async function runAutonomousAgent(
 
       const { simplifiedDOM, elementsMap } = domState;
 
-      agentEvents.log("🧠 Pensando com Gemini...");
+      agentEvents.log("🧠 Pensando com a IA (OpenRouter)...");
       let decision: AgentDecision;
       try {
-        decision = await askGeminiForNextAction(
+        decision = await askLLMForNextAction(
           objective,
           currentUrl,
           simplifiedDOM,
@@ -210,7 +235,65 @@ export async function runAutonomousAgent(
       }
 
       if (decision.action === "fill") {
-        const textToFill = decision.value || "";
+        const rawValue = decision.value || "";
+
+        if (element.tagName === "select") {
+          const resolvedValue = resolveSelectOptionLabel(
+            rawValue,
+            element.options,
+          );
+          agentEvents.log(
+            `🔽 Selecionando opção: ${elementDesc} -> "${resolvedValue}"`,
+          );
+          agentEvents.log(`   Seletor de gravação: ${resilientSelector}`);
+
+          try {
+            await page
+              .locator(agentSelector)
+              .filter({ visible: true })
+              .first()
+              .selectOption({ label: resolvedValue }, { timeout: 5000 });
+
+            history.push(`Selecionou "${resolvedValue}" em ${elementDesc}`);
+            generator.addStep({
+              action: "select",
+              selector: resilientSelector,
+              value: resolvedValue,
+              description: `Selecionou a opção "${resolvedValue}" em ${elementDesc}`,
+            });
+          } catch (err: any) {
+            agentEvents.warn(
+              `⚠️ Falha ao selecionar com ID temporário (${err.message}). Tentando fallback com seletor resiliente: ${resilientSelector}`,
+            );
+            try {
+              await page
+                .locator(resilientSelector)
+                .filter({ visible: true })
+                .first()
+                .selectOption({ label: resolvedValue }, { timeout: 10000 });
+
+              history.push(
+                `Selecionou "${resolvedValue}" em ${elementDesc} (via seletor resiliente)`,
+              );
+              generator.addStep({
+                action: "select",
+                selector: resilientSelector,
+                value: resolvedValue,
+                description: `Selecionou a opção "${resolvedValue}" em ${elementDesc}`,
+              });
+            } catch (fallbackErr: any) {
+              agentEvents.error(
+                `❌ Falha persistente ao selecionar opção: ${fallbackErr.message}`,
+              );
+              history.push(
+                `Falhou ao selecionar "${resolvedValue}" em ${elementDesc}`,
+              );
+            }
+          }
+          continue;
+        }
+
+        const textToFill = rawValue;
         agentEvents.log(`✍️ Preenchendo: ${elementDesc} com "${textToFill}"`);
         agentEvents.log(`   Seletor de gravação: ${resilientSelector}`);
 

@@ -1,6 +1,6 @@
 # Automatos-IA 🤖🌐
 
-**Automatos-IA** é um agente autônomo e co-piloto para navegador web integrado com o Google Chrome que utiliza inteligência artificial (modelos Gemini) para navegar e gerar scripts automatizados do **Playwright** baseados nas ações ou objetivos informados.
+**Automatos-IA** é um agente autônomo e co-piloto para navegador web integrado com o Google Chrome que utiliza inteligência artificial (via **OpenRouter**, modelo padrão `deepseek/deepseek-chat`) para navegar e gerar scripts automatizados do **Playwright** baseados nas ações ou objetivos informados.
 
 Para evitar a complexidade de extensões de navegador nativas, o sistema se conecta diretamente a instâncias reais do Google Chrome via **Chrome DevTools Protocol (CDP)**.
 
@@ -12,7 +12,7 @@ O sistema é dividido em três camadas principais:
 
 1. **O Navegador (Chrome):** Rodando localmente com a porta de depuração remota aberta (CDP).
 2. **O Executor (Playwright):** Conecta-se à instância aberta do Chrome para ler o estado da aba atual e executar as ações propostas.
-3. **O Cérebro (Agente/LLM):** Uma máquina de estados que simplifica o DOM da página atual, solicita decisões à API do Gemini e compila as interações em um script Playwright legível e resiliente.
+3. **O Cérebro (Agente/LLM):** Uma máquina de estados que simplifica o DOM da página atual, solicita decisões à API da LLM via OpenRouter e compila as interações em um script Playwright legível e resiliente.
 
 ---
 
@@ -29,9 +29,10 @@ Ao iniciar o servidor da API (`npm run start`), o **Automatos-IA** inicia automa
    ```bash
    npm install
    ```
-3. Crie e configure o arquivo `.env` na raiz do projeto contendo sua chave de API do Gemini e a porta do servidor:
+3. Crie e configure o arquivo `.env` na raiz do projeto contendo sua chave de API do OpenRouter, o modelo desejado e a porta do servidor:
    ```env
-   GEMINI_API_KEY=sua_chave_gemini_aqui
+   OPENROUTER_API_KEY=sua_chave_openrouter_aqui
+   OPENROUTER_MODEL=deepseek/deepseek-chat
    PORT=3001
    ```
 4. Inicie o servidor em modo de desenvolvimento:
@@ -185,6 +186,6 @@ Canal de Server-Sent Events (SSE) para monitorar ações, logs de console e stat
 - **Headers de Resposta:** `Content-Type: text/event-stream`
 - **Tipos de Mensagem transmitidos (`data` formato JSON):**
   - **Mudança de Status:** `{ "type": "status", "status": "running_agent" }`
-  - **Logs do Backend:** `{ "type": "log", "message": "🧠 Pensando com Gemini..." }`
+  - **Logs do Backend:** `{ "type": "log", "message": "🧠 Pensando com a IA (OpenRouter)..." }`
   - **Aviso:** `{ "type": "warn", "message": "⚠️ Elemento não encontrado..." }`
   - **Erros:** `{ "type": "error", "message": "❌ Falha ao obter decisão..." }`

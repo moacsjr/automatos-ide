@@ -3,7 +3,7 @@ import path from "path";
 import { agentEvents } from "../utils/logger.js";
 
 export interface RecordedStep {
-  action: "click" | "fill" | "navigate" | "wait";
+  action: "click" | "fill" | "navigate" | "wait" | "select";
   selector?: string;
   value?: string;
   description?: string;
@@ -86,6 +86,22 @@ export class PlaywrightGenerator {
           const escapedValue = (step.value || "").replace(/'/g, "\\'");
           lines.push(
             `  await page.fill('${fillSelector}', '${escapedValue}');`,
+          );
+          break;
+
+        case "select":
+          if (!step.selector) {
+            lines.push(
+              `  // ERRO: Tentativa de seleção sem seletor válido definido`,
+            );
+            break;
+          }
+          const selectSelector = step.selector.includes(">> visible=")
+            ? step.selector
+            : `${step.selector} >> visible=true`;
+          const escapedSelectValue = (step.value || "").replace(/'/g, "\\'");
+          lines.push(
+            `  await page.selectOption('${selectSelector}', { label: '${escapedSelectValue}' });`,
           );
           break;
 

@@ -363,7 +363,7 @@ export function AiRecordingComponent({
       ...prev,
       "",
       "🩹 [Self-Healing] Enviando script e logs para a IA analisar...",
-      "🧠 [Self-Healing] Gemini está analisando a causa raiz da falha e corrigindo o script...",
+      "🧠 [Self-Healing] IA está analisando a causa raiz da falha e corrigindo o script...",
     ]);
 
     try {

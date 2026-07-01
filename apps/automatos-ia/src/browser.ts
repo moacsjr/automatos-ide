@@ -18,6 +18,7 @@ export interface InteractiveElement {
   checked: boolean;
   value: string;
   href: string;
+  options?: string[];
 }
 
 export interface DOMState {
@@ -346,6 +347,9 @@ export async function captureDOMState(page: Page): Promise<DOMState> {
       const checked = el.checked || false;
       const value = el.value || "";
       const href = el.getAttribute("href") || "";
+      const options = tagName === "select"
+        ? Array.from(el.options).map(o => (o.text || o.value || "").replace(/\s+/g, " ").trim()).filter(Boolean)
+        : undefined;
 
       elementsMap[agentId] = {
         agentId,
@@ -357,13 +361,18 @@ export async function captureDOMState(page: Page): Promise<DOMState> {
         disabled,
         checked,
         value,
-        href
+        href,
+        options
       };
 
       let details = "[ID: " + agentId + "] Tipo: " + tagName;
       if (type) details += "(" + type + ")";
       if (text) details += ' | Texto/Label: "' + text + '"';
       if (role && role !== "generic") details += " | Role: " + role;
+      if (tagName === "select" && options && options.length > 0) {
+        const optsStr = options.map(o => '"' + o.replace(/"/g, '\\"') + '"').join(", ");
+        details += " | Opções disponíveis: [" + optsStr + "]";
+      }
       if (value && tagName !== "button") details += ' | Valor: "' + value + '"';
       if (checked) details += " | [Marcado]";
       if (disabled) details += " | [Desabilitado]";

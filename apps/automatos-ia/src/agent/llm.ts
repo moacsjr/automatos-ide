@@ -1,11 +1,19 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import OpenAI from "openai";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.OPENROUTER_API_KEY;
+const MODEL = process.env.OPENROUTER_MODEL || "deepseek/deepseek-chat";
 
-const genAI = new GoogleGenerativeAI(apiKey || "");
+const openrouter = new OpenAI({
+  apiKey: apiKey || "",
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": "https://github.com/moacsjr/automatos-ide",
+    "X-Title": "Automatos IA",
+  },
+});
 
 export interface AgentDecision {
   action: "click" | "fill" | "navigate" | "finish" | "wait";
@@ -15,23 +23,101 @@ export interface AgentDecision {
   explanation: string;
 }
 
+function assertApiKeyConfigured() {
+  if (
+    !process.env.OPENROUTER_API_KEY ||
+    process.env.OPENROUTER_API_KEY === "your_openrouter_api_key_here"
+  ) {
+    throw new Error(
+      "OPENROUTER_API_KEY não configurada no arquivo .env. Por favor, insira uma chave válida.",
+    );
+  }
+}
+
 /**
- * Consulta o modelo Gemini para planejar o próximo passo lógico do agente autônomo
+ * Chama a LLM via OpenRouter esperando uma resposta JSON, com retry/backoff
+ * para erros de rate limit (429) e erros transitórios de servidor (5xx).
  */
-export async function askGeminiForNextAction(
+async function callOpenRouterJSON(
+  prompt: string,
+  context: string,
+): Promise<string> {
+  const maxRetries = 3;
+  const baseDelay = 2000;
+  let lastError: any = null;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const completion = await openrouter.chat.completions.create({
+        model: MODEL,
+        response_format: { type: "json_object" },
+        messages: [{ role: "user", content: prompt }],
+      });
+
+      const content = completion.choices[0]?.message?.content;
+      if (!content) {
+        throw new Error("Resposta vazia da LLM.");
+      }
+      return content;
+    } catch (error: any) {
+      lastError = error;
+      const errorMessage = error.message || "";
+      const errorStatus = error.status;
+
+      const isAuthError =
+        errorStatus === 401 ||
+        errorStatus === 403 ||
+        errorMessage.includes("API_KEY_INVALID") ||
+        errorMessage.includes("invalid API key") ||
+        errorMessage.includes("No auth credentials found");
+
+      if (isAuthError) {
+        throw error; // Não vale a pena retentar erro de autenticação
+      }
+
+      const isRateLimit =
+        errorStatus === 429 ||
+        errorMessage.includes("429") ||
+        errorMessage.includes("rate limit");
+
+      const isTransientError =
+        errorStatus === 500 ||
+        errorStatus === 502 ||
+        errorStatus === 503 ||
+        errorStatus === 504 ||
+        errorMessage.includes("Service Unavailable") ||
+        errorMessage.includes("overloaded");
+
+      if ((isRateLimit || isTransientError) && attempt < maxRetries - 1) {
+        const waitTime = baseDelay * Math.pow(2, attempt);
+        console.warn(
+          `⚠️ Erro (${errorStatus || errorMessage}) no modelo ${MODEL} durante ${context}. Aguardando ${waitTime}ms antes da tentativa ${attempt + 2}/${maxRetries}...`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        continue;
+      }
+
+      break;
+    }
+  }
+
+  console.error(
+    `Erro na comunicação com a API do OpenRouter (${context}):`,
+    lastError,
+  );
+  throw lastError;
+}
+
+/**
+ * Consulta a LLM (via OpenRouter) para planejar o próximo passo lógico do agente autônomo
+ */
+export async function askLLMForNextAction(
   objective: string,
   currentUrl: string,
   simplifiedDOM: string,
   history: string[],
 ): Promise<AgentDecision> {
-  if (
-    !process.env.GEMINI_API_KEY ||
-    process.env.GEMINI_API_KEY === "your_gemini_api_key_here"
-  ) {
-    throw new Error(
-      "GEMINI_API_KEY não configurada no arquivo .env. Por favor, insira uma chave válida.",
-    );
-  }
+  assertApiKeyConfigured();
 
   const prompt = `
 Você é um agente autônomo encarregado de controlar uma aba ativa do Chrome para realizar um teste/ação automatizada.
@@ -54,172 +140,24 @@ Instruções:
 3. Para interagir com qualquer elemento, use o ID correspondente indicado na lista acima (ex: "targetId": "12").
 4. Apenas selecione elementos que estão listados acima.
 5. Escreva a 'explanation' em português e de forma clara para o usuário final.
+6. Para elementos do tipo 'select' (Role: combobox), ao usar a ação "fill", o campo "value" deve conter exatamente o texto de uma das opções listadas em "Opções disponíveis" daquele elemento.
+
+---
+Responda ESTRITAMENTE em JSON válido, sem markdown, seguindo exatamente este formato:
+{
+  "action": "click" | "fill" | "navigate" | "finish" | "wait",
+  "targetId": "ID numérico do elemento (string), obrigatório apenas para 'click' e 'fill'",
+  "value": "texto a preencher (fill), URL completa (navigate) ou tempo em ms (wait)",
+  "reasoning": "raciocínio interno em português explicando a decisão",
+  "explanation": "mensagem curta e amigável em português explicando ao usuário o que está prestes a fazer"
+}
 `;
 
-  const modelsToTry = [
-    "gemini-2.5-flash",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
-  ];
-  const schema = {
-    type: SchemaType.OBJECT,
-    properties: {
-      action: {
-        type: SchemaType.STRING,
-        enum: ["click", "fill", "navigate", "finish", "wait"],
-        description: "A ação de navegação a ser realizada.",
-      },
-      targetId: {
-        type: SchemaType.STRING,
-        description:
-          "O ID numérico do elemento no DOM simplificado (ex: '3') para ações 'click' ou 'fill'.",
-      },
-      value: {
-        type: SchemaType.STRING,
-        description:
-          "O texto a preencher (se fill), a URL completa (se navigate) ou tempo em ms (se wait).",
-      },
-      reasoning: {
-        type: SchemaType.STRING,
-        description: "Raciocínio interno em português explicando a decisão.",
-      },
-      explanation: {
-        type: SchemaType.STRING,
-        description:
-          "Mensagem curta e amigável em português explicando ao usuário o que está prestes a fazer.",
-      },
-    },
-    required: ["action", "reasoning", "explanation"],
-  };
-
-  let lastError: any = null;
-
-  for (const modelName of modelsToTry) {
-    const model = genAI.getGenerativeModel({
-      model: modelName,
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: schema,
-      },
-    });
-
-    const maxRetries = 3;
-    let delay = 2000;
-
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-      try {
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
-        return JSON.parse(responseText) as AgentDecision;
-      } catch (error: any) {
-        lastError = error;
-        const errorMessage = error.message || "";
-        const errorStatus = error.status;
-
-        // Check if it's an invalid key / authentication error
-        const isAuthError =
-          errorStatus === 401 ||
-          errorStatus === 403 ||
-          errorMessage.includes("API_KEY_INVALID") ||
-          errorMessage.includes("API key not valid") ||
-          errorMessage.includes("invalid API key");
-
-        if (isAuthError) {
-          throw error; // Throw immediately, no point in retrying or switching models
-        }
-
-        // Check if it's a rate limit error (429)
-        const isRateLimit =
-          errorStatus === 429 ||
-          errorMessage.includes("429") ||
-          errorMessage.includes("Quota exceeded") ||
-          errorMessage.includes("RESOURCE_EXHAUSTED");
-
-        // Check if it's a transient server/service error
-        const isTransientError =
-          errorStatus === 500 ||
-          errorStatus === 502 ||
-          errorStatus === 503 ||
-          errorStatus === 504 ||
-          errorMessage.includes("503") ||
-          errorMessage.includes("500") ||
-          errorMessage.includes("Service Unavailable") ||
-          errorMessage.includes("experiencing high demand") ||
-          errorMessage.includes("overloaded");
-
-        // Check if it's a model not found / invalid model error (e.g. 404)
-        const isModelNotFoundError =
-          errorStatus === 404 ||
-          errorMessage.includes("404") ||
-          errorMessage.includes("model not found") ||
-          errorMessage.includes("not found");
-
-        if (isRateLimit) {
-          const isDailyLimit =
-            errorMessage.includes(
-              "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
-            ) ||
-            errorMessage.includes("requests per day") ||
-            errorMessage.includes("quota");
-
-          if (isDailyLimit) {
-            console.warn(
-              `⚠️ Limite/Cota excedido para o modelo ${modelName}. Alternando para o próximo modelo...`,
-            );
-            break; // Sai do loop de retentativas para este modelo e tenta o próximo
-          }
-
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Limite de requisições atingido (429) no modelo ${modelName}. Aguardando ${waitTime}ms antes da tentativa ${attempt + 2}/${maxRetries}...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          }
-        } else if (isTransientError) {
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Erro temporário do servidor (${errorStatus || "503"}) no modelo ${modelName}. Aguardando ${waitTime}ms antes da tentativa ${attempt + 2}/${maxRetries}...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          } else {
-            console.warn(
-              `⚠️ Erro temporário do servidor persistente no modelo ${modelName} após todas as tentativas. Alternando para o próximo modelo...`,
-            );
-            break; // Tenta o próximo modelo
-          }
-        } else if (isModelNotFoundError) {
-          console.warn(
-            `⚠️ Modelo ${modelName} não encontrado/desabilitado. Alternando para o próximo modelo...`,
-          );
-          break; // Tenta o próximo modelo
-        } else {
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Erro inesperado (${errorMessage}) no modelo ${modelName}. Aguardando ${waitTime}ms antes da tentativa ${attempt + 2}/${maxRetries}...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          } else {
-            console.warn(
-              `⚠️ Erro inesperado persistente no modelo ${modelName}. Alternando para o próximo modelo...`,
-            );
-            break; // Tenta o próximo modelo
-          }
-        }
-      }
-    }
-  }
-
-  console.error(
-    "Erro na comunicação com a API do Gemini (todos os modelos falharam/estão sem cota):",
-    lastError,
+  const responseText = await callOpenRouterJSON(
+    prompt,
+    "planejamento do próximo passo",
   );
-  throw lastError;
+  return JSON.parse(responseText) as AgentDecision;
 }
 
 export interface HealedScriptResult {
@@ -228,20 +166,13 @@ export interface HealedScriptResult {
 }
 
 /**
- * Envia o script quebrado e os logs de erro para a LLM Gemini corrigir
+ * Envia o script quebrado e os logs de erro para a LLM (via OpenRouter) corrigir
  */
 export async function healPlaywrightScript(
   code: string,
   errorLogs: string,
 ): Promise<HealedScriptResult> {
-  if (
-    !process.env.GEMINI_API_KEY ||
-    process.env.GEMINI_API_KEY === "your_gemini_api_key_here"
-  ) {
-    throw new Error(
-      "GEMINI_API_KEY não configurada no arquivo .env. Por favor, insira uma chave válida.",
-    );
-  }
+  assertApiKeyConfigured();
 
   const prompt = `
 Você é um especialista em automação e testes com Playwright.
@@ -264,147 +195,18 @@ Instruções importantes:
 4. Garanta que o código retornado na propriedade 'fixedCode' seja o script COMPLETO e válido em TypeScript do Playwright, incluindo as importações (ex: de '@playwright/test') e o bloco principal 'test(...)'.
 5. Não adicione marcações de bloco de código markdown (\`\`\`ts) no valor de 'fixedCode'.
 6. Explique em poucas palavras na propriedade 'explanation' (em português) qual era o problema e como você o corrigiu.
+
+---
+Responda ESTRITAMENTE em JSON válido, sem markdown, seguindo exatamente este formato:
+{
+  "fixedCode": "código completo e atualizado do script Playwright corrigido",
+  "explanation": "explicação em português detalhando qual era o erro nos logs e como ele foi corrigido"
+}
 `;
 
-  const modelsToTry = [
-    "gemini-2.5-flash",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
-  ];
-  const schema = {
-    type: SchemaType.OBJECT,
-    properties: {
-      fixedCode: {
-        type: SchemaType.STRING,
-        description:
-          "O código completo e atualizado do script Playwright corrigido.",
-      },
-      explanation: {
-        type: SchemaType.STRING,
-        description:
-          "Explicação em português detalhando qual era o erro nos logs e como ele foi corrigido.",
-      },
-    },
-    required: ["fixedCode", "explanation"],
-  };
-
-  let lastError: any = null;
-
-  for (const modelName of modelsToTry) {
-    const model = genAI.getGenerativeModel({
-      model: modelName,
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: schema,
-      },
-    });
-
-    const maxRetries = 3;
-    let delay = 2000;
-
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-      try {
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
-        return JSON.parse(responseText) as HealedScriptResult;
-      } catch (error: any) {
-        lastError = error;
-        const errorMessage = error.message || "";
-        const errorStatus = error.status;
-
-        // Check if it's an invalid key / authentication error
-        const isAuthError =
-          errorStatus === 401 ||
-          errorStatus === 403 ||
-          errorMessage.includes("API_KEY_INVALID") ||
-          errorMessage.includes("API key not valid") ||
-          errorMessage.includes("invalid API key");
-
-        if (isAuthError) {
-          throw error;
-        }
-
-        // Check if it's a rate limit error (429)
-        const isRateLimit =
-          errorStatus === 429 ||
-          errorMessage.includes("429") ||
-          errorMessage.includes("Quota exceeded") ||
-          errorMessage.includes("RESOURCE_EXHAUSTED");
-
-        // Check if it's a transient server/service error
-        const isTransientError =
-          errorStatus === 500 ||
-          errorStatus === 502 ||
-          errorStatus === 503 ||
-          errorStatus === 504 ||
-          errorMessage.includes("503") ||
-          errorMessage.includes("500") ||
-          errorMessage.includes("Service Unavailable") ||
-          errorMessage.includes("experiencing high demand") ||
-          errorMessage.includes("overloaded");
-
-        // Check if it's a model not found / invalid model error (e.g. 404)
-        const isModelNotFoundError =
-          errorStatus === 404 ||
-          errorMessage.includes("404") ||
-          errorMessage.includes("model not found") ||
-          errorMessage.includes("not found");
-
-        if (isRateLimit) {
-          const isDailyLimit =
-            errorMessage.includes(
-              "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
-            ) ||
-            errorMessage.includes("requests per day") ||
-            errorMessage.includes("quota");
-
-          if (isDailyLimit) {
-            console.warn(
-              `⚠️ Limite/Cota excedido para o modelo ${modelName} no Self-Healing. Alternando...`,
-            );
-            break;
-          }
-
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Limite atingido (429) no Self-Healing com modelo ${modelName}. Aguardando ${waitTime}ms...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          }
-        } else if (isTransientError) {
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Erro temporário (${errorStatus}) no Self-Healing com modelo ${modelName}. Aguardando ${waitTime}ms...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          } else {
-            break;
-          }
-        } else if (isModelNotFoundError) {
-          break;
-        } else {
-          if (attempt < maxRetries - 1) {
-            const waitTime = delay * Math.pow(2, attempt);
-            console.warn(
-              `⚠️ Erro inesperado (${errorMessage}) no Self-Healing com modelo ${modelName}. Aguardando ${waitTime}ms...`,
-            );
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          } else {
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  console.error(
-    "Erro na comunicação com a API do Gemini para Self-Healing:",
-    lastError,
+  const responseText = await callOpenRouterJSON(
+    prompt,
+    "self-healing do script",
   );
-  throw lastError;
+  return JSON.parse(responseText) as HealedScriptResult;
 }
