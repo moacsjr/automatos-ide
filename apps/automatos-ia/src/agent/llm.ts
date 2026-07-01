@@ -88,7 +88,19 @@ async function callOpenRouterJSON(
         errorMessage.includes("Service Unavailable") ||
         errorMessage.includes("overloaded");
 
-      if ((isRateLimit || isTransientError) && attempt < maxRetries - 1) {
+      const isNetworkError =
+        error.code === "ERR_STREAM_PREMATURE_CLOSE" ||
+        error.code === "ECONNRESET" ||
+        error.code === "ETIMEDOUT" ||
+        error.code === "EPIPE" ||
+        errorMessage.includes("Premature close") ||
+        errorMessage.includes("fetch failed") ||
+        errorMessage.includes("socket hang up");
+
+      if (
+        (isRateLimit || isTransientError || isNetworkError) &&
+        attempt < maxRetries - 1
+      ) {
         const waitTime = baseDelay * Math.pow(2, attempt);
         console.warn(
           `⚠️ Erro (${errorStatus || errorMessage}) no modelo ${MODEL} durante ${context}. Aguardando ${waitTime}ms antes da tentativa ${attempt + 2}/${maxRetries}...`,
