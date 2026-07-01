@@ -55,6 +55,11 @@
     "apps/*",
     "libs/*"
   ],
+  "overrides": {
+    "openai": {
+      "zod": "$zod"
+    }
+  },
   "lint-staged": {
     "*.{js,ts,tsx,json,md}": "prettier --write --ignore-unknown"
   }
