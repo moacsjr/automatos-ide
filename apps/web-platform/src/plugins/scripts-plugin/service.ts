@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 import { Script, ScriptSchema } from "./schema";
+import { authFetch } from "../../auth/cognito";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
@@ -7,7 +8,7 @@ const API_BASE_URL =
 
 export class DynamoDbScriptsService {
   async list(): Promise<Script[]> {
-    const res = await fetch(`${API_BASE_URL}/scripts`);
+    const res = await authFetch(`${API_BASE_URL}/scripts`);
     if (!res.ok) {
       throw new Error(`Erro ao listar scripts: ${res.statusText}`);
     }
@@ -16,7 +17,7 @@ export class DynamoDbScriptsService {
   }
 
   async get(id: string): Promise<Script> {
-    const res = await fetch(`${API_BASE_URL}/scripts/${id}`);
+    const res = await authFetch(`${API_BASE_URL}/scripts/${id}`);
     if (!res.ok) {
       throw new Error(`Script com ID ${id} não encontrado.`);
     }
@@ -25,7 +26,7 @@ export class DynamoDbScriptsService {
   }
 
   async create(data: Omit<Script, "id">): Promise<Script> {
-    const res = await fetch(`${API_BASE_URL}/scripts`, {
+    const res = await authFetch(`${API_BASE_URL}/scripts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +41,7 @@ export class DynamoDbScriptsService {
   }
 
   async update(id: string, data: Omit<Script, "id">): Promise<Script> {
-    const res = await fetch(`${API_BASE_URL}/scripts/${id}`, {
+    const res = await authFetch(`${API_BASE_URL}/scripts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export class DynamoDbScriptsService {
   }
 
   async delete(id: string): Promise<void> {
-    const res = await fetch(`${API_BASE_URL}/scripts/${id}`, {
+    const res = await authFetch(`${API_BASE_URL}/scripts/${id}`, {
       method: "DELETE",
     });
     if (!res.ok) {
@@ -82,7 +83,7 @@ export class DynamoDbScriptsService {
       );
     }
 
-    const res = await fetch(`${API_BASE_URL}/workflows`, {
+    const res = await authFetch(`${API_BASE_URL}/workflows`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

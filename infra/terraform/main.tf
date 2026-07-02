@@ -10,6 +10,10 @@ terraform {
       source  = "integrations/github"
       version = "~> 6.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
 
   backend "s3" {
@@ -39,6 +43,59 @@ data "aws_region" "current" {}
 locals {
   account_id = data.aws_caller_identity.current.account_id
   region     = data.aws_region.current.name
+}
+
+# ============================================================
+# Secrets Manager — LLM keys + internal-auth shared secret
+# ============================================================
+# Segredos injetados nos containers via `secrets` (valueFrom) do task def, em vez
+# de env var plaintext. Não aparecem no task definition nem no CloudWatch.
+#
+# NOTA: os valores das chaves de LLM ainda são semeados via var (que vem do
+# GitHub Secret no CI) e ficam no state (S3 criptografado). O ganho é remover do
+# task def/console/logs. Zero-exposição-no-state fica pra Fase 2 (gerir o valor
+# fora do Terraform). O secret_string tem ignore_changes p/ permitir rotação
+# manual no console sem ser sobrescrito.
+
+resource "random_password" "internal_auth" {
+  length  = 48
+  special = false
+}
+
+resource "aws_secretsmanager_secret" "openrouter" {
+  name                    = "${var.environment}/automatos/openrouter-api-key"
+  recovery_window_in_days = 0
+}
+
+resource "aws_secretsmanager_secret_version" "openrouter" {
+  secret_id     = aws_secretsmanager_secret.openrouter.id
+  secret_string = var.openrouter_api_key
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
+}
+
+resource "aws_secretsmanager_secret" "gemini" {
+  name                    = "${var.environment}/automatos/gemini-api-key"
+  recovery_window_in_days = 0
+}
+
+resource "aws_secretsmanager_secret_version" "gemini" {
+  secret_id     = aws_secretsmanager_secret.gemini.id
+  secret_string = var.gemini_api_key
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
+}
+
+resource "aws_secretsmanager_secret" "internal_auth" {
+  name                    = "${var.environment}/automatos/internal-auth-secret"
+  recovery_window_in_days = 0
+}
+
+resource "aws_secretsmanager_secret_version" "internal_auth" {
+  secret_id     = aws_secretsmanager_secret.internal_auth.id
+  secret_string = random_password.internal_auth.result
 }
 
 # ============================================================
@@ -429,6 +486,17 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
           "events:PutEvents"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = [
+          aws_secretsmanager_secret.openrouter.arn,
+          aws_secretsmanager_secret.gemini.arn,
+          aws_secretsmanager_secret.internal_auth.arn
+        ]
       }
     ]
   })
@@ -441,13 +509,15 @@ resource "aws_iam_role_policy" "rpa_execution_policy" {
 module "api_gateway" {
   source = "./modules/api-gateway"
 
-  environment         = var.environment
-  workflow_table_name = aws_dynamodb_table.workflows.name
-  scripts_table_name  = aws_dynamodb_table.scripts.name
-  job_queue_url       = aws_sqs_queue.workflow_queue.url
-  execution_role_arn  = aws_iam_role.rpa_execution_role.arn
-  vpc_id              = var.vpc_id
-  subnet_ids          = var.subnet_ids
+  environment          = var.environment
+  workflow_table_name  = aws_dynamodb_table.workflows.name
+  scripts_table_name   = aws_dynamodb_table.scripts.name
+  job_queue_url        = aws_sqs_queue.workflow_queue.url
+  execution_role_arn   = aws_iam_role.rpa_execution_role.arn
+  vpc_id               = var.vpc_id
+  subnet_ids           = var.subnet_ids
+  allowed_origin       = var.allowed_origin
+  internal_auth_secret = random_password.internal_auth.result
 }
 
 # ============================================================
@@ -465,8 +535,11 @@ module "worker" {
   vpc_id                          = var.vpc_id
   subnet_ids                      = var.subnet_ids
   image_tag                       = var.image_tag
-  gemini_api_key                  = var.gemini_api_key
-  openrouter_api_key              = var.openrouter_api_key
+  allowed_origin                  = var.allowed_origin
+  assign_public_ip                = var.assign_public_ip
+  gemini_secret_arn               = aws_secretsmanager_secret.gemini.arn
+  openrouter_secret_arn           = aws_secretsmanager_secret.openrouter.arn
+  internal_auth_secret_arn        = aws_secretsmanager_secret.internal_auth.arn
 }
 
 # ============================================================

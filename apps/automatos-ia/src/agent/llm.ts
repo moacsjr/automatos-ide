@@ -126,9 +126,9 @@ async function callOpenRouterJSON(
     }
   }
 
+  // Loga só a mensagem — o objeto de erro cru pode conter headers com a API key.
   console.error(
-    `Erro na comunicação com a API do OpenRouter (${context}):`,
-    lastError,
+    `Erro na comunicação com a API do OpenRouter (${context}): ${lastError?.message ?? lastError}`,
   );
   throw lastError;
 }
@@ -145,43 +145,42 @@ export async function askLLMForNextAction(
   assertApiKeyConfigured();
 
   const prompt = `
-Você é um agente autônomo encarregado de controlar uma aba ativa do Chrome para realizar um teste/ação automatizada.
-Seu objetivo final é: "${objective}"
+You are an autonomous agent responsible for controlling an active Chrome tab to perform an automated test/action.
+Your final objective is: "${objective}"
 
 ---
-Informações do Estado Atual:
-- URL Atual: ${currentUrl}
-- Histórico de Ações Tomadas:
-${history.map((h, i) => `  ${i + 1}. ${h}`).join("\n") || "  (Nenhuma ação tomada ainda)"}
+Current State:
+- Current URL: ${currentUrl}
+- Action History:
+${history.map((h, i) => `  ${i + 1}. ${h}`).join("\n") || "  (No action taken yet)"}
 
 ---
-Elementos Interativos Disponíveis na Página (DOM Simplificado):
-${simplifiedDOM || "(Nenhum elemento interativo detectado)"}
+Interactive Elements Available on the Page (Simplified DOM):
+${simplifiedDOM || "(No interactive element detected)"}
 
 ---
-Instruções:
-1. Avalie cuidadosamente se o objetivo principal foi alcançado. Se sim, responda com a ação "finish".
-2. Caso contrário, selecione a próxima ação mais lógica para progredir em direção ao objetivo.
-3. Para interagir com qualquer elemento, use o ID correspondente indicado na lista acima (ex: "targetId": "12").
-4. Apenas selecione elementos que estão listados acima.
-5. Escreva a 'explanation' em português e de forma clara para o usuário final.
-6. Para elementos do tipo 'select' (Role: combobox), ao usar a ação "fill", o campo "value" deve conter exatamente o texto de uma das opções listadas em "Opções disponíveis" daquele elemento.
+Instructions:
+1. Carefully assess whether the main objective has been achieved. If so, respond with the "finish" action.
+2. Otherwise, select the next most logical action to progress toward the objective.
+3. To interact with any element, use the corresponding ID shown in the list above (e.g. "targetId": "12").
+4. Only select elements that are listed above.
+5. Write the 'explanation' in Portuguese (pt-BR), clearly, for the end user.
+6. For 'select' elements (Role: combobox), when using the "fill" action, the "value" field must contain exactly the text of one of the options listed in "Opções disponíveis" for that element.
+7. The "fill" action is only valid on elements with Type "input", "textarea" or "select", or Role "textbox" or "combobox". Never use "fill" on links (a), buttons (button), or any element without an editable field — use "click" instead.
+8. Before repeating an action, check the Action History: if the last action is already identical to the one you're about to take (same action, same target) and the Current URL hasn't changed since then, it had no effect — choose a different action instead of repeating it.
 
 ---
-Responda ESTRITAMENTE em JSON válido, sem markdown, seguindo exatamente este formato:
+Respond STRICTLY in valid JSON, without markdown, following exactly this format:
 {
   "action": "click" | "fill" | "navigate" | "finish" | "wait",
-  "targetId": "ID numérico do elemento (string), obrigatório apenas para 'click' e 'fill'",
-  "value": "texto a preencher (fill), URL completa (navigate) ou tempo em ms (wait)",
-  "reasoning": "raciocínio interno em português explicando a decisão",
-  "explanation": "mensagem curta e amigável em português explicando ao usuário o que está prestes a fazer"
+  "targetId": "numeric element ID (string), required only for 'click' and 'fill'",
+  "value": "text to fill (fill), full URL (navigate), or time in ms (wait)",
+  "reasoning": "internal reasoning in Portuguese (pt-BR) explaining the decision",
+  "explanation": "short, friendly message in Portuguese (pt-BR) explaining to the user what you're about to do"
 }
 `;
 
-  const responseText = await callOpenRouterJSON(
-    prompt,
-    "planejamento do próximo passo",
-  );
+  const responseText = await callOpenRouterJSON(prompt, "next step planning");
   return JSON.parse(responseText) as AgentDecision;
 }
 
@@ -200,38 +199,35 @@ export async function healPlaywrightScript(
   assertApiKeyConfigured();
 
   const prompt = `
-Você é um especialista em automação e testes com Playwright.
-Recebemos um script de teste Playwright gerado automaticamente que falhou durante a execução.
+You are an automation and Playwright testing expert.
+We received an automatically generated Playwright test script that failed during execution.
 
-Abaixo está o código do script que falhou:
+Below is the code of the script that failed:
 \`\`\`typescript
 ${code}
 \`\`\`
 
-Abaixo estão os logs de execução do terminal que contêm a mensagem de erro da falha:
+Below are the terminal execution logs containing the failure's error message:
 \`\`\`
 ${errorLogs}
 \`\`\`
 
-Instruções importantes:
-1. Analise cuidadosamente o erro indicado nos logs e o código do script correspondente.
-2. Identifique qual linha, seletor, asserção ou parâmetro causou a falha do teste.
-3. Corrija o erro no script Playwright mantendo a lógica original do fluxo, porém ajustando o seletor, seletor de visibilidade, espera ou lógica que causou a quebra do teste.
-4. Garanta que o código retornado na propriedade 'fixedCode' seja o script COMPLETO e válido em TypeScript do Playwright, incluindo as importações (ex: de '@playwright/test') e o bloco principal 'test(...)'.
-5. Não adicione marcações de bloco de código markdown (\`\`\`ts) no valor de 'fixedCode'.
-6. Explique em poucas palavras na propriedade 'explanation' (em português) qual era o problema e como você o corrigiu.
+Important instructions:
+1. Carefully analyze the error shown in the logs and the corresponding script code.
+2. Identify which line, selector, assertion, or parameter caused the test to fail.
+3. Fix the error in the Playwright script while keeping the original flow logic, adjusting only the selector, visibility selector, wait, or logic that caused the test to break.
+4. Ensure the code returned in the 'fixedCode' property is the COMPLETE and valid Playwright TypeScript script, including the imports (e.g. from '@playwright/test') and the main 'test(...)' block.
+5. Do not add markdown code block markers (\`\`\`ts) to the 'fixedCode' value.
+6. Briefly explain in the 'explanation' property (in Portuguese, pt-BR) what the problem was and how you fixed it.
 
 ---
-Responda ESTRITAMENTE em JSON válido, sem markdown, seguindo exatamente este formato:
+Respond STRICTLY in valid JSON, without markdown, following exactly this format:
 {
-  "fixedCode": "código completo e atualizado do script Playwright corrigido",
-  "explanation": "explicação em português detalhando qual era o erro nos logs e como ele foi corrigido"
+  "fixedCode": "complete, updated code of the fixed Playwright script",
+  "explanation": "explanation in Portuguese (pt-BR) detailing what the error in the logs was and how it was fixed"
 }
 `;
 
-  const responseText = await callOpenRouterJSON(
-    prompt,
-    "self-healing do script",
-  );
+  const responseText = await callOpenRouterJSON(prompt, "script self-healing");
   return JSON.parse(responseText) as HealedScriptResult;
 }

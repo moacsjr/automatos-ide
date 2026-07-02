@@ -48,9 +48,26 @@ variable "gemini_api_key" {
 }
 
 variable "openrouter_api_key" {
-  description = "OpenRouter API key for automatos-ia"
+  description = "OpenRouter API key for automatos-ia (usada só para semear o Secrets Manager)"
   type        = string
   sensitive   = true
   default     = ""
+}
+
+variable "allowed_origin" {
+  description = "Origem permitida para CORS (domínio do web-platform). '*' só para dev."
+  type        = string
+  default     = "*"
+}
+
+variable "assign_public_ip" {
+  description = <<-EOT
+    Atribui IP público ao container automatos-ia. Deve ser false em produção
+    (lockdown). PRÉ-REQUISITO p/ false: subnets privadas com NAT/VPC endpoints
+    para pull de imagem + egress LLM, e o Lambda do API Gateway anexado à VPC
+    (subnet_ids setado) para conseguir alcançar o container pela rede interna.
+  EOT
+  type        = bool
+  default     = false
 }
 

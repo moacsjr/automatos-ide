@@ -33,6 +33,16 @@ output "web_platform_url" {
   value       = aws_s3_bucket_website_configuration.web_platform.website_endpoint
 }
 
+output "cognito_user_pool_id" {
+  description = "Cognito User Pool ID (para configurar login no web-platform)"
+  value       = module.api_gateway.cognito_user_pool_id
+}
+
+output "cognito_user_pool_client_id" {
+  description = "Cognito User Pool Client ID (para o web-platform)"
+  value       = module.api_gateway.cognito_user_pool_client_id
+}
+
 output "secrets_created" {
   description = "GitHub secrets that were created"
   value = {

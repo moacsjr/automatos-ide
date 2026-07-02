@@ -135,8 +135,12 @@ resource "aws_ecs_task_definition" "automatos_ia" {
       environment = [
         { name = "NODE_ENV", value = "production" },
         { name = "PORT",     value = "3001" },
-        { name = "GEMINI_API_KEY", value = var.gemini_api_key },
-        { name = "OPENROUTER_API_KEY", value = var.openrouter_api_key }
+        { name = "ALLOWED_ORIGIN", value = var.allowed_origin }
+      ]
+      secrets = [
+        { name = "GEMINI_API_KEY",      valueFrom = var.gemini_secret_arn },
+        { name = "OPENROUTER_API_KEY",  valueFrom = var.openrouter_secret_arn },
+        { name = "INTERNAL_AUTH_SECRET", valueFrom = var.internal_auth_secret_arn }
       ]
       healthCheck = {
         command     = ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3001/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
@@ -171,20 +175,28 @@ resource "aws_ecs_service" "automatos_ia" {
 
   network_configuration {
     subnets          = length(var.subnet_ids) > 0 ? var.subnet_ids : data.aws_subnets.default[0].ids
-    assign_public_ip = true
+    assign_public_ip = var.assign_public_ip
     security_groups  = [aws_security_group.automatos_ia_sg.id]
   }
+}
+
+# CIDR da VPC em uso — usado para restringir o ingress da porta 3001 ao tráfego
+# interno da VPC (o Lambda proxy precisa estar anexado à VPC).
+data "aws_vpc" "selected" {
+  id = length(var.subnet_ids) > 0 ? var.vpc_id : data.aws_vpc.default[0].id
 }
 
 resource "aws_security_group" "automatos_ia_sg" {
   name   = "${var.environment}-automatos-ia-sg"
   vpc_id = length(var.subnet_ids) > 0 ? var.vpc_id : data.aws_vpc.default[0].id
 
+  # Porta 3001 acessível apenas de dentro da VPC (não mais 0.0.0.0/0).
+  # Defense-in-depth adicional: o app exige o header x-internal-auth.
   ingress {
     from_port   = 3001
     to_port     = 3001
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_vpc.selected.cidr_block]
   }
 
   egress {

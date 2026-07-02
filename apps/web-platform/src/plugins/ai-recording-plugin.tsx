@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { pluginRegistry } from "@pluggable-js/core";
 import { Script } from "./scripts-plugin/schema";
 import { DynamoDbScriptsService } from "./scripts-plugin/service";
+import { authFetch } from "../auth/cognito";
 import {
   ReactFlow,
   MiniMap,
@@ -151,7 +152,7 @@ export function AiRecordingComponent({
   // Fetch connection status from automatos-ia
   const checkStatus = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/status`);
+      const res = await authFetch(`${API_BASE}/api/status`);
       const data = await res.json();
       setIsConnected(data.connected);
       setSessionType(data.sessionType);
@@ -178,7 +179,7 @@ export function AiRecordingComponent({
 
       if (!isLocal) {
         try {
-          const res = await fetch(`${API_BASE_URL}/ia-host`);
+          const res = await authFetch(`${API_BASE_URL}/ia-host`);
           const data = await res.json();
           if (active && data.publicIp) {
             sseUrl = `http://${data.publicIp}:3001/api/events`;
@@ -193,6 +194,11 @@ export function AiRecordingComponent({
 
       if (!active) return;
 
+      // NOTA (segurança/Fase 2): o SSE conecta direto no IP do container e o
+      // EventSource não permite header Authorization. Com o lockdown de rede
+      // (sem IP público, SG restrito à VPC) este caminho direto deixa de
+      // funcionar. Rework necessário: rotear o SSE pelo proxy /ia/api/events
+      // com authorizer via query-string, ou migrar para WebSocket autenticado.
       const source = new EventSource(sseUrl);
       eventSourceRef.current = source;
 
@@ -218,7 +224,7 @@ export function AiRecordingComponent({
               return [...prev, data.step];
             });
             // Ao registrar um passo, vamos buscar o código mais atualizado do script
-            fetch(`${API_BASE}/api/script`)
+            authFetch(`${API_BASE}/api/script`)
               .then((res) => res.json())
               .then((resData) => {
                 if (resData.code) {
@@ -295,7 +301,7 @@ export function AiRecordingComponent({
     setTestLogs(["⏳ Enviando script para o servidor..."]);
 
     try {
-      const response = await fetch(`${API_BASE}/api/session/test`, {
+      const response = await authFetch(`${API_BASE}/api/session/test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: generatedCode }),
@@ -367,7 +373,7 @@ export function AiRecordingComponent({
     ]);
 
     try {
-      const response = await fetch(`${API_BASE}/api/session/heal`, {
+      const response = await authFetch(`${API_BASE}/api/session/heal`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: generatedCode, logs: testLogs }),
@@ -409,7 +415,7 @@ export function AiRecordingComponent({
       { sender: "system", text: "Conectando ao Chrome..." },
     ]);
     try {
-      const res = await fetch(`${API_BASE}/api/connect`, {
+      const res = await authFetch(`${API_BASE}/api/connect`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ port: 9222 }),
@@ -446,7 +452,7 @@ export function AiRecordingComponent({
       { sender: "system", text: "Iniciando sessão de gravação Co-piloto..." },
     ]);
     try {
-      const res = await fetch(`${API_BASE}/api/copilot/start`, {
+      const res = await authFetch(`${API_BASE}/api/copilot/start`, {
         method: "POST",
       });
       const data = await res.json();
@@ -482,7 +488,7 @@ export function AiRecordingComponent({
       { sender: "system", text: "Finalizando sessão ativa..." },
     ]);
     try {
-      const res = await fetch(`${API_BASE}/api/session/stop`, {
+      const res = await authFetch(`${API_BASE}/api/session/stop`, {
         method: "POST",
       });
       const data = await res.json();
@@ -519,7 +525,7 @@ export function AiRecordingComponent({
     setLogs((prev) => [...prev, { sender: "user", text: userPrompt }]);
 
     try {
-      const res = await fetch(`${API_BASE}/api/agent/start`, {
+      const res = await authFetch(`${API_BASE}/api/agent/start`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ objective: userPrompt, maxSteps: 20 }),
@@ -547,7 +553,7 @@ export function AiRecordingComponent({
 
     const pollInterval = setInterval(async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/script`);
+        const res = await authFetch(`${API_BASE}/api/script`);
         const data = await res.json();
         if (data.steps) {
           setRecordedSteps(data.steps);
@@ -653,7 +659,7 @@ export function AiRecordingComponent({
     // Show typing overlay if they click an input/textbox area (user convenience)
     // and keep focus so we can send interaction
     try {
-      await fetch(`${API_BASE}/api/interaction`, {
+      await authFetch(`${API_BASE}/api/interaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -676,7 +682,7 @@ export function AiRecordingComponent({
   const handleNavigate = async () => {
     if (!inputUrl) return;
     try {
-      await fetch(`${API_BASE}/api/interaction`, {
+      await authFetch(`${API_BASE}/api/interaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -694,7 +700,7 @@ export function AiRecordingComponent({
   const handleTypeSubmit = async () => {
     if (!typingValue) return;
     try {
-      await fetch(`${API_BASE}/api/interaction`, {
+      await authFetch(`${API_BASE}/api/interaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

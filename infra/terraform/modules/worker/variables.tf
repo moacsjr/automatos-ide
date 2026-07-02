@@ -36,15 +36,30 @@ variable "image_tag" {
   default     = "latest"
 }
 
-variable "gemini_api_key" {
-  description = "Gemini API key for automatos-ia"
+variable "gemini_secret_arn" {
+  description = "ARN do secret (Secrets Manager) com a Gemini API key"
   type        = string
-  sensitive   = true
 }
 
-variable "openrouter_api_key" {
-  description = "OpenRouter API key for automatos-ia"
+variable "openrouter_secret_arn" {
+  description = "ARN do secret (Secrets Manager) com a OpenRouter API key"
   type        = string
-  sensitive   = true
+}
+
+variable "internal_auth_secret_arn" {
+  description = "ARN do secret (Secrets Manager) com o segredo x-internal-auth"
+  type        = string
+}
+
+variable "allowed_origin" {
+  description = "Origem permitida para CORS no automatos-ia"
+  type        = string
+  default     = "*"
+}
+
+variable "assign_public_ip" {
+  description = "Atribui IP público ao container automatos-ia (false = lockdown)"
+  type        = bool
+  default     = false
 }
 

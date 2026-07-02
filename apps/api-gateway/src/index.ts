@@ -22,6 +22,12 @@ import {
 } from "@aws-sdk/client-eventbridge";
 import { randomUUID } from "crypto";
 import type { APIGatewayProxyResult } from "aws-lambda";
+import {
+  workflowSchema,
+  scriptSchema,
+  parseJson,
+  isValidId,
+} from "./validation.js";
 
 const sqs = new SQSClient({ region: "us-east-1" });
 const docClient = DynamoDBDocumentClient.from(
@@ -57,11 +63,20 @@ const WORKFLOW_TABLE = process.env.WORKFLOW_TABLE ?? "rpa-workflows";
 const SCRIPTS_TABLE = process.env.SCRIPTS_TABLE ?? "rpa-scripts";
 const JOB_QUEUE_URL = process.env.JOB_QUEUE_URL;
 
+// Origem permitida para CORS. Em produção, definir ALLOWED_ORIGIN com o domínio
+// do web-platform (CloudFront). Sem valor (dev), cai em "*".
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "*";
+
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "*",
-  "Access-Control-Allow-Methods": "*",
+  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  ...(ALLOWED_ORIGIN !== "*" ? { Vary: "Origin" } : {}),
 };
+
+// Segredo compartilhado injetado no proxy /ia/* para que o container só aceite
+// chamadas vindas deste Lambda (defense-in-depth). Vem do Secrets Manager.
+const INTERNAL_AUTH_SECRET = process.env.INTERNAL_AUTH_SECRET || "";
 
 async function getIaContainerIps(): Promise<{
   privateIp: string;
@@ -210,14 +225,21 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       const headers: Record<string, string> = {};
       if (event.headers) {
         for (const [key, val] of Object.entries(event.headers)) {
+          const lower = key.toLowerCase();
           if (
             val &&
-            key.toLowerCase() !== "host" &&
-            key.toLowerCase() !== "connection"
+            lower !== "host" &&
+            lower !== "connection" &&
+            // Nunca repassa um x-internal-auth vindo do cliente (anti-spoof).
+            lower !== "x-internal-auth"
           ) {
             headers[key] = String(val);
           }
         }
+      }
+      // Injeta o segredo interno; o container rejeita chamadas sem ele.
+      if (INTERNAL_AUTH_SECRET) {
+        headers["x-internal-auth"] = INTERNAL_AUTH_SECRET;
       }
 
       let bodyBuffer: Buffer | undefined;
@@ -258,8 +280,15 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
 
     // POST /workflows — create workflow + enqueue job
     if (httpMethod === "POST" && rawPath === "/workflows") {
-      const payload = JSON.parse(body ?? "{}");
-      const { workflowId, executionId, dataSourceFileKey, steps } = payload;
+      const parsed = parseJson(workflowSchema, body);
+      if (!parsed.ok) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: parsed.error }),
+        };
+      }
+      const { workflowId, executionId, dataSourceFileKey, steps } = parsed.data;
 
       await docClient.send(
         new PutCommand({
@@ -316,6 +345,13 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
     // GET /workflows/:id — read workflow status
     if (httpMethod === "GET" && rawPath.startsWith("/workflows/")) {
       const workflowId = rawPath.split("/").pop();
+      if (!isValidId(workflowId)) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: "id inválido." }),
+        };
+      }
       const result = await docClient.send(
         new GetCommand({ TableName: WORKFLOW_TABLE, Key: { workflowId } }),
       );
@@ -357,6 +393,13 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
     // GET /scripts/:id — read script
     if (httpMethod === "GET" && rawPath.startsWith("/scripts/")) {
       const id = rawPath.split("/").pop();
+      if (!isValidId(id)) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: "id inválido." }),
+        };
+      }
       const result = await docClient.send(
         new GetCommand({ TableName: SCRIPTS_TABLE, Key: { id } }),
       );
@@ -382,9 +425,16 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       httpMethod === "POST" &&
       (rawPath === "/scripts" || rawPath === "/scripts/")
     ) {
-      const payload = JSON.parse(body ?? "{}");
-      const id = payload.id || randomUUID();
-      const item = { ...payload, id };
+      const parsed = parseJson(scriptSchema, body);
+      if (!parsed.ok) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: parsed.error }),
+        };
+      }
+      const id = parsed.data.id || randomUUID();
+      const item = { ...parsed.data, id };
 
       await docClient.send(
         new PutCommand({
@@ -410,8 +460,22 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
     // PUT /scripts/:id — update script
     if (httpMethod === "PUT" && rawPath.startsWith("/scripts/")) {
       const id = rawPath.split("/").pop();
-      const payload = JSON.parse(body ?? "{}");
-      const item = { ...payload, id };
+      if (!isValidId(id)) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: "id inválido." }),
+        };
+      }
+      const parsed = parseJson(scriptSchema, body);
+      if (!parsed.ok) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: parsed.error }),
+        };
+      }
+      const item = { ...parsed.data, id };
 
       let rawScriptChanged = true;
       try {
@@ -452,6 +516,13 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
     // DELETE /scripts/:id — delete script
     if (httpMethod === "DELETE" && rawPath.startsWith("/scripts/")) {
       const id = rawPath.split("/").pop();
+      if (!isValidId(id)) {
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: "id inválido." }),
+        };
+      }
       await docClient.send(
         new DeleteCommand({
           TableName: SCRIPTS_TABLE,
@@ -475,11 +546,12 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       body: "Method not allowed",
     };
   } catch (err) {
+    // Detalhe só no log (CloudWatch); cliente recebe mensagem genérica.
     console.error("Handler error:", err);
     return {
       statusCode: 500,
       headers: CORS_HEADERS,
-      body: JSON.stringify({ error: (err as Error).message }),
+      body: JSON.stringify({ error: "Erro interno." }),
     };
   }
 }

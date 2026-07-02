@@ -14,6 +14,15 @@ import { listenerScript } from "./recorder/listener.js";
 import { PlaywrightGenerator } from "./generator/playwright.js";
 import { agentEvents } from "./utils/logger.js";
 import { healPlaywrightScript } from "./agent/llm.js";
+import {
+  internalAuthMiddleware,
+  parseBody,
+  agentStartSchema,
+  interactionSchema,
+  connectSchema,
+  testCodeSchema,
+  findForbiddenCodePattern,
+} from "./security.js";
 
 // Carrega as variáveis do arquivo .env localizado na raiz do módulo automatos-ia
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
@@ -21,11 +30,21 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware de CORS nativo
+// Origem permitida para CORS. Em produção, definir ALLOWED_ORIGIN com o domínio
+// do web-platform. Sem valor (dev local), cai em "*".
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "*";
+
+// Middleware de CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, x-internal-auth",
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  if (ALLOWED_ORIGIN !== "*") {
+    res.setHeader("Vary", "Origin");
+  }
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
@@ -34,7 +53,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-// Health check endpoint
+// Health check endpoint (liberado, sem internal-auth — usado pelo ECS)
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
@@ -42,6 +61,10 @@ app.get("/health", (req, res) => {
 // Servir os arquivos estáticos do Dashboard Web
 const publicPath = path.resolve("public");
 app.use(express.static(publicPath));
+
+// Defense-in-depth: exige header x-internal-auth (injetado pelo Lambda proxy)
+// em todas as rotas /api/*. Bloqueia acesso direto ao container.
+app.use("/api", internalAuthMiddleware);
 
 // Estado global do servidor
 let browserInstance: any = null;
@@ -253,14 +276,11 @@ app.post("/api/agent/start", async (req, res) => {
       .json({ error: "Já existe uma sessão ativa em execução." });
   }
 
-  const { objective, maxSteps } = req.body;
-  if (!objective || typeof objective !== "string" || !objective.trim()) {
-    return res
-      .status(400)
-      .json({ error: "O objetivo (objective) é obrigatório." });
-  }
+  const parsed = parseBody(agentStartSchema, req.body, res);
+  if (!parsed) return;
+  const { objective, maxSteps } = parsed;
 
-  const stepsLimit = maxSteps ? parseInt(maxSteps, 10) : 20;
+  const stepsLimit = maxSteps ?? 20;
   const isHybrid = sessionType === "recording_copilot";
 
   if (!isHybrid) {
@@ -409,7 +429,9 @@ app.get("/api/script", (req, res) => {
  * Executa uma interação manual enviada pela viewport espelhada (clique, digitação, navegação)
  */
 app.post("/api/interaction", async (req, res) => {
-  const { action, x, y, value, url, width, height } = req.body;
+  const parsed = parseBody(interactionSchema, req.body, res);
+  if (!parsed) return;
+  const { action, x, y, value, url, width, height } = parsed;
 
   if (browserContext && (!activePage || activePage.isClosed())) {
     try {
@@ -425,6 +447,11 @@ app.post("/api/interaction", async (req, res) => {
 
   try {
     if (action === "click") {
+      if (typeof x !== "number" || typeof y !== "number") {
+        return res
+          .status(400)
+          .json({ error: "x e y são obrigatórios para click." });
+      }
       let targetX = x;
       let targetY = y;
 
@@ -440,10 +467,16 @@ app.post("/api/interaction", async (req, res) => {
       await activePage.bringToFront().catch(() => {});
       await activePage.mouse.click(targetX, targetY);
     } else if (action === "navigate") {
-      await activePage.goto(url, { waitUntil: "load" });
+      // url já validada (http/https) pelo schema
+      await activePage.goto(url as string, { waitUntil: "load" });
     } else if (action === "fill") {
-      await activePage.keyboard.type(value);
+      await activePage.keyboard.type(value ?? "");
     } else if (action === "press") {
+      if (!value) {
+        return res
+          .status(400)
+          .json({ error: "value é obrigatório para press." });
+      }
       await activePage.keyboard.press(value);
     }
 
@@ -457,9 +490,17 @@ app.post("/api/interaction", async (req, res) => {
  * Executa o script gerado em um ambiente isolado do Playwright e faz streaming dos logs
  */
 app.post("/api/session/test", async (req, res) => {
-  const { code } = req.body;
-  if (!code || typeof code !== "string") {
-    return res.status(400).json({ error: "O código do script é obrigatório." });
+  const parsed = parseBody(testCodeSchema, req.body, res);
+  if (!parsed) return;
+  const { code } = parsed;
+
+  // Best-effort: bloqueia padrões perigosos antes de gravar/rodar. NÃO é sandbox
+  // (isolamento real em container efêmero fica pra Fase 2).
+  const forbidden = findForbiddenCodePattern(code);
+  if (forbidden) {
+    return res.status(400).json({
+      error: `Código rejeitado: padrão não permitido detectado (${forbidden}).`,
+    });
   }
 
   try {
@@ -552,7 +593,9 @@ app.post("/api/session/heal", async (req, res) => {
  * Conecta a uma instância do Chrome já em execução via CDP
  */
 app.post("/api/connect", async (req, res) => {
-  const port = Number(req.body?.port) || 9222;
+  const parsed = parseBody(connectSchema, req.body, res);
+  if (!parsed) return;
+  const port = parsed.port ?? 9222;
   try {
     agentEvents.log(`Conectando ao Chrome via CDP na porta ${port}...`);
     const connection = await connectBrowser(port);

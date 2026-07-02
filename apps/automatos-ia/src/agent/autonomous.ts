@@ -136,6 +136,10 @@ export async function runAutonomousAgent(
         agentEvents.log(`✈️ Navegando para: ${url}`);
         try {
           await page.goto(url, { waitUntil: "domcontentloaded" });
+          // Dá tempo para apps client-side-rendered hidratarem antes da próxima captura de DOM
+          await page
+            .waitForLoadState("networkidle", { timeout: 5000 })
+            .catch(() => {});
           history.push(`Navegou para "${url}"`);
           generator.addStep({
             action: "navigate",

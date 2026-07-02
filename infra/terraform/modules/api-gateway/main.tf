@@ -1,5 +1,7 @@
 # Lambda function — API Gateway handler
 
+data "aws_region" "current" {}
+
 data "archive_file" "api_lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../../../../dist/apps/api-gateway"
@@ -19,11 +21,13 @@ resource "aws_lambda_function" "api_handler" {
 
   environment {
     variables = {
-      WORKFLOW_TABLE = var.workflow_table_name
-      SCRIPTS_TABLE  = var.scripts_table_name
-      JOB_QUEUE_URL  = var.job_queue_url
-      ENVIRONMENT    = var.environment
-      NODE_ENV       = "production"
+      WORKFLOW_TABLE       = var.workflow_table_name
+      SCRIPTS_TABLE        = var.scripts_table_name
+      JOB_QUEUE_URL        = var.job_queue_url
+      ENVIRONMENT          = var.environment
+      NODE_ENV             = "production"
+      ALLOWED_ORIGIN       = var.allowed_origin
+      INTERNAL_AUTH_SECRET = var.internal_auth_secret
     }
   }
 
@@ -56,10 +60,47 @@ resource "aws_apigatewayv2_api" "api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_headers = ["*"]
-    allow_methods = ["*"]
-    allow_origins = ["*"]
+    allow_headers = ["Content-Type", "Authorization"]
+    allow_methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allow_origins = [var.allowed_origin]
     max_age       = 300
+  }
+}
+
+# ---- Cognito (identidade) + JWT authorizer ----
+
+resource "aws_cognito_user_pool" "users" {
+  name = "${var.environment}-automatos-users"
+
+  password_policy {
+    minimum_length    = 12
+    require_lowercase = true
+    require_uppercase = true
+    require_numbers   = true
+    require_symbols   = true
+  }
+}
+
+resource "aws_cognito_user_pool_client" "web" {
+  name         = "${var.environment}-automatos-web"
+  user_pool_id = aws_cognito_user_pool.users.id
+
+  explicit_auth_flows = [
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH"
+  ]
+  generate_secret = false
+}
+
+resource "aws_apigatewayv2_authorizer" "jwt" {
+  api_id           = aws_apigatewayv2_api.api.id
+  authorizer_type  = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+  name             = "${var.environment}-cognito-jwt"
+
+  jwt_configuration {
+    audience = [aws_cognito_user_pool_client.web.id]
+    issuer   = "https://cognito-idp.${data.aws_region.current.name}.amazonaws.com/${aws_cognito_user_pool.users.id}"
   }
 }
 
@@ -71,10 +112,14 @@ resource "aws_apigatewayv2_integration" "lambda" {
   payload_format_version = "2.0"
 }
 
+# Authorizer JWT aplicado ao $default → protege todas as rotas, inclusive /ia/*.
+# Preflight CORS (OPTIONS) é tratado pelo API Gateway antes do authorizer.
 resource "aws_apigatewayv2_route" "default" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "$default"
-  target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
+  api_id             = aws_apigatewayv2_api.api.id
+  route_key          = "$default"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda.id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.jwt.id
 }
 
 resource "aws_apigatewayv2_stage" "default" {

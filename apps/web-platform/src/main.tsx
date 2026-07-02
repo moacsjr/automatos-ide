@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { ExtensionPoint } from "@pluggable-js/react";
 import { pluginRegistry } from "@pluggable-js/core";
 import "./index.css";
+import { LoginGate } from "./auth/LoginGate";
 import "./plugins/rpa-cockpit";
 import "./plugins/ai-recording-plugin";
 import "./plugins/scripts-plugin";
@@ -98,4 +99,8 @@ function App() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <LoginGate>
+    <App />
+  </LoginGate>,
+);

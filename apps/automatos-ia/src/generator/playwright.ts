@@ -10,6 +10,15 @@ export interface RecordedStep {
 }
 
 /**
+ * Converte um valor arbitrário em um literal de string JS seguro (aspas duplas,
+ * com todos os caracteres especiais escapados). Evita injeção de código no
+ * script gerado quando URLs/seletores/valores contêm aspas, barras ou quebras.
+ */
+function toJsStringLiteral(value: string): string {
+  return JSON.stringify(value ?? "");
+}
+
+/**
  * Classe responsável por gerenciar os passos registrados e compilar
  * o script de teste final do Playwright.
  */
@@ -40,7 +49,7 @@ export class PlaywrightGenerator {
 
     lines.push(`import { test, expect } from '@playwright/test';`);
     lines.push(``);
-    lines.push(`test('${testName}', async ({ page }) => {`);
+    lines.push(`test(${toJsStringLiteral(testName)}, async ({ page }) => {`);
     lines.push(
       `  // Configura um viewport padrão de desktop para garantir visibilidade dos elementos`,
     );
@@ -57,7 +66,9 @@ export class PlaywrightGenerator {
 
       switch (step.action) {
         case "navigate":
-          lines.push(`  await page.goto('${step.value}');`);
+          lines.push(
+            `  await page.goto(${toJsStringLiteral(step.value || "")});`,
+          );
           break;
 
         case "click":
@@ -70,7 +81,9 @@ export class PlaywrightGenerator {
           const clickSelector = step.selector.includes(">> visible=")
             ? step.selector
             : `${step.selector} >> visible=true`;
-          lines.push(`  await page.click('${clickSelector}');`);
+          lines.push(
+            `  await page.click(${toJsStringLiteral(clickSelector)});`,
+          );
           break;
 
         case "fill":
@@ -83,9 +96,8 @@ export class PlaywrightGenerator {
           const fillSelector = step.selector.includes(">> visible=")
             ? step.selector
             : `${step.selector} >> visible=true`;
-          const escapedValue = (step.value || "").replace(/'/g, "\\'");
           lines.push(
-            `  await page.fill('${fillSelector}', '${escapedValue}');`,
+            `  await page.fill(${toJsStringLiteral(fillSelector)}, ${toJsStringLiteral(step.value || "")});`,
           );
           break;
 
@@ -99,9 +111,8 @@ export class PlaywrightGenerator {
           const selectSelector = step.selector.includes(">> visible=")
             ? step.selector
             : `${step.selector} >> visible=true`;
-          const escapedSelectValue = (step.value || "").replace(/'/g, "\\'");
           lines.push(
-            `  await page.selectOption('${selectSelector}', { label: '${escapedSelectValue}' });`,
+            `  await page.selectOption(${toJsStringLiteral(selectSelector)}, { label: ${toJsStringLiteral(step.value || "")} });`,
           );
           break;
 
