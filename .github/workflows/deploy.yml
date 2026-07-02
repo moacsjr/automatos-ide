@@ -1,12 +1,14 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - 'apps/**'
       - 'libs/**'
       - 'infra/**'
+      - '.github/workflows/deploy.yml'
 
 permissions:
   id-token: write
