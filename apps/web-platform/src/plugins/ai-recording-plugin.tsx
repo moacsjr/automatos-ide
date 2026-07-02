@@ -88,7 +88,6 @@ export function AiRecordingComponent({
   const [showTerminal, setShowTerminal] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement | null>(null);
 
-  const eventSourceRef = useRef<EventSource | null>(null);
   const logsEndRef = useRef<HTMLDivElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const isInputFocusedRef = useRef(false);
@@ -167,122 +166,106 @@ export function AiRecordingComponent({
     }
   }, []);
 
-  // Connect or disconnect the SSE EventSource
-  const setupEventSource = useCallback(() => {
-    let active = true;
-    if (eventSourceRef.current) {
-      eventSourceRef.current.close();
+  // Processa um evento (mesmo formato do SSE antigo) vindo do polling.
+  const handleEvent = useCallback((data: any) => {
+    if (data.type === "status") {
+      setSessionType(data.status);
+    } else if (data.type === "step") {
+      setRecordedSteps((prev) => {
+        const stepExists = prev.some(
+          (s) =>
+            s.action === data.step.action &&
+            s.selector === data.step.selector &&
+            s.value === data.step.value &&
+            s.description === data.step.description,
+        );
+        if (stepExists) return prev;
+        return [...prev, data.step];
+      });
+      authFetch(`${API_BASE}/api/script`)
+        .then((res) => res.json())
+        .then((resData) => {
+          if (resData.code) {
+            setGeneratedCode(resData.code);
+          }
+        })
+        .catch(() => {});
+    } else if (data.type === "log") {
+      const isThought =
+        data.message.includes("🧠") || data.message.includes("Pensando");
+      setLogs((prev) => [
+        ...prev,
+        { sender: isThought ? "ai-thought" : "assistant", text: data.message },
+      ]);
+    } else if (data.type === "error") {
+      setLogs((prev) => [...prev, { sender: "error", text: data.message }]);
+    } else if (data.type === "warn") {
+      setLogs((prev) => [
+        ...prev,
+        { sender: "system", text: `⚠️ ${data.message}` },
+      ]);
     }
+  }, []);
 
-    const init = async () => {
-      let sseUrl = "http://localhost:3001/api/events";
+  // Modo polling: substitui o SSE. O EventSource não permite header
+  // Authorization e o API Gateway (proxy autenticado) não faz streaming, então
+  // fazemos polling autenticado em /api/poll pelo mesmo proxy.
+  const setupPolling = useCallback(() => {
+    let active = true;
+    let cursor = 0;
+    let frameSeq = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
 
-      if (!isLocal) {
-        try {
-          const res = await authFetch(`${API_BASE_URL}/ia-host`);
-          const data = await res.json();
-          if (active && data.publicIp) {
-            sseUrl = `http://${data.publicIp}:3001/api/events`;
-          }
-        } catch (err) {
-          console.error(
-            "Failed to fetch IA public host, falling back to localhost:",
-            err,
-          );
-        }
-      }
-
+    const poll = async () => {
       if (!active) return;
-
-      // NOTA (segurança/Fase 2): o SSE conecta direto no IP do container e o
-      // EventSource não permite header Authorization. Com o lockdown de rede
-      // (sem IP público, SG restrito à VPC) este caminho direto deixa de
-      // funcionar. Rework necessário: rotear o SSE pelo proxy /ia/api/events
-      // com authorizer via query-string, ou migrar para WebSocket autenticado.
-      const source = new EventSource(sseUrl);
-      eventSourceRef.current = source;
-
-      source.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-
-          if (data.type === "frame") {
-            setFrameSrc(`data:image/jpeg;base64,${data.image}`);
-          } else if (data.type === "status") {
-            setSessionType(data.status);
-          } else if (data.type === "step") {
-            setRecordedSteps((prev) => {
-              // Previne adicionar duplicados se já estiver na lista
-              const stepExists = prev.some(
-                (s) =>
-                  s.action === data.step.action &&
-                  s.selector === data.step.selector &&
-                  s.value === data.step.value &&
-                  s.description === data.step.description,
-              );
-              if (stepExists) return prev;
-              return [...prev, data.step];
-            });
-            // Ao registrar um passo, vamos buscar o código mais atualizado do script
-            authFetch(`${API_BASE}/api/script`)
-              .then((res) => res.json())
-              .then((resData) => {
-                if (resData.code) {
-                  setGeneratedCode(resData.code);
-                }
-              })
-              .catch(() => {});
-          } else if (data.type === "log") {
-            const isThought =
-              data.message.includes("🧠") || data.message.includes("Pensando");
-            setLogs((prev) => [
-              ...prev,
-              {
-                sender: isThought ? "ai-thought" : "assistant",
-                text: data.message,
-              },
-            ]);
-          } else if (data.type === "error") {
-            setLogs((prev) => [
-              ...prev,
-              { sender: "error", text: data.message },
-            ]);
-          } else if (data.type === "warn") {
-            setLogs((prev) => [
-              ...prev,
-              { sender: "system", text: `⚠️ ${data.message}` },
-            ]);
+      try {
+        const res = await authFetch(
+          `${API_BASE}/api/poll?cursor=${cursor}&frameSeq=${frameSeq}`,
+        );
+        if (res.ok) {
+          const data = await res.json();
+          if (!active) return;
+          setIsConnected(true);
+          if (typeof data.cursor === "number") cursor = data.cursor;
+          if (data.frame && typeof data.frame.seq === "number") {
+            frameSeq = data.frame.seq;
+            setFrameSrc(`data:image/jpeg;base64,${data.frame.image}`);
           }
-        } catch (err) {
-          console.error("Erro ao decodificar evento SSE:", err);
+          if (Array.isArray(data.events)) {
+            for (const ev of data.events) handleEvent(ev);
+          }
+          if (typeof data.sessionType === "string") {
+            setSessionType(data.sessionType);
+          }
+        } else {
+          setIsConnected(false);
         }
-      };
-
-      source.onerror = () => {
-        console.warn("SSE desconectado. Tentando reconectar...");
-        setIsConnected(false);
-      };
+      } catch {
+        if (active) setIsConnected(false);
+      } finally {
+        if (active) timer = setTimeout(poll, 700);
+      }
     };
 
-    init();
+    poll();
 
     return () => {
       active = false;
+      if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [handleEvent]);
 
   // Trigger initial checks and connection
   useEffect(() => {
     checkStatus();
-    const cleanupEventSource = setupEventSource();
+    const cleanupPolling = setupPolling();
 
     const interval = setInterval(checkStatus, 3000);
     return () => {
       clearInterval(interval);
-      cleanupEventSource();
-      eventSourceRef.current?.close();
+      cleanupPolling();
     };
-  }, [checkStatus, setupEventSource]);
+  }, [checkStatus, setupPolling]);
 
   // Auto-scroll terminal to bottom
   useEffect(() => {

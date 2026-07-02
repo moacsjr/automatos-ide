@@ -78,6 +78,15 @@ let generatorInstance: PlaywrightGenerator | null = null;
 // Lista de clientes conectados ao SSE
 let sseClients: express.Response[] = [];
 
+// Estado para o modo polling (GET /api/poll) — usado quando o SSE direto não é
+// possível (lockdown de rede: cliente acessa via proxy autenticado do API GW,
+// que não faz streaming). Guarda o último frame e um buffer de eventos.
+let latestFrame: { image: string; metadata: any; seq: number } | null = null;
+let frameSeq = 0;
+const eventBuffer: Array<{ seq: number; data: any }> = [];
+let eventSeq = 0;
+const EVENT_BUFFER_MAX = 500;
+
 let activeCdpSession: any = null;
 
 async function startScreencast(page: any) {
@@ -98,6 +107,12 @@ async function startScreencast(page: any) {
       if (activeCdpSession !== session) {
         return;
       }
+      // Guarda o último frame para o modo polling
+      latestFrame = {
+        image: event.data,
+        metadata: event.metadata,
+        seq: ++frameSeq,
+      };
       const sseData = `data: ${JSON.stringify({
         type: "frame",
         image: event.data,
@@ -191,10 +206,58 @@ async function handleNewBrowserConnection(connection: any) {
 }
 
 // Redireciona todos os eventos de agentEvents para os clientes SSE conectados
+// e também os acumula no buffer para o modo polling.
 agentEvents.on("message", (data) => {
+  eventBuffer.push({ seq: ++eventSeq, data });
+  if (eventBuffer.length > EVENT_BUFFER_MAX) {
+    eventBuffer.splice(0, eventBuffer.length - EVENT_BUFFER_MAX);
+  }
   const sseData = `data: ${JSON.stringify(data)}\n\n`;
   sseClients.forEach((client) => {
     client.write(sseData);
+  });
+});
+
+/**
+ * Modo polling — alternativa ao SSE para quando o cliente acessa via proxy
+ * autenticado do API Gateway (que não faz streaming). Retorna o último frame
+ * (se novo) e os eventos acumulados desde o cursor informado.
+ */
+app.get("/api/poll", async (req, res) => {
+  const cursor = Number(req.query.cursor) || 0;
+  const clientFrameSeq = Number(req.query.frameSeq) || 0;
+
+  const events = eventBuffer.filter((e) => e.seq > cursor).map((e) => e.data);
+
+  const frame =
+    latestFrame && latestFrame.seq > clientFrameSeq
+      ? {
+          image: latestFrame.image,
+          metadata: latestFrame.metadata,
+          seq: latestFrame.seq,
+        }
+      : null;
+
+  let connected = false;
+  let currentUrl = "";
+  if (browserContext) {
+    try {
+      connected = true;
+      const page = await getActivePage(browserContext);
+      currentUrl = page.url();
+    } catch {
+      connected = false;
+    }
+  }
+
+  res.json({
+    events,
+    cursor: eventSeq,
+    frame,
+    frameSeq: latestFrame?.seq ?? 0,
+    connected,
+    sessionType,
+    currentUrl,
   });
 });
 
