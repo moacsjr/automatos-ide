@@ -124,11 +124,9 @@ export function parseBody<T>(
   const result = schema.safeParse(body);
   if (!result.success) {
     const issue = result.error.issues[0];
-    res
-      .status(400)
-      .json({
-        error: `Payload inválido: ${issue?.path.join(".")} ${issue?.message}`,
-      });
+    res.status(400).json({
+      error: `Payload inválido: ${issue?.path.join(".")} ${issue?.message}`,
+    });
     return null;
   }
   return result.data;
