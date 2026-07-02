@@ -383,6 +383,28 @@ resource "aws_iam_role_policy" "github_actions_policy" {
           "events:*"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:CreateSecret",
+          "secretsmanager:DeleteSecret",
+          "secretsmanager:DescribeSecret",
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:PutSecretValue",
+          "secretsmanager:UpdateSecret",
+          "secretsmanager:TagResource",
+          "secretsmanager:GetResourcePolicy",
+          "secretsmanager:ListSecretVersionIds"
+        ]
+        Resource = "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:${var.environment}/automatos/*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "cognito-idp:*"
+        ]
+        Resource = "*"
       }
     ]
   })
