@@ -122,6 +122,17 @@ resource "aws_apigatewayv2_route" "default" {
   authorizer_id      = aws_apigatewayv2_authorizer.jwt.id
 }
 
+# Preflight CORS (OPTIONS) sem auth. O $default com JWT captura o OPTIONS antes
+# do tratamento automático de CORS do API Gateway e o rejeita com 401 (o browser
+# não manda token no preflight). Esta rota explícita deixa o OPTIONS passar; o
+# Lambda responde 204 + headers CORS.
+resource "aws_apigatewayv2_route" "options_preflight" {
+  api_id             = aws_apigatewayv2_api.api.id
+  route_key          = "OPTIONS /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.lambda.id}"
+  authorization_type = "NONE"
+}
+
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "$default"
