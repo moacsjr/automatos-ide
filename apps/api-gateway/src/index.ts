@@ -23,8 +23,8 @@ import {
 import { randomUUID } from "crypto";
 import type { APIGatewayProxyResult } from "aws-lambda";
 import {
-  workflowSchema,
-  scriptSchema,
+  validateWorkflow,
+  validateScript,
   parseJson,
   isValidId,
 } from "./validation.js";
@@ -280,7 +280,7 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
 
     // POST /workflows — create workflow + enqueue job
     if (httpMethod === "POST" && rawPath === "/workflows") {
-      const parsed = parseJson(workflowSchema, body);
+      const parsed = parseJson(validateWorkflow, body);
       if (!parsed.ok) {
         return {
           statusCode: 400,
@@ -425,7 +425,7 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
       httpMethod === "POST" &&
       (rawPath === "/scripts" || rawPath === "/scripts/")
     ) {
-      const parsed = parseJson(scriptSchema, body);
+      const parsed = parseJson(validateScript, body);
       if (!parsed.ok) {
         return {
           statusCode: 400,
@@ -467,7 +467,7 @@ export async function handler(event: any): Promise<APIGatewayProxyResult> {
           body: JSON.stringify({ error: "id inválido." }),
         };
       }
-      const parsed = parseJson(scriptSchema, body);
+      const parsed = parseJson(validateScript, body);
       if (!parsed.ok) {
         return {
           statusCode: 400,
