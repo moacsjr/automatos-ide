@@ -68,8 +68,10 @@ resource "aws_secretsmanager_secret" "openrouter" {
 }
 
 resource "aws_secretsmanager_secret_version" "openrouter" {
-  secret_id     = aws_secretsmanager_secret.openrouter.id
-  secret_string = var.openrouter_api_key
+  secret_id = aws_secretsmanager_secret.openrouter.id
+  # coalesce evita erro quando o var vem vazio (PutSecretValue rejeita string
+  # vazia). Valor real é semeado no CI; "unset" é só placeholder.
+  secret_string = coalesce(var.openrouter_api_key, "unset")
   lifecycle {
     ignore_changes = [secret_string]
   }
@@ -82,7 +84,7 @@ resource "aws_secretsmanager_secret" "gemini" {
 
 resource "aws_secretsmanager_secret_version" "gemini" {
   secret_id     = aws_secretsmanager_secret.gemini.id
-  secret_string = var.gemini_api_key
+  secret_string = coalesce(var.gemini_api_key, "unset")
   lifecycle {
     ignore_changes = [secret_string]
   }
