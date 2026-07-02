@@ -124,11 +124,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: terraform apply -auto-approve tfplan
 
-      - name: Download Web Platform Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: web-platform-build
-          path: dist/apps/web-platform/
+      # Rebuild do frontend APÓS o apply, injetando os IDs do Cognito (que só
+      # existem depois do terraform). Sem isso o SPA não autentica e a API 401.
+      - name: Build Frontend with Cognito config
+        env:
+          VITE_API_URL: 'https://8agnfud1gh.execute-api.us-east-1.amazonaws.com'
+          VITE_APP_VERSION: ${{ github.sha }}
+        run: |
+          POOL_ID=$(terraform -chdir=${{ env.TERRAFORM_DIR }} output -raw cognito_user_pool_id)
+          CLIENT_ID=$(terraform -chdir=${{ env.TERRAFORM_DIR }} output -raw cognito_user_pool_client_id)
+          VITE_COGNITO_USER_POOL_ID="$POOL_ID" \
+          VITE_COGNITO_CLIENT_ID="$CLIENT_ID" \
+            npx nx build web-platform
 
       - name: Deploy Frontend to S3
         run: |
