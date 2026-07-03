@@ -180,23 +180,19 @@ resource "aws_ecs_service" "automatos_ia" {
   }
 }
 
-# CIDR da VPC em uso — usado para restringir o ingress da porta 3001 ao tráfego
-# interno da VPC (o Lambda proxy precisa estar anexado à VPC).
-data "aws_vpc" "selected" {
-  id = length(var.subnet_ids) > 0 ? var.vpc_id : data.aws_vpc.default[0].id
-}
-
 resource "aws_security_group" "automatos_ia_sg" {
   name   = "${var.environment}-automatos-ia-sg"
   vpc_id = length(var.subnet_ids) > 0 ? var.vpc_id : data.aws_vpc.default[0].id
 
-  # Porta 3001 acessível apenas de dentro da VPC (não mais 0.0.0.0/0).
-  # Defense-in-depth adicional: o app exige o header x-internal-auth.
+  # Porta 3001 aberta, MAS o controle real é no app: todo /api/* exige o header
+  # x-internal-auth (injetado só pelo Lambda proxy) → hit direto sem o segredo
+  # recebe 403. O lockdown de rede completo (SG restrito à VPC) exige o Lambda
+  # anexado à VPC + NAT/VPC endpoints para as chamadas AWS — Fase 2.
   ingress {
     from_port   = 3001
     to_port     = 3001
     protocol    = "tcp"
-    cidr_blocks = [data.aws_vpc.selected.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

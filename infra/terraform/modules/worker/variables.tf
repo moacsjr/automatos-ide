@@ -58,8 +58,8 @@ variable "allowed_origin" {
 }
 
 variable "assign_public_ip" {
-  description = "Atribui IP público ao container automatos-ia (false = lockdown)"
+  description = "Atribui IP público ao container automatos-ia. true por ora: o Lambda proxy roda fora da VPC e alcança o container pelo IP público; controle de acesso é via x-internal-auth. Lockdown completo (false) = Fase 2 (Lambda na VPC + NAT/endpoints)."
   type        = bool
-  default     = false
+  default     = true
 }
 

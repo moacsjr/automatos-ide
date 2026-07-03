@@ -62,12 +62,13 @@ variable "allowed_origin" {
 
 variable "assign_public_ip" {
   description = <<-EOT
-    Atribui IP público ao container automatos-ia. Deve ser false em produção
-    (lockdown). PRÉ-REQUISITO p/ false: subnets privadas com NAT/VPC endpoints
-    para pull de imagem + egress LLM, e o Lambda do API Gateway anexado à VPC
-    (subnet_ids setado) para conseguir alcançar o container pela rede interna.
+    Atribui IP público ao container automatos-ia. true por ora: o Lambda proxy
+    roda fora da VPC e alcança o container pelo IP público; o controle de acesso
+    é via header x-internal-auth (a porta fica aberta mas /api/* exige o segredo).
+    Lockdown completo (false) é Fase 2: exige subnets privadas com NAT/VPC
+    endpoints e o Lambda anexado à VPC para alcançar o container internamente.
   EOT
   type        = bool
-  default     = false
+  default     = true
 }
 
