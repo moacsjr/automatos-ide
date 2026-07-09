@@ -66,6 +66,12 @@ variable "web_platform_domain" {
   default     = "automatos.astratech.net.br"
 }
 
+variable "web_platform_cert_arn" {
+  description = "ARN do cert ACM curinga *.astratech.net.br (us-east-1) para o CloudFront."
+  type        = string
+  default     = "arn:aws:acm:us-east-1:458889634344:certificate/cc86e839-b2fb-40b3-95d3-8a0d51085cc2"
+}
+
 variable "assign_public_ip" {
   description = <<-EOT
     Atribui IP público ao container automatos-ia. true por ora: o Lambda proxy

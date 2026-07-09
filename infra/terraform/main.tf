@@ -411,9 +411,7 @@ resource "aws_iam_role_policy" "github_actions_policy" {
       {
         Effect = "Allow"
         Action = [
-          "cloudfront:*",
-          "acm:DescribeCertificate",
-          "acm:ListCertificates"
+          "cloudfront:*"
         ]
         Resource = "*"
       }
@@ -634,11 +632,10 @@ resource "aws_s3_bucket_policy" "web_platform" {
 # = "http-only" (tráfego CloudFront→S3 dentro da AWS; viewer→CloudFront é HTTPS).
 
 # Cert curinga *.astratech.net.br (já emitido, us-east-1 — obrigatório p/ CloudFront).
-data "aws_acm_certificate" "web_platform" {
-  domain      = "*.astratech.net.br"
-  statuses    = ["ISSUED"]
-  most_recent = true
-}
+# ARN passado por var em vez de data source: o data.aws_acm_certificate exige
+# acm:GetCertificate na role do CI, e essa permissão só entraria no mesmo apply
+# que falha no plan (bootstrap circular). O ARN é estável, então referenciamos
+# direto e evitamos qualquer leitura de ACM no plan.
 
 # Policies gerenciadas da AWS (evita forwarded_values legado).
 data "aws_cloudfront_cache_policy" "optimized" {
@@ -689,7 +686,7 @@ resource "aws_cloudfront_distribution" "web_platform" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = data.aws_acm_certificate.web_platform.arn
+    acm_certificate_arn      = var.web_platform_cert_arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
