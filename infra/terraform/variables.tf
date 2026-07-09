@@ -60,6 +60,12 @@ variable "allowed_origin" {
   default     = "*"
 }
 
+variable "web_platform_domain" {
+  description = "Domínio custom do web-platform servido via CloudFront (alias + cert)."
+  type        = string
+  default     = "automatos.astratech.net.br"
+}
+
 variable "assign_public_ip" {
   description = <<-EOT
     Atribui IP público ao container automatos-ia. true por ora: o Lambda proxy

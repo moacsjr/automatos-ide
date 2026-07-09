@@ -33,6 +33,16 @@ output "web_platform_url" {
   value       = aws_s3_bucket_website_configuration.web_platform.website_endpoint
 }
 
+output "web_platform_cloudfront_domain" {
+  description = "CloudFront domain do web-platform (apontar o CNAME automatos.astratech.net.br para cá)"
+  value       = aws_cloudfront_distribution.web_platform.domain_name
+}
+
+output "web_platform_cloudfront_id" {
+  description = "CloudFront distribution ID (para invalidations no deploy)"
+  value       = aws_cloudfront_distribution.web_platform.id
+}
+
 output "cognito_user_pool_id" {
   description = "Cognito User Pool ID (para configurar login no web-platform)"
   value       = module.api_gateway.cognito_user_pool_id

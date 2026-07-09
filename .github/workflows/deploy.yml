@@ -142,3 +142,10 @@ jobs:
       - name: Deploy Frontend to S3
         run: |
           aws s3 sync dist/apps/web-platform/ s3://${{ secrets.WEB_PLATFORM_BUCKET }} --delete
+
+      # Invalida o cache do CloudFront para o novo bundle aparecer na hora.
+      - name: Invalidate CloudFront
+        working-directory: ${{ env.TERRAFORM_DIR }}
+        run: |
+          DIST_ID=$(terraform output -raw web_platform_cloudfront_id)
+          aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"

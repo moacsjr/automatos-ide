@@ -407,6 +407,15 @@ resource "aws_iam_role_policy" "github_actions_policy" {
           "cognito-idp:*"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudfront:*",
+          "acm:DescribeCertificate",
+          "acm:ListCertificates"
+        ]
+        Resource = "*"
       }
     ]
   })
@@ -613,6 +622,83 @@ resource "aws_s3_bucket_policy" "web_platform" {
   })
 
   depends_on = [aws_s3_bucket_public_access_block.web_platform]
+}
+
+# ============================================================
+# CloudFront — HTTPS + custom domain for web-platform
+# ============================================================
+#
+# Origem = S3 *website endpoint* (custom origin), não o REST endpoint. O website
+# endpoint aplica index_document/error_document (fallback SPA → index.html), que o
+# REST endpoint não faz. Website endpoint só fala HTTP, então origin_protocol_policy
+# = "http-only" (tráfego CloudFront→S3 dentro da AWS; viewer→CloudFront é HTTPS).
+
+# Cert curinga *.astratech.net.br (já emitido, us-east-1 — obrigatório p/ CloudFront).
+data "aws_acm_certificate" "web_platform" {
+  domain      = "*.astratech.net.br"
+  statuses    = ["ISSUED"]
+  most_recent = true
+}
+
+# Policies gerenciadas da AWS (evita forwarded_values legado).
+data "aws_cloudfront_cache_policy" "optimized" {
+  name = "Managed-CachingOptimized"
+}
+
+resource "aws_cloudfront_distribution" "web_platform" {
+  enabled             = true
+  is_ipv6_enabled     = true
+  comment             = "${var.environment}-automatos-web-platform"
+  default_root_object = "index.html"
+  price_class         = "PriceClass_100"
+  aliases             = [var.web_platform_domain]
+
+  origin {
+    origin_id   = "s3-website-web-platform"
+    domain_name = aws_s3_bucket_website_configuration.web_platform.website_endpoint
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }
+
+  default_cache_behavior {
+    target_origin_id       = "s3-website-web-platform"
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    compress               = true
+    cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
+  }
+
+  # SPA: rota client-side → devolve index.html com 200 em vez de erro do S3.
+  custom_error_response {
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
+  }
+  custom_error_response {
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = data.aws_acm_certificate.web_platform.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
 }
 
 # ============================================================
